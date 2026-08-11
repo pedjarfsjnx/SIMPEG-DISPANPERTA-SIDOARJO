@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MasterDataController as AdminMasterDataController
 use App\Http\Controllers\Admin\RiwayatPensiunController as AdminPensiunController;
 use App\Http\Controllers\Admin\RiwayatKenaikanPangkatController as AdminKPController;
 use App\Http\Controllers\Admin\ImportExportController;
+use App\Http\Controllers\Admin\ActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ use App\Http\Controllers\Admin\ImportExportController;
 Route::get('/', [PublicDashboardController::class, 'index'])->name('public.dashboard');
 Route::get('/pegawai', [PublicPegawaiController::class, 'index'])->name('public.pegawai.index');
 Route::get('/pegawai-cetak', [PublicPegawaiController::class, 'cetak'])->name('public.pegawai.cetak');
+Route::get('/pegawai-download-pdf', [PublicPegawaiController::class, 'downloadPdf'])->name('public.pegawai.download-pdf');
 Route::get('/pegawai/{id}', [PublicPegawaiController::class, 'show'])->name('public.pegawai.show');
 Route::get('/struktur-organisasi', [PublicStrukturController::class, 'index'])->name('public.struktur-organisasi');
 
@@ -54,7 +56,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('pensiun', AdminPensiunController::class);
     Route::resource('kenaikan-pangkat', AdminKPController::class);
 
-    // Import / Export Excel
+    // Activity Audit Logs
+    Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
+
+    // Import / Export Excel & PDF
     Route::get('/import', [ImportExportController::class, 'showImportForm'])->name('import.form');
     Route::post('/import/preview', [ImportExportController::class, 'previewImport'])->name('import.preview');
     Route::post('/import/commit', [ImportExportController::class, 'commitImport'])->name('import.commit');

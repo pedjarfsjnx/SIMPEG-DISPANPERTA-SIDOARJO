@@ -9,14 +9,19 @@
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
             <div>
                 <h2 class="text-lg font-bold text-slate-900">Direktori Kepegawaian</h2>
-                <p class="text-xs text-slate-500">Pencarian dan penyaringan data pegawai resmi Dinas Pangan dan Pertanian Kabupaten Sidoarjo.</p>
+                <p class="text-xs text-slate-500">Pencarian, penyaringan Eselon / Kelas Jabatan, dan data pegawai resmi Dinas Pangan dan Pertanian Kabupaten Sidoarjo.</p>
             </div>
-            <a href="{{ route('public.pegawai.cetak') }}" target="_blank" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs rounded transition shadow-sm">
-                Cetak Laporan
-            </a>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('public.pegawai.download-pdf', request()->query()) }}" class="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-xs rounded transition shadow-sm">
+                    Download PDF
+                </a>
+                <a href="{{ route('public.pegawai.cetak', request()->query()) }}" target="_blank" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs rounded transition shadow-sm">
+                    Cetak Laporan
+                </a>
+            </div>
         </div>
 
-        <form method="GET" action="{{ route('public.pegawai.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <form method="GET" action="{{ route('public.pegawai.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
             <div class="lg:col-span-2">
                 <input type="text" 
                        name="search" 
@@ -37,6 +42,17 @@
             </div>
 
             <div>
+                <select name="kelas_jabatan" class="w-full text-xs rounded border-slate-300 focus:border-emerald-700 focus:ring-emerald-700">
+                    <option value="">Semua Eselon / Kelas</option>
+                    <option value="eselon_2" {{ request('kelas_jabatan') == 'eselon_2' ? 'selected' : '' }}>Eselon II.b (Kelas 14 - Kadis)</option>
+                    <option value="eselon_3a" {{ request('kelas_jabatan') == 'eselon_3a' ? 'selected' : '' }}>Eselon III.a (Kelas 11-13 - Sekdin & Kabid)</option>
+                    <option value="eselon_3b" {{ request('kelas_jabatan') == 'eselon_3b' ? 'selected' : '' }}>Eselon III.b (Kelas 9-10 - Kasubbag/UPTD)</option>
+                    <option value="fungsional" {{ request('kelas_jabatan') == 'fungsional' ? 'selected' : '' }}>Fungsional JFT (Kelas 7-8)</option>
+                    <option value="pelaksana" {{ request('kelas_jabatan') == 'pelaksana' ? 'selected' : '' }}>Pelaksana JFU (Kelas 1-6)</option>
+                </select>
+            </div>
+
+            <div>
                 <select name="unit_kerja_id" class="w-full text-xs rounded border-slate-300 focus:border-emerald-700 focus:ring-emerald-700">
                     <option value="">Semua Unit Kerja</option>
                     @foreach($unitKerjaOptions as $unit)
@@ -51,7 +67,7 @@
                 <button type="submit" class="w-full py-2 px-3 bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-xs rounded transition">
                     Cari Data
                 </button>
-                @if(request()->hasAny(['search', 'kategori_id', 'unit_kerja_id']))
+                @if(request()->hasAny(['search', 'kategori_id', 'kelas_jabatan', 'unit_kerja_id']))
                 <a href="{{ route('public.pegawai.index') }}" class="py-2 px-3 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs rounded transition">
                     Reset
                 </a>
@@ -67,7 +83,7 @@
                 <thead>
                     <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 font-semibold uppercase tracking-wider text-[11px]">
                         <th class="py-3 px-4">Nama & NIP/NIK</th>
-                        <th class="py-3 px-4">Kategori</th>
+                        <th class="py-3 px-4">Kategori & Eselon</th>
                         <th class="py-3 px-4">Unit Kerja & Bidang</th>
                         <th class="py-3 px-4">Jabatan / Kebutuhan</th>
                         <th class="py-3 px-4">Golongan</th>
@@ -87,6 +103,11 @@
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded font-semibold text-[11px] bg-emerald-100 text-emerald-800">
                                 {{ $peg->kategori?->nama ?? '-' }}
                             </span>
+                            @if($peg->formasiJabatan?->kelas_jabatan)
+                            <div class="text-amber-700 font-semibold text-[10px] mt-1">
+                                {{ $peg->formasiJabatan?->eselon_label }}
+                            </div>
+                            @endif
                         </td>
                         <td class="py-3 px-4">
                             <div class="font-medium text-slate-800">{{ $peg->unitKerja?->nama ?? '-' }}</div>

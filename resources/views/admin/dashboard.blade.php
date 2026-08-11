@@ -1,109 +1,164 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin Dashboard - SIMPEG Dispanperta Sidoarjo')
+@section('title', 'Dashboard Admin - SIMPEG Dispanperta Sidoarjo')
 
 @section('content')
-<div class="space-y-6">
-    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<div class="space-y-6 text-xs">
+    <!-- Header Banner -->
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-            <h2 class="text-xl font-bold text-slate-900">Dashboard Pengelola Admin</h2>
-            <p class="text-xs text-slate-500">Ringkasan status data kepegawaian, formasi kosong, dan usulan pensiun/KP.</p>
+            <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded text-[10px] uppercase tracking-wider">Akses Administrator</span>
+            <h2 class="text-xl font-bold text-slate-900 mt-1">Dashboard Pengelolaan Kepegawaian</h2>
+            <p class="text-xs text-slate-500">Ringkasan kontrol administrasi, visualisasi grafik, dan statistik pegawai aktif.</p>
         </div>
-        <a href="{{ route('admin.pegawai.create') }}" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs rounded transition shadow-sm">
-            + Tambah Pegawai Baru
-        </a>
+        <div class="flex gap-2">
+            <a href="{{ route('admin.pegawai.create') }}" class="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold rounded shadow-sm whitespace-nowrap">
+                + Tambah Pegawai Baru
+            </a>
+        </div>
     </div>
 
-    <!-- Stats Cards -->
+    <!-- Stats Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
-            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Pegawai</div>
+        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm border-l-4 border-l-emerald-800">
+            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Pegawai Aktif</div>
             <div class="text-3xl font-bold text-slate-900 mt-1">{{ number_format($totalPegawai) }}</div>
-            <div class="text-xs text-slate-500 mt-1">Aktif di database</div>
+            <div class="text-xs text-slate-400 mt-1">Dalam database</div>
         </div>
 
-        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
-            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pegawai PNS</div>
-            <div class="text-3xl font-bold text-emerald-800 mt-1">{{ number_format($totalPns) }}</div>
-            <div class="text-xs text-emerald-600 mt-1">Aparatur Sipil Negara</div>
+        @foreach($rekapKategori as $kat)
+        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm border-l-4 border-l-amber-500">
+            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ $kat->nama }}</div>
+            <div class="text-3xl font-bold text-emerald-800 mt-1">{{ number_format($kat->pegawai_count) }}</div>
+            <div class="text-xs text-slate-400 mt-1">Personel Terdaftar</div>
         </div>
-
-        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
-            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pegawai PPPK</div>
-            <div class="text-3xl font-bold text-emerald-800 mt-1">{{ number_format($totalPppk) }}</div>
-            <div class="text-xs text-emerald-600 mt-1">PPPK & Paruh Waktu</div>
-        </div>
-
-        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
-            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Formasi Kosong</div>
-            <div class="text-3xl font-bold text-amber-600 mt-1">{{ number_format($formasiKosong) }}</div>
-            <div class="text-xs text-amber-600 mt-1">Belum ada pejabat</div>
-        </div>
+        @endforeach
     </div>
 
-    <!-- Main Content Split -->
+    <!-- Interactive Visual Charts (Chart.js) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Chart 1: Donut Komposisi Kategori -->
+        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm space-y-4">
+            <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Grafik Komposisi Kategori Pegawai</h3>
+                <span class="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-semibold">Persentase</span>
+            </div>
+            <div class="relative h-64 flex items-center justify-center">
+                <canvas id="adminKategoriChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Bar Distribusi Unit Kerja -->
+        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm space-y-4">
+            <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Grafik Distribusi Per Unit Kerja</h3>
+                <span class="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-semibold">Jumlah Personel</span>
+            </div>
+            <div class="relative h-64">
+                <canvas id="adminUnitChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Quick Access & Formasi Status -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <div class="lg:col-span-2 bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Data Pegawai Terbaru</h3>
-                <a href="{{ route('admin.pegawai.index') }}" class="text-xs text-emerald-800 font-semibold hover:underline">Lihat Semua &rarr;</a>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs border-collapse">
-                    <thead>
-                        <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase">
-                            <th class="py-2.5 px-3">Nama</th>
-                            <th class="py-2.5 px-3">Kategori</th>
-                            <th class="py-2.5 px-3">Unit</th>
-                            <th class="py-2.5 px-3 text-right">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        @foreach($recentPegawai as $peg)
-                        <tr>
-                            <td class="py-2.5 px-3 font-semibold text-slate-900">{{ $peg->nama }}</td>
-                            <td class="py-2.5 px-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-medium text-[11px]">{{ $peg->kategori?->nama }}</span></td>
-                            <td class="py-2.5 px-3 text-slate-600">{{ $peg->unitKerja?->nama }}</td>
-                            <td class="py-2.5 px-3 text-right">
-                                <a href="{{ route('admin.pegawai.edit', $peg->id) }}" class="text-emerald-800 font-semibold hover:underline">Edit</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
+                Distribusi Personel Per Unit Kerja
+            </h3>
+            <div class="space-y-3">
+                @foreach($rekapUnitKerja as $unit)
+                <div>
+                    <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
+                        <span>{{ $unit->nama }}</span>
+                        <span class="font-bold text-emerald-900">{{ $unit->pegawai_count }} Personel</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2">
+                        <div class="bg-emerald-800 h-2 rounded-full" style="width: {{ $totalPegawai > 0 ? ($unit->pegawai_count / $totalPegawai * 100) : 0 }}%"></div>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
 
-        <div class="space-y-6">
-            
-            <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-3">
-                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">Usulan Pensiun</h3>
-                @forelse($pensiunMendatang as $pen)
-                <div class="text-xs border-b border-slate-100 pb-2 last:border-b-0 last:pb-0">
-                    <div class="font-bold text-slate-900">{{ $pen->pegawai?->nama }}</div>
-                    <div class="text-amber-700 font-semibold mt-0.5 text-[11px]">TMT: {{ \Carbon\Carbon::parse($pen->tmt_pensiun)->format('d/m/Y') }}</div>
+        <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-3">
+            <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
+                Status Formasi Jabatan
+            </h3>
+            <div class="space-y-3 pt-1">
+                <div class="flex items-center justify-between p-3 bg-emerald-50 rounded border border-emerald-200">
+                    <span class="font-semibold text-emerald-900">Formasi Terisi</span>
+                    <span class="font-bold text-lg text-emerald-900">{{ $formasiTerisiCount }}</span>
                 </div>
-                @empty
-                <p class="text-xs text-slate-400 italic">Tidak ada pengajuan pensiun.</p>
-                @endforelse
-            </div>
-
-            <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-3">
-                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">Usulan Naik Pangkat</h3>
-                @forelse($kpMendatang as $kp)
-                <div class="text-xs border-b border-slate-100 pb-2 last:border-b-0 last:pb-0">
-                    <div class="font-bold text-slate-900">{{ $kp->pegawai?->nama }}</div>
-                    <div class="text-emerald-800 font-semibold mt-0.5 text-[11px]">TMT: {{ \Carbon\Carbon::parse($kp->tmt_diusulkan)->format('d/m/Y') }}</div>
+                <div class="flex items-center justify-between p-3 bg-amber-50 rounded border border-amber-200">
+                    <span class="font-semibold text-amber-900">Formasi Kosong</span>
+                    <span class="font-bold text-lg text-amber-900">{{ $formasiKosongCount }}</span>
                 </div>
-                @empty
-                <p class="text-xs text-slate-400 italic">Tidak ada pengajuan KP.</p>
-                @endforelse
             </div>
-
+            <div class="pt-2">
+                <a href="{{ route('admin.formasi-jabatan.index') }}" class="block w-full py-2 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-center text-xs rounded shadow-sm">
+                    Kelola Formasi Jabatan &rarr;
+                </a>
+            </div>
         </div>
 
     </div>
 </div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Admin Chart 1: Donut Kategori
+        const katCtx = document.getElementById('adminKategoriChart').getContext('2d');
+        new Chart(katCtx, {
+            type: 'doughnut',
+            data: {
+                labels: {!! json_encode($rekapKategori->pluck('nama')) !!},
+                datasets: [{
+                    data: {!! json_encode($rekapKategori->pluck('pegawai_count')) !!},
+                    backgroundColor: ['#064e3b', '#166534', '#f59e0b', '#0284c7', '#64748b'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { family: 'Inter', size: 11 } } }
+                }
+            }
+        });
+
+        // Admin Chart 2: Bar Unit Kerja
+        const unitCtx = document.getElementById('adminUnitChart').getContext('2d');
+        new Chart(unitCtx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($rekapUnitKerja->pluck('nama')) !!},
+                datasets: [{
+                    label: 'Jumlah Personel',
+                    data: {!! json_encode($rekapUnitKerja->pluck('pegawai_count')) !!},
+                    backgroundColor: '#166534',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } },
+                    x: { ticks: { font: { family: 'Inter', size: 10 } } }
+                }
+            }
+        });
+    });
+</script>
 @endsection

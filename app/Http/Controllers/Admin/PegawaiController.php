@@ -9,6 +9,7 @@ use App\Models\StatusKepegawaian;
 use App\Models\UnitKerja;
 use App\Models\Bidang;
 use App\Models\FormasiJabatan;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -17,10 +18,12 @@ class PegawaiController extends Controller
 {
     public function index(Request $request): View
     {
-        $query = Pegawai::with(['kategori', 'status', 'unitKerja', 'bidang', 'formasiJabatan']);
+        $query = Pegawai::withTrashed()->with(['kategori', 'status', 'unitKerja', 'bidang', 'formasiJabatan']);
 
-        if ($request->filled('trashed') && $request->input('trashed') === 'only') {
+        if ($request->input('trashed') === 'only') {
             $query->onlyTrashed();
+        } else {
+            $query->withoutTrashed();
         }
 
         if ($request->filled('search')) {
@@ -36,32 +39,26 @@ class PegawaiController extends Controller
             $query->where('kategori_pegawai_id', $request->input('kategori_id'));
         }
 
-        if ($request->filled('unit_kerja_id')) {
-            $query->where('unit_kerja_id', $request->input('unit_kerja_id'));
-        }
-
         $pegawaiList = $query->orderBy('nama', 'asc')->paginate(15)->withQueryString();
-
         $kategoriOptions = KategoriPegawai::all();
-        $unitKerjaOptions = UnitKerja::all();
 
-        return view('admin.pegawai.index', compact('pegawaiList', 'kategoriOptions', 'unitKerjaOptions'));
+        return view('admin.pegawai.index', compact('pegawaiList', 'kategoriOptions'));
     }
 
     public function create(): View
     {
-        $kategoriList = KategoriPegawai::all();
-        $statusList = StatusKepegawaian::all();
-        $unitKerjaList = UnitKerja::all();
-        $bidangList = Bidang::all();
-        $formasiList = FormasiJabatan::where('status_formasi', 'kosong')->get();
+        $kategoriOptions = KategoriPegawai::all();
+        $statusOptions = StatusKepegawaian::all();
+        $unitKerjaOptions = UnitKerja::all();
+        $bidangOptions = Bidang::all();
+        $formasiOptions = FormasiJabatan::where('status_formasi', 'kosong')->orWhereNull('status_formasi')->get();
 
         return view('admin.pegawai.create', compact(
-            'kategoriList',
-            'statusList',
-            'unitKerjaList',
-            'bidangList',
-            'formasiList'
+            'kategoriOptions',
+            'statusOptions',
+            'unitKerjaOptions',
+            'bidangOptions',
+            'formasiOptions'
         ));
     }
 
@@ -73,32 +70,32 @@ class PegawaiController extends Controller
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'bidang_id' => 'nullable|exists:bidang,id',
             'formasi_jabatan_id' => 'nullable|exists:formasi_jabatan,id',
-            'nama' => 'required|string|max:200',
-            'nip' => 'nullable|string|max:30',
-            'nik' => 'nullable|string|max:30',
+            'nama' => 'required|string|max:150',
+            'nip' => 'nullable|string|max:30|unique:pegawai,nip',
+            'nik' => 'nullable|string|max:20|unique:pegawai,nik',
             'tempat_lahir' => 'nullable|string|max:100',
             'tanggal_lahir' => 'nullable|date',
             'pendidikan' => 'nullable|string|max:100',
-            'golongan' => 'nullable|string|max:30',
-            'no_hp' => 'nullable|string|max:30',
-            'email' => 'nullable|email|max:150',
+            'golongan' => 'nullable|string|max:20',
+            'no_hp' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:100',
             'tmt_jabatan' => 'nullable|date',
         ]);
 
         $pegawai = Pegawai::create($validated);
 
-        // Jika formasi jabatan dipilih, update status formasi menjadi terisi
-        if (!empty($validated['formasi_jabatan_id'])) {
-            FormasiJabatan::where('id', $validated['formasi_jabatan_id'])->update(['status_formasi' => 'terisi']);
+        if ($pegawai->formasi_jabatan_id) {
+            FormasiJabatan::where('id', $pegawai->formasi_jabatan_id)->update(['status_formasi' => 'terisi']);
         }
+
+        ActivityLog::log('CREATE', "Menambahkan pegawai baru: {$pegawai->nama}");
 
         return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan.');
     }
 
     public function show($id): View
     {
-        $pegawai = Pegawai::withTrashed()
-            ->with(['kategori', 'status', 'unitKerja', 'bidang', 'formasiJabatan', 'riwayatPensiun', 'riwayatKenaikanPangkat'])
+        $pegawai = Pegawai::withTrashed()->with(['kategori', 'status', 'unitKerja', 'bidang', 'formasiJabatan', 'riwayatPensiun', 'riwayatKenaikanPangkat'])
             ->findOrFail($id);
 
         return view('admin.pegawai.show', compact('pegawai'));
@@ -107,22 +104,19 @@ class PegawaiController extends Controller
     public function edit($id): View
     {
         $pegawai = Pegawai::findOrFail($id);
-
-        $kategoriList = KategoriPegawai::all();
-        $statusList = StatusKepegawaian::all();
-        $unitKerjaList = UnitKerja::all();
-        $bidangList = Bidang::where('unit_kerja_id', $pegawai->unit_kerja_id)->get();
-        $formasiList = FormasiJabatan::where('status_formasi', 'kosong')
-            ->orWhere('id', $pegawai->formasi_jabatan_id)
-            ->get();
+        $kategoriOptions = KategoriPegawai::all();
+        $statusOptions = StatusKepegawaian::all();
+        $unitKerjaOptions = UnitKerja::all();
+        $bidangOptions = Bidang::all();
+        $formasiOptions = FormasiJabatan::all();
 
         return view('admin.pegawai.edit', compact(
             'pegawai',
-            'kategoriList',
-            'statusList',
-            'unitKerjaList',
-            'bidangList',
-            'formasiList'
+            'kategoriOptions',
+            'statusOptions',
+            'unitKerjaOptions',
+            'bidangOptions',
+            'formasiOptions'
         ));
     }
 
@@ -136,30 +130,21 @@ class PegawaiController extends Controller
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'bidang_id' => 'nullable|exists:bidang,id',
             'formasi_jabatan_id' => 'nullable|exists:formasi_jabatan,id',
-            'nama' => 'required|string|max:200',
-            'nip' => 'nullable|string|max:30',
-            'nik' => 'nullable|string|max:30',
+            'nama' => 'required|string|max:150',
+            'nip' => 'nullable|string|max:30|unique:pegawai,nip,' . $id,
+            'nik' => 'nullable|string|max:20|unique:pegawai,nik,' . $id,
             'tempat_lahir' => 'nullable|string|max:100',
             'tanggal_lahir' => 'nullable|date',
             'pendidikan' => 'nullable|string|max:100',
-            'golongan' => 'nullable|string|max:30',
-            'no_hp' => 'nullable|string|max:30',
-            'email' => 'nullable|email|max:150',
+            'golongan' => 'nullable|string|max:20',
+            'no_hp' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:100',
             'tmt_jabatan' => 'nullable|date',
         ]);
 
-        $oldFormasiId = $pegawai->formasi_jabatan_id;
-        $newFormasiId = $validated['formasi_jabatan_id'] ?? null;
-
         $pegawai->update($validated);
 
-        // Update status formasi lama dan baru jika berubah
-        if ($oldFormasiId && $oldFormasiId != $newFormasiId) {
-            FormasiJabatan::where('id', $oldFormasiId)->update(['status_formasi' => 'kosong']);
-        }
-        if ($newFormasiId) {
-            FormasiJabatan::where('id', $newFormasiId)->update(['status_formasi' => 'terisi']);
-        }
+        ActivityLog::log('UPDATE', "Memperbarui data pegawai: {$pegawai->nama}");
 
         return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil diperbarui.');
     }
@@ -167,14 +152,12 @@ class PegawaiController extends Controller
     public function destroy($id): RedirectResponse
     {
         $pegawai = Pegawai::findOrFail($id);
-        
-        if ($pegawai->formasi_jabatan_id) {
-            FormasiJabatan::where('id', $pegawai->formasi_jabatan_id)->update(['status_formasi' => 'kosong']);
-        }
+        $nama = $pegawai->nama;
+        $pegawai->delete();
 
-        $pegawai->delete(); // Soft Delete
+        ActivityLog::log('DELETE', "Mengarsipkan pegawai: {$nama}");
 
-        return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil diarsipkan (soft delete).');
+        return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil diarsipkan (Soft Delete).');
     }
 
     public function restore($id): RedirectResponse
@@ -182,6 +165,8 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::onlyTrashed()->findOrFail($id);
         $pegawai->restore();
 
-        return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil dipulihkan dari arsip.');
+        ActivityLog::log('RESTORE', "Memulihkan data pegawai: {$pegawai->nama}");
+
+        return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil dipulihkan.');
     }
 }
