@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -16,9 +16,15 @@
 </head>
 <body class="bg-slate-100 text-slate-800 flex flex-col min-h-screen">
 
-    <!-- Top Notice Bar Sidoarjo -->
-    <div class="bg-amber-500 text-slate-950 text-[11px] font-bold py-1 px-4 text-center tracking-wide uppercase">
-        Pemerintah Kabupaten Sidoarjo &bull; Dinas Pangan dan Pertanian
+    <!-- Top Notice & Real-time Live Clock Bar Sidoarjo -->
+    <div class="bg-amber-500 text-slate-950 text-[11px] font-bold py-1 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-1 shadow-sm">
+        <div class="uppercase tracking-wide">
+            Pemerintah Kabupaten Sidoarjo &bull; Dinas Pangan dan Pertanian
+        </div>
+        <!-- Live Real-Time Clock Widget -->
+        <div id="liveClock" class="font-mono bg-slate-950 text-amber-400 px-3 py-0.5 rounded-full text-[11px] font-bold shadow-xs">
+            🕒 Memuat waktu real-time...
+        </div>
     </div>
 
     <!-- Header Kop Instansi Sidoarjo -->
@@ -103,5 +109,28 @@
         </div>
     </footer>
 
+    <!-- Real-time Live Clock Script -->
+    <script>
+        function updateLiveClock() {
+            const clockEl = document.getElementById('liveClock');
+            if (!clockEl) return;
+            const now = new Date();
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            
+            const dayName = days[now.getDay()];
+            const dayNum = String(now.getDate()).padStart(2, '0');
+            const monthName = months[now.getMonth()];
+            const year = now.getFullYear();
+            
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            clockEl.innerHTML = `🕒 ${dayName}, ${dayNum} ${monthName} ${year} &bull; ${hours}:${minutes}:${seconds} WIB`;
+        }
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+    </script>
 </body>
 </html>

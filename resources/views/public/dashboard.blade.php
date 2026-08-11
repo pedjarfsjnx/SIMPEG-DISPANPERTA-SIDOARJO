@@ -11,7 +11,7 @@
             <h2 class="text-xl font-bold text-slate-900 mt-1">Dashboard Kepegawaian</h2>
             <p class="text-xs text-slate-500">Ringkasan visual statistik dan grafik komposisi data pegawai aktif Dinas Pangan dan Pertanian Kabupaten Sidoarjo.</p>
         </div>
-        <a href="{{ route('public.pegawai.index') }}" class="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold rounded transition shadow-sm whitespace-nowrap">
+        <a href="{{ route('public.pegawai.index') }}" class="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded transition shadow-sm whitespace-nowrap">
             Lihat Direktori Pegawai &rarr;
         </a>
     </div>
@@ -189,7 +189,7 @@
                 labels: {!! json_encode($rekapKategori->pluck('nama')) !!},
                 datasets: [{
                     data: {!! json_encode($rekapKategori->pluck('pegawai_count')) !!},
-                    backgroundColor: ['#064e3b', '#166534', '#f59e0b', '#0284c7', '#64748b'],
+                    backgroundColor: ['#064e3b', '#d97706', '#2563eb', '#7c3aed', '#64748b'],
                     borderWidth: 2,
                     borderColor: '#ffffff'
                 }]
