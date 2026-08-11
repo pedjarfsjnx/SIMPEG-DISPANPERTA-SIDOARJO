@@ -41,19 +41,31 @@ class PegawaiController extends Controller
 
         $pegawaiList = $query->orderBy('nama', 'asc')->paginate(15)->withQueryString();
         $kategoriOptions = KategoriPegawai::all();
+        $kategoriList = $kategoriOptions;
 
-        return view('admin.pegawai.index', compact('pegawaiList', 'kategoriOptions'));
+        return view('admin.pegawai.index', compact('pegawaiList', 'kategoriOptions', 'kategoriList'));
     }
 
     public function create(): View
     {
-        $kategoriOptions = KategoriPegawai::all();
-        $statusOptions = StatusKepegawaian::all();
-        $unitKerjaOptions = UnitKerja::all();
-        $bidangOptions = Bidang::all();
-        $formasiOptions = FormasiJabatan::where('status_formasi', 'kosong')->orWhereNull('status_formasi')->get();
+        $kategoriList = KategoriPegawai::all();
+        $statusList = StatusKepegawaian::all();
+        $unitKerjaList = UnitKerja::all();
+        $bidangList = Bidang::all();
+        $formasiList = FormasiJabatan::where('status_formasi', 'kosong')->orWhereNull('status_formasi')->get();
+
+        $kategoriOptions = $kategoriList;
+        $statusOptions = $statusList;
+        $unitKerjaOptions = $unitKerjaList;
+        $bidangOptions = $bidangList;
+        $formasiOptions = $formasiList;
 
         return view('admin.pegawai.create', compact(
+            'kategoriList',
+            'statusList',
+            'unitKerjaList',
+            'bidangList',
+            'formasiList',
             'kategoriOptions',
             'statusOptions',
             'unitKerjaOptions',
@@ -104,14 +116,25 @@ class PegawaiController extends Controller
     public function edit($id): View
     {
         $pegawai = Pegawai::findOrFail($id);
-        $kategoriOptions = KategoriPegawai::all();
-        $statusOptions = StatusKepegawaian::all();
-        $unitKerjaOptions = UnitKerja::all();
-        $bidangOptions = Bidang::all();
-        $formasiOptions = FormasiJabatan::all();
+        $kategoriList = KategoriPegawai::all();
+        $statusList = StatusKepegawaian::all();
+        $unitKerjaList = UnitKerja::all();
+        $bidangList = Bidang::all();
+        $formasiList = FormasiJabatan::all();
+
+        $kategoriOptions = $kategoriList;
+        $statusOptions = $statusList;
+        $unitKerjaOptions = $unitKerjaList;
+        $bidangOptions = $bidangList;
+        $formasiOptions = $formasiList;
 
         return view('admin.pegawai.edit', compact(
             'pegawai',
+            'kategoriList',
+            'statusList',
+            'unitKerjaList',
+            'bidangList',
+            'formasiList',
             'kategoriOptions',
             'statusOptions',
             'unitKerjaOptions',

@@ -16,20 +16,29 @@
         </a>
     </div>
 
-    <!-- Summary Stats Grid -->
+    <!-- Summary Stats Grid (Clickable Cards) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm border-l-4 border-l-emerald-800">
-            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Pegawai Aktif</div>
+        
+        <!-- Card 1: Total Pegawai (Clickable) -->
+        <a href="{{ route('public.pegawai.index') }}" class="block bg-white p-5 rounded-lg border border-slate-200 shadow-sm border-l-4 border-l-emerald-800 hover:border-emerald-700 hover:shadow-md transition group">
+            <div class="flex justify-between items-start">
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-emerald-800">Total Pegawai Aktif</div>
+                <span class="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Lihat Semua &rarr;</span>
+            </div>
             <div class="text-3xl font-bold text-slate-900 mt-1">{{ number_format($totalPegawai) }}</div>
-            <div class="text-xs text-slate-500 mt-1">Terdaftar di database</div>
-        </div>
+            <div class="text-xs text-slate-500 mt-1">Klik untuk melihat seluruh 149 personel</div>
+        </a>
 
+        <!-- Cards Kategori (Clickable) -->
         @foreach($rekapKategori as $kat)
-        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm border-l-4 border-l-amber-500">
-            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ $kat->nama }}</div>
+        <a href="{{ route('public.pegawai.index', ['kategori_id' => $kat->id]) }}" class="block bg-white p-5 rounded-lg border border-slate-200 shadow-sm border-l-4 border-l-amber-500 hover:border-amber-600 hover:shadow-md transition group">
+            <div class="flex justify-between items-start">
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-amber-700">{{ $kat->nama }}</div>
+                <span class="text-[10px] text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Lihat Anggota &rarr;</span>
+            </div>
             <div class="text-3xl font-bold text-emerald-800 mt-1">{{ number_format($kat->pegawai_count) }}</div>
-            <div class="text-xs text-slate-400 mt-1">Personel Resmi</div>
-        </div>
+            <div class="text-xs text-slate-500 mt-1">Klik untuk melihat anggota {{ $kat->nama }}</div>
+        </a>
         @endforeach
     </div>
 
@@ -60,28 +69,33 @@
 
     </div>
 
-    <!-- Grid Rekap Detail & Widgets -->
+    <!-- Grid Rekap Detail & Clickable Unit Cards -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <!-- Column 1 & 2: Unit Kerja & Status -->
         <div class="lg:col-span-2 space-y-6">
             
-            <!-- Card Unit Kerja -->
+            <!-- Card Unit Kerja (Clickable Links) -->
             <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-4">
-                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
-                    Rekapitulasi Unit Kerja & UPTD
-                </h3>
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                    <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">
+                        Rekapitulasi Unit Kerja & UPTD
+                    </h3>
+                    <span class="text-[11px] text-slate-500 font-medium">Klik unit kerja untuk melihat daftar anggotanya</span>
+                </div>
                 <div class="space-y-3">
                     @foreach($rekapUnitKerja as $unit)
-                    <div>
-                        <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
-                            <span>{{ $unit->nama }} <span class="text-slate-400">({{ $unit->tipe }})</span></span>
-                            <span class="font-bold text-emerald-900">{{ $unit->pegawai_count }} Pegawai</span>
+                    <a href="{{ route('public.pegawai.index', ['unit_kerja_id' => $unit->id]) }}" class="block p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 transition group">
+                        <div class="flex justify-between items-center text-xs font-medium text-slate-700 mb-1.5">
+                            <span class="font-bold text-slate-900 group-hover:text-emerald-900">{{ $unit->nama }} <span class="text-slate-400 font-normal">({{ $unit->tipe }})</span></span>
+                            <span class="font-bold text-emerald-900 bg-white px-2.5 py-1 rounded border border-slate-200 text-xs shadow-sm">
+                                {{ $unit->pegawai_count }} Personel &rarr;
+                            </span>
                         </div>
-                        <div class="w-full bg-slate-100 rounded-full h-2">
+                        <div class="w-full bg-slate-200 rounded-full h-2">
                             <div class="bg-emerald-800 h-2 rounded-full" style="width: {{ $totalPegawai > 0 ? ($unit->pegawai_count / $totalPegawai * 100) : 0 }}%"></div>
                         </div>
-                    </div>
+                    </a>
                     @endforeach
                 </div>
             </div>
@@ -116,7 +130,9 @@
                 <div class="divide-y divide-slate-100 text-xs">
                     @foreach($pensiunMendatang as $pensiun)
                     <div class="py-2.5 first:pt-0 last:pb-0">
-                        <div class="font-bold text-slate-900">{{ $pensiun->pegawai?->nama ?? 'Pegawai' }}</div>
+                        <a href="{{ route('public.pegawai.show', $pensiun->pegawai_id) }}" class="font-bold text-slate-900 hover:text-emerald-800 hover:underline block">
+                            {{ $pensiun->pegawai?->nama ?? 'Pegawai' }}
+                        </a>
                         <div class="text-slate-500 text-[11px] mt-0.5">Unit: {{ $pensiun->pegawai?->unitKerja?->nama ?? '-' }}</div>
                         <div class="text-amber-700 font-semibold text-[11px] mt-0.5">
                             TMT Pensiun: {{ \Carbon\Carbon::parse($pensiun->tmt_pensiun)->format('d/m/Y') }}
@@ -139,7 +155,9 @@
                 <div class="divide-y divide-slate-100 text-xs">
                     @foreach($kpMendatang as $kp)
                     <div class="py-2.5 first:pt-0 last:pb-0">
-                        <div class="font-bold text-slate-900">{{ $kp->pegawai?->nama ?? 'Pegawai' }}</div>
+                        <a href="{{ route('public.pegawai.show', $kp->pegawai_id) }}" class="font-bold text-slate-900 hover:text-emerald-800 hover:underline block">
+                            {{ $kp->pegawai?->nama ?? 'Pegawai' }}
+                        </a>
                         <div class="text-slate-500 text-[11px] mt-0.5">
                             Usulan Gol: <span class="font-mono text-slate-700">{{ $kp->golongan_baru ?? '-' }}</span>
                         </div>
@@ -192,7 +210,7 @@
             data: {
                 labels: {!! json_encode($rekapUnitKerja->pluck('nama')) !!},
                 datasets: [{
-                    label: 'Jumlah Pegawai',
+                    label: 'Jumlah Personel',
                     data: {!! json_encode($rekapUnitKerja->pluck('pegawai_count')) !!},
                     backgroundColor: '#166534',
                     borderRadius: 4

@@ -59,6 +59,13 @@
                 <label class="text-slate-400 block text-[11px]">Golongan / Ruang</label>
                 <p class="font-mono font-semibold text-slate-900 text-sm">{{ $pegawai->golongan ?: '-' }}</p>
             </div>
+
+            <div>
+                <label class="text-slate-400 block text-[11px]">TMT Jabatan / Pengangkatan</label>
+                <p class="font-mono font-semibold text-emerald-900 text-sm">
+                    {{ $pegawai->tmt_jabatan ? \Carbon\Carbon::parse($pegawai->tmt_jabatan)->translatedFormat('d F Y') : '-' }}
+                </p>
+            </div>
         </div>
 
         <!-- Column 2: Data Privasi & Admin -->
@@ -84,8 +91,48 @@
                 <label class="text-slate-400 block text-[11px]">Alamat Email</label>
                 <p class="font-mono font-semibold text-slate-900 text-sm">{{ $pegawai->email ?: '-' }}</p>
             </div>
+
+            <div>
+                <label class="text-slate-400 block text-[11px]">Usia Pegawai Saat Ini</label>
+                <p class="font-semibold text-slate-900 text-sm">{{ $pegawai->usia ? $pegawai->usia.' Tahun' : '-' }}</p>
+            </div>
         </div>
 
     </div>
+
+    <!-- Smart Auto-Calculated Career & Pension Section -->
+    <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-800 border-b border-slate-100 pb-2 flex items-center justify-between">
+            <span>Estimasi Karir & Usia Pensiun (Otomatis Terhitung dari NIP/TMT)</span>
+            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Otomatis BKN</span>
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- Estimasi Pensiun -->
+            <div class="bg-amber-50/60 border border-amber-200 rounded p-4 space-y-1">
+                <div class="text-[11px] font-bold text-amber-900 uppercase">Jadwal Batas Usia Pensiun (BUP {{ $pegawai->estimasi_pensiun['usia'] }} Thn)</div>
+                <div class="text-base font-bold text-slate-900 font-mono">
+                    {{ $pegawai->estimasi_pensiun['tanggal'] ? $pegawai->estimasi_pensiun['tanggal']->translatedFormat('d F Y') : 'Membutuhkan Tanggal Lahir / NIP' }}
+                </div>
+                <p class="text-[10px] text-amber-800">
+                    Dihitung otomatis berdasarkan usia pensiun resmi ASN ({{ $pegawai->estimasi_pensiun['usia'] }} tahun).
+                </p>
+            </div>
+
+            <!-- Estimasi Kenaikan Pangkat -->
+            <div class="bg-emerald-50/60 border border-emerald-200 rounded p-4 space-y-1">
+                <div class="text-[11px] font-bold text-emerald-900 uppercase">Perkiraan Kenaikan Pangkat (KP 4 Thn Sekali)</div>
+                <div class="text-base font-bold text-slate-900 font-mono">
+                    {{ $pegawai->estimasi_kp_berikutnya ? $pegawai->estimasi_kp_berikutnya->translatedFormat('d F Y') : 'Membutuhkan TMT Jabatan / NIP' }}
+                </div>
+                <p class="text-[10px] text-emerald-800">
+                    Dihitung otomatis per siklus 4 tahunan dari TMT Pengangkatan/Jabatan.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 @endsection

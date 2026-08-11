@@ -25,7 +25,7 @@
                 <div>
                     <label class="block font-medium text-slate-700 mb-1">Kategori Pegawai *</label>
                     <select name="kategori_pegawai_id" required class="w-full rounded-lg border-slate-300">
-                        @foreach($kategoriList as $kat)
+                        @foreach($kategoriList as $kats)
                             <option value="{{ $kat->id }}">{{ $kat->nama }}</option>
                         @endforeach
                     </select>

@@ -11,7 +11,7 @@
                 Pemerintah Kabupaten Sidoarjo
             </span>
             <h2 class="text-xl font-bold text-slate-900">Struktur Organisasi & Tingkatan Eselon</h2>
-            <p class="text-xs text-slate-500 mt-1">Bagan resmi struktur organisasi, rekapitulasi Eselon kepemimpinan, dan distribusi unit kerja Dinas Pangan dan Pertanian Kabupaten Sidoarjo.</p>
+            <p class="text-xs text-slate-500 mt-1">Bagan resmi struktur organisasi, rekapitulasi Eselon kepemimpinan, dan alokasi seluruh personel Dinas Pangan dan Pertanian Kabupaten Sidoarjo.</p>
         </div>
         <a href="{{ route('public.pegawai.index') }}" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded shadow-sm whitespace-nowrap">
             Cari Pegawai &rarr;
@@ -34,7 +34,7 @@
             @endif
         </div>
 
-        <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 flex items-center justify-center min-h-[300px]">
+        <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 flex items-center justify-center min-h-[250px]">
             @if(file_exists(public_path('images/struktur-organisasi.png')))
                 <img src="{{ asset('images/struktur-organisasi.png') }}" alt="Bagan Struktur Organisasi Dispanperta Sidoarjo" class="max-w-full h-auto rounded shadow-md border border-slate-200">
             @elseif(file_exists(public_path('images/struktur-organisasi.jpg')))
@@ -159,11 +159,11 @@
 
     </div>
 
-    <!-- Section 3: Hirarki Unit Kerja & Bidang Struktural -->
+    <!-- Section 3: Hirarki Unit Kerja & Alokasi Seluruh Pegawai UPTD -->
     <div class="space-y-6">
         <div class="border-b border-slate-200 pb-2">
-            <h3 class="text-lg font-bold text-slate-900 uppercase tracking-wider">Distribusi Pegawai Per Unit Kerja & Bidang</h3>
-            <p class="text-xs text-slate-500">Pemetaan alokasi pegawai di Dinas Induk dan UPTD.</p>
+            <h3 class="text-lg font-bold text-slate-900 uppercase tracking-wider">Distribusi & Daftar Seluruh Personel Per Unit Kerja</h3>
+            <p class="text-xs text-slate-500">Daftar lengkap alokasi pegawai pada Dinas Induk, Bidang Struktural, UPTD RPH, dan UPTD Lab.</p>
         </div>
 
         <div class="space-y-6">
@@ -175,48 +175,84 @@
                         <h3 class="text-base font-bold">{{ $unit->nama }}</h3>
                     </div>
                     <div class="flex items-center gap-2 text-xs">
-                        <span class="px-2.5 py-1 bg-emerald-800 text-emerald-100 rounded font-semibold">
-                            {{ $unit->pegawai->count() }} Total Pegawai
-                        </span>
+                        <a href="{{ route('public.pegawai.index', ['unit_kerja_id' => $unit->id]) }}" class="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded shadow-sm text-xs transition">
+                            Lihat {{ $unit->pegawai->count() }} Personel di Direktori &rarr;
+                        </a>
                     </div>
                 </div>
 
-                <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
-                    @forelse($unit->bidang as $bidang)
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-3">
-                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-                            <h4 class="font-bold text-slate-900 text-sm leading-snug">{{ $bidang->nama }}</h4>
-                            <span class="text-xs text-emerald-800 font-bold bg-emerald-100 px-2 py-0.5 rounded whitespace-nowrap">
-                                {{ $bidang->pegawai->count() }} Pegawai
-                            </span>
-                        </div>
-
-                        @if($bidang->pegawai->count() > 0)
-                        <ul class="text-xs text-slate-700 divide-y divide-slate-200 max-h-60 overflow-y-auto pr-1">
-                            @foreach($bidang->pegawai as $peg)
-                            <li class="py-1.5 flex justify-between items-center">
-                                <div>
-                                    <a href="{{ route('public.pegawai.show', $peg->id) }}" class="font-semibold text-slate-900 hover:text-emerald-800 hover:underline block">{{ $peg->nama }}</a>
-                                    <span class="text-slate-500 text-[11px] block">{{ $peg->formasiJabatan?->nama_jabatan ?: 'Staff / Pelaksana' }}</span>
+                <div class="p-5">
+                    @if($unit->bidang->count() > 0)
+                        <!-- Render Bidang Struktural under Dinas Induk -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            @foreach($unit->bidang as $bidang)
+                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-3">
+                                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                    <h4 class="font-bold text-slate-900 text-sm leading-snug">{{ $bidang->nama }}</h4>
+                                    <span class="text-xs text-emerald-800 font-bold bg-emerald-100 px-2 py-0.5 rounded whitespace-nowrap">
+                                        {{ $bidang->pegawai->count() }} Pegawai
+                                    </span>
                                 </div>
-                                <span class="text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded font-mono text-[10px] font-semibold border border-emerald-200 whitespace-nowrap ml-2">
-                                    {{ $peg->kategori?->nama }}
-                                </span>
-                            </li>
+
+                                @if($bidang->pegawai->count() > 0)
+                                <ul class="text-xs text-slate-700 divide-y divide-slate-200 max-h-60 overflow-y-auto pr-1">
+                                    @foreach($bidang->pegawai as $peg)
+                                    <li class="py-1.5 flex justify-between items-center">
+                                        <div>
+                                            <a href="{{ route('public.pegawai.show', $peg->id) }}" class="font-semibold text-slate-900 hover:text-emerald-800 hover:underline block">{{ $peg->nama }}</a>
+                                            <span class="text-slate-500 text-[11px] block">{{ $peg->formasiJabatan?->nama_jabatan ?: 'Staff / Pelaksana' }}</span>
+                                        </div>
+                                        <span class="text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded font-mono text-[10px] font-semibold border border-emerald-200 whitespace-nowrap ml-2">
+                                            {{ $peg->kategori?->nama }}
+                                        </span>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @else
+                                <div class="text-xs text-slate-500 italic py-3 text-center bg-white rounded border border-dashed border-slate-300">
+                                    Belum ada pegawai yang dialokasikan di bidang ini.
+                                </div>
+                                @endif
+                            </div>
                             @endforeach
-                        </ul>
-                        @else
-                        <div class="text-xs text-slate-500 italic py-3 text-center bg-white rounded border border-dashed border-slate-300">
-                            Belum ada pegawai yang dialokasikan di bidang ini.
                         </div>
-                        @endif
-                    </div>
-                    @empty
-                    <div class="col-span-2 text-xs text-slate-600 bg-slate-50 p-4 rounded border border-slate-200">
-                        <p class="font-bold text-slate-800">Unit Operasional Khusus (UPTD)</p>
-                        <p class="text-slate-500 mt-0.5">Beroperasi langsung di bawah Kepala UPTD tanpa bidang struktural terpisah. Total {{ $unit->pegawai->count() }} personel aktif.</p>
-                    </div>
-                    @endforelse
+                    @else
+                        <!-- Render Full Personel List under UPTD Units -->
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                <h4 class="font-bold text-slate-900 text-sm">Daftar Personel Operasional UPTD (Total {{ $unit->pegawai->count() }} Personel)</h4>
+                                <span class="text-xs text-slate-500">Klik nama pegawai untuk melihat detail profil</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-96 overflow-y-auto pr-1">
+                                @forelse($unit->pegawai as $peg)
+                                <div class="bg-slate-50 border border-slate-200 rounded p-3 flex flex-col justify-between space-y-2">
+                                    <div>
+                                        <div class="flex items-start justify-between gap-1">
+                                            <a href="{{ route('public.pegawai.show', $peg->id) }}" class="font-bold text-slate-900 hover:text-emerald-800 hover:underline leading-snug">
+                                                {{ $peg->nama }}
+                                            </a>
+                                            <span class="text-[10px] font-semibold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded whitespace-nowrap">
+                                                {{ $peg->kategori?->nama }}
+                                            </span>
+                                        </div>
+                                        <div class="text-emerald-800 font-semibold text-[11px] mt-1">
+                                            {{ $peg->formasiJabatan?->nama_jabatan ?: 'Pelaksana Unit' }}
+                                        </div>
+                                        <div class="text-slate-500 text-[11px] font-mono mt-0.5">
+                                            {{ $peg->nip ? 'NIP. '.$peg->nip : ($peg->nik ? 'NIK. '.$peg->nik : '-') }}
+                                        </div>
+                                    </div>
+                                    <div class="pt-1.5 border-t border-slate-200 text-right">
+                                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="text-emerald-800 font-bold hover:underline text-[11px]">Lihat Detail &rarr;</a>
+                                    </div>
+                                </div>
+                                @empty
+                                <div class="col-span-3 text-xs text-slate-400 italic text-center py-4">Belum ada personel terdaftar di UPTD ini.</div>
+                                @endforelse
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
             @endforeach

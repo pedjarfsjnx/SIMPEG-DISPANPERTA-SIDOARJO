@@ -20,7 +20,8 @@ class DashboardController extends Controller
         $totalPns = Pegawai::whereHas('kategori', fn($q) => $q->where('nama', 'PNS'))->count();
         $totalPppk = Pegawai::whereHas('kategori', fn($q) => $q->where('nama', 'LIKE', 'PPPK%'))->count();
         
-        $formasiKosong = FormasiJabatan::where('status_formasi', 'kosong')->count();
+        $formasiTerisiCount = FormasiJabatan::where('status_formasi', 'terisi')->count();
+        $formasiKosongCount = FormasiJabatan::where('status_formasi', 'kosong')->orWhereNull('status_formasi')->count();
 
         $rekapKategori = KategoriPegawai::withCount('pegawai')->get();
         $rekapStatus = StatusKepegawaian::withCount('pegawai')->get();
@@ -45,7 +46,8 @@ class DashboardController extends Controller
             'totalPegawai',
             'totalPns',
             'totalPppk',
-            'formasiKosong',
+            'formasiTerisiCount',
+            'formasiKosongCount',
             'rekapKategori',
             'rekapStatus',
             'rekapUnitKerja',

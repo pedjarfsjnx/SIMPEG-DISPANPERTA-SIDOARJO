@@ -121,11 +121,12 @@ class ImportRealExcelData extends Command
                 continue;
             }
 
-            // 1. Sheet TAHUN 2026: DATA RIEL NAMA DAN JABATAN (PNS)
+            // 1. Sheet TAHUN 2026: DATA RIEL NAMA DAN JABATAN (PNS & PPPK Penuh Waktu)
             if (trim(strtoupper($sheetName)) === 'DATA RIEL NAMA DAN JABATAN') {
                 $rows = $sheet->toArray();
                 $headerFound = false;
                 $countPns = 0;
+                $countPppk = 0;
                 $countKosong = 0;
 
                 $currentUnit = $dinasUnit;
@@ -150,12 +151,27 @@ class ImportRealExcelData extends Command
                         $kelas = trim((string)($row[5] ?? ''));
                         $pend = trim((string)($row[6] ?? ''));
 
+                        if (empty($nama) || is_numeric($nama) || str_contains(strtoupper($nama), 'PEMERINTAH') || str_contains(strtoupper($nama), 'NAMA') || str_contains(strtoupper($nama), 'DINAS PANGAN') || strtoupper($nama) === 'PPPK') continue;
+
                         if (str_starts_with($nip, "'")) {
                             $nip = substr($nip, 1);
                         }
 
-                        if (str_contains(strtoupper($nama), 'KEPALA DINAS PANGAN') && str_contains(strtoupper($nama), 'PEMERINTAH')) continue;
-                        if (str_contains(strtoupper($nama), 'PEMERINTAH KABUPATEN')) continue;
+                        $cleanNip = preg_replace('/[^0-9]/', '', $nip);
+
+                        // PNS Golongan always has a slash '/' (e.g. IV/c, III/a). PPPK Golongan has no slash (e.g. X, IX, VII, V) or NIP has PPPK year code.
+                        $isPppk = !str_contains($gol, '/') && (!empty($gol) || str_contains($cleanNip, '202321') || str_contains($cleanNip, '202421') || str_contains($cleanNip, '202521') || str_contains(strtoupper($jabatan), 'PPPK'));
+                        $assignedKategori = $isPppk ? $pppkKat : $pnsKat;
+
+                        $tmtCalculated = null;
+                        if (!empty($nip)) {
+                            if (strlen($cleanNip) >= 14) {
+                                $year = substr($cleanNip, 8, 4);
+                                $monthRaw = (int)substr($cleanNip, 12, 2);
+                                $month = ($monthRaw >= 1 && $monthRaw <= 12) ? sprintf('%02d', $monthRaw) : '01';
+                                $tmtCalculated = "{$year}-{$month}-01";
+                            }
+                        }
 
                         $jabatanUpper = strtoupper($jabatan);
 
@@ -195,7 +211,7 @@ class ImportRealExcelData extends Command
 
                             if (!empty($nama)) {
                                 Pegawai::create([
-                                    'kategori_pegawai_id' => $pnsKat->id,
+                                    'kategori_pegawai_id' => $assignedKategori->id,
                                     'status_kepegawaian_id' => $aktifStatus->id,
                                     'unit_kerja_id' => $currentUnit->id,
                                     'bidang_id' => $currentBidang?->id,
@@ -204,15 +220,20 @@ class ImportRealExcelData extends Command
                                     'nip' => $nip ?: null,
                                     'golongan' => $gol ?: null,
                                     'pendidikan' => $pend ?: null,
+                                    'tmt_jabatan' => $tmtCalculated,
                                 ]);
-                                $countPns++;
+                                if ($isPppk) {
+                                    $countPppk++;
+                                } else {
+                                    $countPns++;
+                                }
                             } else {
                                 $countKosong++;
                             }
                         }
                     }
                 }
-                $this->info("✓ Berhasil mengimpor {$countPns} pegawai PNS TAHUN 2026 dan {$countKosong} formasi jabatan kosong.");
+                $this->info("✓ Berhasil mengimpor {$countPns} PNS dan {$countPppk} PPPK Penuh Waktu TAHUN 2026.");
             }
 
             // 2. Sheet TAHUN 2026: DATA PPPK PARUH WAKTU
@@ -241,10 +262,21 @@ class ImportRealExcelData extends Command
                         $hp = trim((string)($row[8] ?? ''));
                         $email = trim((string)($row[9] ?? ''));
 
-                        if (empty($nama) || str_contains(strtoupper($nama), 'PEMERINTAH') || str_contains(strtoupper($nama), 'NAMA')) continue;
+                        if (empty($nama) || is_numeric($nama) || str_contains(strtoupper($nama), 'PEMERINTAH') || str_contains(strtoupper($nama), 'NAMA') || str_contains(strtoupper($nama), 'PARUH WAKTU')) continue;
 
                         if (str_starts_with($nip, "'")) {
                             $nip = substr($nip, 1);
+                        }
+
+                        $tmtCalculated = null;
+                        if (!empty($nip)) {
+                            $cleanNip = preg_replace('/[^0-9]/', '', $nip);
+                            if (strlen($cleanNip) >= 14) {
+                                $year = substr($cleanNip, 8, 4);
+                                $monthRaw = (int)substr($cleanNip, 12, 2);
+                                $month = ($monthRaw >= 1 && $monthRaw <= 12) ? sprintf('%02d', $monthRaw) : '01';
+                                $tmtCalculated = "{$year}-{$month}-01";
+                            }
                         }
 
                         $unitUpper = strtoupper($unitStr);
@@ -280,6 +312,7 @@ class ImportRealExcelData extends Command
                             'pendidikan' => $pend ?: null,
                             'no_hp' => $hp ?: null,
                             'email' => $email ?: null,
+                            'tmt_jabatan' => $tmtCalculated,
                         ]);
                         $countParuh++;
                     }
@@ -309,7 +342,7 @@ class ImportRealExcelData extends Command
                         $pend = trim((string)($row[4] ?? ''));
                         $unitStr = trim((string)($row[5] ?? ''));
 
-                        if (empty($nama) || str_contains(strtoupper($nama), 'NAMA')) continue;
+                        if (empty($nama) || is_numeric($nama) || str_contains(strtoupper($nama), 'NAMA') || str_contains(strtoupper($nama), 'SWAKELOLA')) continue;
 
                         $unitUpper = strtoupper($unitStr);
                         $targetUnit = str_contains($unitUpper, 'RPH') ? $uptdRphUnit : $dinasUnit;
@@ -360,7 +393,7 @@ class ImportRealExcelData extends Command
                         $pend = trim((string)($row[4] ?? ''));
                         $unitStr = trim((string)($row[5] ?? ''));
 
-                        if (empty($nama) || str_contains(strtoupper($nama), 'NAMA')) continue;
+                        if (empty($nama) || is_numeric($nama) || str_contains(strtoupper($nama), 'NAMA') || str_contains(strtoupper($nama), 'OUTSURCHING')) continue;
 
                         $unitUpper = strtoupper($unitStr);
                         $targetUnit = str_contains($unitUpper, 'RPH') ? $uptdRphUnit : $dinasUnit;
@@ -412,7 +445,7 @@ class ImportRealExcelData extends Command
 
                     foreach ($rows2 as $row) {
                         $nama = trim((string)($row[1] ?? ''));
-                        if (empty($nama) || str_contains(strtoupper($nama), 'NAMA') || str_contains(strtoupper($nama), 'PEMERINTAH')) continue;
+                        if (empty($nama) || is_numeric($nama) || str_contains(strtoupper($nama), 'NAMA') || str_contains(strtoupper($nama), 'PEMERINTAH')) continue;
 
                         $peg = Pegawai::where('nama', 'LIKE', "%{$nama}%")->first();
                         if ($peg) {
@@ -439,7 +472,7 @@ class ImportRealExcelData extends Command
                         $golLama = trim((string)($row[3] ?? ''));
                         $golBaru = trim((string)($row[4] ?? ''));
 
-                        if (empty($nama) || str_contains(strtoupper($nama), 'NAMA') || str_contains(strtoupper($nama), 'PEMERINTAH')) continue;
+                        if (empty($nama) || is_numeric($nama) || str_contains(strtoupper($nama), 'NAMA') || str_contains(strtoupper($nama), 'PEMERINTAH')) continue;
 
                         $peg = Pegawai::where('nama', 'LIKE', "%{$nama}%")->first();
                         if ($peg) {
