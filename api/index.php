@@ -16,9 +16,18 @@ foreach ($dirs as $dir) {
     }
 }
 
-// Set environment storage path for Laravel
+// Set environment variables for Vercel
 putenv("APP_STORAGE={$storagePath}");
 $_ENV['APP_STORAGE'] = $storagePath;
+
+// Auto-configure bundled SQLite database with 149 records
+$sqlitePath = realpath(__DIR__ . '/../database/database.sqlite');
+if ($sqlitePath && file_exists($sqlitePath)) {
+    putenv("DB_CONNECTION=sqlite");
+    putenv("DB_DATABASE={$sqlitePath}");
+    $_ENV['DB_CONNECTION'] = 'sqlite';
+    $_ENV['DB_DATABASE'] = $sqlitePath;
+}
 
 // Forward to public/index.php
 require __DIR__ . '/../public/index.php';
