@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 // Prepare writable storage directories in /tmp for Vercel Serverless environment
 $storagePath = '/tmp/storage';
 $dirs = [
@@ -21,8 +25,8 @@ putenv("APP_STORAGE={$storagePath}");
 $_ENV['APP_STORAGE'] = $storagePath;
 
 // Auto-configure bundled SQLite database with 149 records
-$sqlitePath = realpath(__DIR__ . '/../database/database.sqlite');
-if ($sqlitePath && file_exists($sqlitePath)) {
+$sqlitePath = __DIR__ . '/../database/database.sqlite';
+if (file_exists($sqlitePath)) {
     putenv("DB_CONNECTION=sqlite");
     putenv("DB_DATABASE={$sqlitePath}");
     $_ENV['DB_CONNECTION'] = 'sqlite';
