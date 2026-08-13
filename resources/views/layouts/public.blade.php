@@ -28,6 +28,44 @@
 </head>
 <body class="bg-slate-100 text-slate-800 flex flex-col min-h-screen">
 
+    <!-- Preloader / Splash Screen Animation Sidoarjo (Matching Official Site) -->
+    <div id="appPreloader" class="fixed inset-0 z-[9999] bg-emerald-950 flex flex-col items-center justify-center transition-opacity duration-500 text-white">
+        <div class="relative flex items-center justify-center mb-6">
+            <!-- Glowing Spinner Ring -->
+            <div class="absolute w-28 h-28 rounded-full border-4 border-amber-500/30 animate-ping"></div>
+            <div class="absolute w-24 h-24 rounded-full border-4 border-amber-400 border-t-transparent animate-spin"></div>
+            
+            <!-- Crisp Logo Card -->
+            <div class="relative bg-white p-2.5 rounded-2xl shadow-2xl flex items-center space-x-2 border-2 border-amber-400">
+                <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-12 w-auto object-contain">
+                <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-12 w-auto object-contain">
+            </div>
+        </div>
+        
+        <h2 class="text-lg font-extrabold uppercase tracking-wider text-amber-400 text-center px-4">
+            Dinas Pangan dan Pertanian
+        </h2>
+        <p class="text-xs font-semibold text-emerald-200 mt-1 uppercase tracking-widest text-center">
+            Pemerintah Kabupaten Sidoarjo
+        </p>
+        <div class="mt-4 flex items-center space-x-2 text-[11px] text-amber-300 font-mono bg-emerald-900/80 px-4 py-1.5 rounded-full border border-emerald-700/60 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span>Memuat SIMPEG Dispanperta Sidoarjo...</span>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            const preloader = document.getElementById('appPreloader');
+            if (preloader) {
+                setTimeout(function() {
+                    preloader.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => preloader.remove(), 600);
+                }, 500);
+            }
+        });
+    </script>
+
     <!-- Top Notice & Real-time Live Clock Bar Sidoarjo with Running Marquee Text -->
     <div class="bg-amber-500 text-slate-950 text-[11px] font-bold py-1 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm overflow-hidden">
         <div class="flex-1 overflow-hidden relative w-full sm:w-auto">
