@@ -32,7 +32,7 @@
     <div class="bg-amber-500 text-slate-950 text-[11px] font-bold py-1 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm overflow-hidden">
         <div class="flex-1 overflow-hidden relative w-full sm:w-auto">
             <div class="animate-marquee font-extrabold uppercase tracking-wider">
-                🏛️ PEMERINTAH KABUPATEN SIDOARJO &bull; DINAS PANGAN DAN PERTANIAN &bull; SISTEM INFORMASI KEPEGAWAIAN (SIMPEG) &bull; 🌾 MEMBANGUN KETAHANAN PANGAN & PERTANIAN BERKELANJUTAN SIDOARJO
+                PEMERINTAH KABUPATEN SIDOARJO &bull; DINAS PANGAN DAN PERTANIAN &bull; SISTEM INFORMASI KEPEGAWAIAN (SIMPEG) &bull; PEMERINTAH KABUPATEN SIDOARJO &bull; DINAS PANGAN DAN PERTANIAN &bull; SISTEM INFORMASI KEPEGAWAIAN (SIMPEG)
             </div>
         </div>
         <!-- Live Real-Time Clock Widget -->
