@@ -12,7 +12,7 @@
 
         <!-- Email Address -->
         <div>
-            <label for="email" class="block text-xs font-semibold text-slate-700 mb-1">Alamat Email Admin</label>
+            <label for="email" class="block text-xs font-semibold text-slate-700 mb-1">Email</label>
             <input id="email" 
                    type="email" 
                    name="email" 
@@ -20,7 +20,6 @@
                    required 
                    autofocus 
                    autocomplete="username" 
-                   placeholder="admin@dispanperta.sidoarjo.go.id"
                    class="w-full text-xs rounded border-slate-300 focus:border-emerald-700 focus:ring-emerald-700 py-2 px-3">
             <x-input-error :messages="$errors->get('email')" class="mt-1 text-xs" />
         </div>
