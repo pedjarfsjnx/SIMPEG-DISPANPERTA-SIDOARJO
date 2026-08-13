@@ -38,49 +38,49 @@
         <nav class="flex-grow p-3 space-y-1 text-xs font-medium overflow-y-auto">
             <a href="{{ route('admin.dashboard') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.dashboard') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               📊 Dashboard
+               Dashboard
             </a>
 
             <a href="{{ route('admin.pegawai.index') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.pegawai.*') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               👥 Kelola Pegawai
+               Kelola Pegawai
             </a>
 
             <a href="{{ route('admin.formasi-jabatan.index') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.formasi-jabatan.*') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               🏛️ Formasi Jabatan
+               Formasi Jabatan
             </a>
 
             <a href="{{ route('admin.master-data.index') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.master-data.*') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               🗂️ Master Data
+               Master Data
             </a>
 
             <div class="pt-4 pb-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3">Administrasi</div>
 
             <a href="{{ route('admin.pensiun.index') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.pensiun.*') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               📜 Pengajuan Pensiun
+               Pengajuan Pensiun
             </a>
 
             <a href="{{ route('admin.kenaikan-pangkat.index') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.kenaikan-pangkat.*') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               🎖️ Kenaikan Pangkat
+               Kenaikan Pangkat
             </a>
 
             <a href="{{ route('admin.activity-logs.index') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.activity-logs.*') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               🛡️ Audit Log Aktivitas
+               Audit Log Aktivitas
             </a>
 
             <a href="{{ route('admin.import.form') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.import.*') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               📥 Import Excel
+               Import Excel
             </a>
 
             <a href="{{ route('admin.export.excel') }}" 
                class="flex items-center px-3 py-2 rounded transition hover:bg-slate-800 text-slate-400 hover:text-white">
-               📤 Export Excel
+               Export Excel
             </a>
         </nav>
 
@@ -116,7 +116,7 @@
 
             <div class="flex items-center space-x-2 sm:space-x-3">
                 <a href="{{ route('public.dashboard') }}" target="_blank" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-[11px] rounded border border-emerald-300 transition">
-                    🌐 Web Publik
+                    Web Publik
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -137,15 +137,15 @@
              x-transition:leave-end="opacity-0 -translate-y-2"
              class="bg-slate-900 text-slate-200 border-b border-slate-800 md:hidden p-3 space-y-1 shadow-lg">
             <div class="px-2 py-1 text-[11px] font-bold text-amber-400 uppercase tracking-wider">Menu Administrator</div>
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.dashboard') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">📊 Dashboard</a>
-            <a href="{{ route('admin.pegawai.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.pegawai.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">👥 Kelola Pegawai</a>
-            <a href="{{ route('admin.formasi-jabatan.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.formasi-jabatan.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">🏛️ Formasi Jabatan</a>
-            <a href="{{ route('admin.master-data.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.master-data.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">🗂️ Master Data</a>
-            <a href="{{ route('admin.pensiun.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.pensiun.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">📜 Pengajuan Pensiun</a>
-            <a href="{{ route('admin.kenaikan-pangkat.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.kenaikan-pangkat.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">🎖️ Kenaikan Pangkat</a>
-            <a href="{{ route('admin.activity-logs.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.activity-logs.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">🛡️ Audit Log Aktivitas</a>
-            <a href="{{ route('admin.import.form') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.import.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">📥 Import Excel</a>
-            <a href="{{ route('admin.export.excel') }}" class="flex items-center px-3 py-2 rounded text-xs text-slate-300 hover:bg-slate-800">📤 Export Excel</a>
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.dashboard') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Dashboard</a>
+            <a href="{{ route('admin.pegawai.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.pegawai.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Kelola Pegawai</a>
+            <a href="{{ route('admin.formasi-jabatan.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.formasi-jabatan.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Formasi Jabatan</a>
+            <a href="{{ route('admin.master-data.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.master-data.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Master Data</a>
+            <a href="{{ route('admin.pensiun.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.pensiun.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Pengajuan Pensiun</a>
+            <a href="{{ route('admin.kenaikan-pangkat.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.kenaikan-pangkat.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Kenaikan Pangkat</a>
+            <a href="{{ route('admin.activity-logs.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.activity-logs.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Audit Log Aktivitas</a>
+            <a href="{{ route('admin.import.form') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.import.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Import Excel</a>
+            <a href="{{ route('admin.export.excel') }}" class="flex items-center px-3 py-2 rounded text-xs text-slate-300 hover:bg-slate-800">Export Excel</a>
         </div>
 
         <!-- Flash Messages -->
