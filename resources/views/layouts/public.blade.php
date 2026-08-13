@@ -28,42 +28,70 @@
 </head>
 <body class="bg-slate-100 text-slate-800 flex flex-col min-h-screen">
 
-    <!-- Preloader / Splash Screen Animation Sidoarjo (Matching Official Site) -->
-    <div id="appPreloader" class="fixed inset-0 z-[9999] bg-emerald-950 flex flex-col items-center justify-center transition-opacity duration-500 text-white">
-        <div class="relative flex items-center justify-center mb-6">
-            <!-- Glowing Spinner Ring -->
-            <div class="absolute w-28 h-28 rounded-full border-4 border-amber-500/30 animate-ping"></div>
-            <div class="absolute w-24 h-24 rounded-full border-4 border-amber-400 border-t-transparent animate-spin"></div>
-            
-            <!-- Crisp Logo Card -->
-            <div class="relative bg-white p-2.5 rounded-2xl shadow-2xl flex items-center space-x-2 border-2 border-amber-400">
-                <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-12 w-auto object-contain">
-                <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-12 w-auto object-contain">
+    <!-- VIP Ultra-Smooth Preloader / Splash Screen Sidoarjo -->
+    <div id="appPreloader" class="fixed inset-0 z-[9999] bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-900 flex flex-col items-center justify-center text-white transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+        <!-- Ambient Background Glow -->
+        <div class="absolute w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+        <div class="absolute w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-pulse" style="animation-delay: 1s;"></div>
+
+        <div id="preloaderCard" class="relative flex flex-col items-center transition-all duration-700 ease-out transform scale-100 opacity-100">
+            <div class="relative flex items-center justify-center mb-6">
+                <!-- Smooth Pulsing Glow Rings -->
+                <div class="absolute w-32 h-32 rounded-full border border-amber-500/30 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+                <div class="absolute w-24 h-24 rounded-full border-2 border-emerald-400/40 border-t-amber-400 animate-spin" style="animation-duration: 1.5s;"></div>
+                
+                <!-- Logo Box with Glass & Floating Effect -->
+                <div class="relative bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center space-x-3 border border-amber-400/60">
+                    <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-12 w-auto object-contain drop-shadow">
+                    <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-12 w-auto object-contain drop-shadow">
+                </div>
             </div>
-        </div>
-        
-        <h2 class="text-lg font-extrabold uppercase tracking-wider text-amber-400 text-center px-4">
-            Dinas Pangan dan Pertanian
-        </h2>
-        <p class="text-xs font-semibold text-emerald-200 mt-1 uppercase tracking-widest text-center">
-            Pemerintah Kabupaten Sidoarjo
-        </p>
-        <div class="mt-4 flex items-center space-x-2 text-[11px] text-amber-300 font-mono bg-emerald-900/80 px-4 py-1.5 rounded-full border border-emerald-700/60 shadow-inner">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-            <span>Memuat SIMPEG Dispanperta Sidoarjo...</span>
+            
+            <h2 class="text-xl font-extrabold uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-200 text-center px-4 drop-shadow">
+                Dinas Pangan dan Pertanian
+            </h2>
+            <p class="text-xs font-medium text-emerald-200/90 mt-1 uppercase tracking-[0.25em] text-center">
+                Pemerintah Kabupaten Sidoarjo
+            </p>
+            
+            <!-- Smooth Progress Bar Indicator -->
+            <div class="mt-6 w-48 bg-emerald-950/80 h-1.5 rounded-full overflow-hidden border border-emerald-800/60 p-0.5 shadow-inner">
+                <div id="preloaderBar" class="bg-gradient-to-r from-amber-500 to-emerald-400 h-full rounded-full w-0 transition-all duration-700 ease-out"></div>
+            </div>
+            <span class="text-[10px] font-mono text-emerald-300/80 mt-2 tracking-wider uppercase">Memuat Sistem...</span>
         </div>
     </div>
 
     <script>
-        window.addEventListener('DOMContentLoaded', function() {
+        (function() {
+            const bar = document.getElementById('preloaderBar');
             const preloader = document.getElementById('appPreloader');
-            if (preloader) {
+            const card = document.getElementById('preloaderCard');
+            
+            setTimeout(function() { if(bar) bar.style.width = '60%'; }, 100);
+            setTimeout(function() { if(bar) bar.style.width = '100%'; }, 400);
+
+            function dismissPreloader() {
+                if (!preloader) return;
+                if (card) {
+                    card.style.transform = 'scale(0.92)';
+                    card.style.opacity = '0';
+                }
                 setTimeout(function() {
-                    preloader.classList.add('opacity-0', 'pointer-events-none');
-                    setTimeout(() => preloader.remove(), 600);
-                }, 500);
+                    preloader.style.opacity = '0';
+                    preloader.style.filter = 'blur(12px)';
+                    setTimeout(function() { preloader.remove(); }, 700);
+                }, 200);
             }
-        });
+
+            if (document.readyState === 'complete') {
+                setTimeout(dismissPreloader, 650);
+            } else {
+                window.addEventListener('load', function() {
+                    setTimeout(dismissPreloader, 650);
+                });
+            }
+        })();
     </script>
 
     <!-- Top Notice & Real-time Live Clock Bar Sidoarjo with Running Marquee Text -->
