@@ -12,17 +12,31 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { font-family: 'Inter', sans-serif; }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 flex flex-col min-h-screen">
 
-    <!-- Top Notice & Real-time Live Clock Bar Sidoarjo -->
-    <div class="bg-amber-500 text-slate-950 text-[11px] font-bold py-1 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-1 shadow-sm">
-        <div class="uppercase tracking-wide">
-            Pemerintah Kabupaten Sidoarjo &bull; Dinas Pangan dan Pertanian
+    <!-- Top Notice & Real-time Live Clock Bar Sidoarjo with Running Marquee Text -->
+    <div class="bg-amber-500 text-slate-950 text-[11px] font-bold py-1 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm overflow-hidden">
+        <div class="flex-1 overflow-hidden relative w-full sm:w-auto">
+            <div class="animate-marquee font-extrabold uppercase tracking-wider">
+                🏛️ PEMERINTAH KABUPATEN SIDOARJO &bull; DINAS PANGAN DAN PERTANIAN &bull; SISTEM INFORMASI KEPEGAWAIAN (SIMPEG) &bull; 🌾 MEMBANGUN KETAHANAN PANGAN & PERTANIAN BERKELANJUTAN SIDOARJO
+            </div>
         </div>
         <!-- Live Real-Time Clock Widget -->
-        <div id="liveClock" class="font-mono bg-slate-950 text-amber-400 px-3 py-0.5 rounded-full text-[11px] font-bold shadow-xs">
+        <div id="liveClock" class="font-mono bg-slate-950 text-amber-400 px-3 py-0.5 rounded-full text-[11px] font-bold shadow-xs flex-shrink-0 z-10">
             🕒 Memuat waktu real-time...
         </div>
     </div>
