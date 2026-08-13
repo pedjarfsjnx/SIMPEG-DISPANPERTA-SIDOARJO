@@ -32,7 +32,6 @@
                    name="password" 
                    required 
                    autocomplete="current-password" 
-                   placeholder="••••••••"
                    class="w-full text-xs rounded border-slate-300 focus:border-emerald-700 focus:ring-emerald-700 py-2 px-3">
             <x-input-error :messages="$errors->get('password')" class="mt-1 text-xs" />
         </div>
