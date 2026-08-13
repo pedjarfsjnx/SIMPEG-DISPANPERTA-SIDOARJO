@@ -26,11 +26,10 @@ Route::get('/pegawai-download-pdf', [PublicPegawaiController::class, 'downloadPd
 Route::get('/pegawai/{id}', [PublicPegawaiController::class, 'show'])->name('public.pegawai.show');
 Route::get('/struktur-organisasi', [PublicStrukturController::class, 'index'])->name('public.struktur-organisasi');
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes (Full Access - Authenticated Only)
-|--------------------------------------------------------------------------
-*/
+Route::get('/admin', function () {
+    return redirect()->route('admin.dashboard');
+});
+
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');

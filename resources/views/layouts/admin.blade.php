@@ -115,9 +115,6 @@
             </div>
 
             <div class="flex items-center space-x-2 sm:space-x-3">
-                <span class="text-xs text-slate-600 font-medium hidden sm:inline">
-                    👤 {{ Auth::user()->name }}
-                </span>
                 <a href="{{ route('public.dashboard') }}" target="_blank" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-[11px] rounded border border-emerald-300 transition">
                     🌐 Web Publik
                 </a>

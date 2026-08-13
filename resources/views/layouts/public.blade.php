@@ -68,17 +68,10 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <div class="text-right hidden lg:block text-[11px] text-emerald-200 border-r border-emerald-800 pr-3">
+                <div class="text-right hidden lg:block text-[11px] text-emerald-200">
                     <div class="font-semibold text-white">Jl. Pahlawan No.KM.2, Jetis, Lemahputro</div>
                     <div>Kec. Sidoarjo, Kab. Sidoarjo 61213</div>
                 </div>
-
-                <a href="{{ route('login') }}" class="inline-flex items-center px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold rounded shadow transition">
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-                    </svg>
-                    Portal Admin
-                </a>
             </div>
         </div>
 
