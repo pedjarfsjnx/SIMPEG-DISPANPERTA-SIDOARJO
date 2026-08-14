@@ -12,12 +12,15 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased flex flex-col md:flex-row md:h-screen md:overflow-hidden" x-data="{ mobileMenuOpen: false }">
 
     <!-- Desktop Sticky Fixed Sidebar Navigation -->
-    <aside class="w-64 bg-slate-900 text-slate-300 flex-shrink-0 hidden md:flex flex-col border-r border-slate-800 h-screen sticky top-0">
+    <aside class="w-64 min-w-[16rem] max-w-[16rem] bg-slate-900 text-slate-300 flex-shrink-0 hidden md:flex flex-col border-r border-slate-800 h-screen sticky top-0 z-30 select-none">
         <!-- Brand Header with Crisp White Logo Card Wrapper -->
         <div class="p-4 bg-emerald-950 border-b border-emerald-900 flex items-center space-x-3 flex-shrink-0">
             <div class="flex items-center space-x-1.5 flex-shrink-0">
@@ -35,7 +38,7 @@
         </div>
 
         <!-- Sidebar Links (Internal Scrollable) -->
-        <nav class="flex-grow p-3 space-y-1 text-xs font-medium overflow-y-auto">
+        <nav class="flex-grow p-3 space-y-1 text-xs font-medium overflow-y-auto sidebar-scroll">
             <a href="{{ route('admin.dashboard') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.dashboard') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
                Dashboard
@@ -151,7 +154,7 @@
         <!-- Flash Messages -->
         @if(session('success'))
         <div class="bg-emerald-50 border-b border-emerald-200 text-emerald-800 text-xs font-semibold px-4 sm:px-6 py-2.5 flex items-center justify-between">
-            <span>✅ {{ session('success') }}</span>
+            <span>{{ session('success') }}</span>
         </div>
         @endif
 
