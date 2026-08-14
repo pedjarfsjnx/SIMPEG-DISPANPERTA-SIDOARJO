@@ -11,18 +11,51 @@
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0;
+            padding: 0;
+            background-color: #f1f5f9;
+        }
         .sidebar-scroll::-webkit-scrollbar { width: 4px; }
         .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+
+        @media (min-width: 768px) {
+            .admin-sidebar {
+                display: flex !important;
+                position: fixed !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 260px !important;
+                height: 100vh !important;
+                z-index: 40 !important;
+            }
+            .admin-main-wrapper {
+                margin-left: 260px !important;
+                width: calc(100% - 260px) !important;
+                min-height: 100vh !important;
+            }
+        }
+        @media (max-width: 767px) {
+            .admin-sidebar {
+                display: none !important;
+            }
+            .admin-main-wrapper {
+                margin-left: 0 !important;
+                width: 100% !important;
+                min-height: 100vh !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased min-h-screen" x-data="{ mobileMenuOpen: false }">
 
-    <!-- Desktop Fixed Sidebar Navigation (Locked at 260px) -->
-    <aside style="position: fixed; top: 0; bottom: 0; left: 0; width: 260px; z-index: 40;" class="bg-slate-900 text-slate-300 hidden md:flex flex-col border-r border-slate-800 select-none">
+    <!-- Desktop Fixed Sidebar Navigation -->
+    <aside class="admin-sidebar bg-slate-900 text-slate-300 flex-col border-r border-slate-800 select-none">
         <!-- Brand Header with Crisp White Logo Card Wrapper -->
-        <div class="px-4 py-3 bg-emerald-950 border-b border-emerald-900 flex items-center space-x-3 flex-shrink-0" style="height: 60px;">
+        <div class="px-4 py-3 bg-emerald-950 border-b border-emerald-900 flex items-center space-x-3 flex-shrink-0" style="height: 64px; box-sizing: border-box;">
             <div class="flex items-center space-x-1.5 flex-shrink-0">
                 <div class="bg-white p-1 rounded-md shadow-sm flex items-center justify-center">
                     <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-7 w-auto object-contain">
@@ -95,10 +128,10 @@
         </div>
     </aside>
 
-    <!-- Main Section (Offset Left by 260px on Desktop) -->
-    <div class="min-h-screen flex flex-col md:pl-[260px] w-full min-w-0" style="box-sizing: border-box;">
+    <!-- Main Section (Reliably Offset on Desktop via pure CSS) -->
+    <div class="admin-main-wrapper flex flex-col min-w-0" style="box-sizing: border-box;">
         <!-- Topbar Header (Fixed Top) -->
-        <header class="bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between shadow-xs sticky top-0 z-30" style="height: 60px;">
+        <header class="bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between shadow-xs sticky top-0 z-30" style="height: 64px; box-sizing: border-box;">
             <div class="flex items-center space-x-3">
                 <!-- Mobile Hamburger Toggle Button -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none border border-slate-300">
@@ -158,8 +191,8 @@
         </div>
         @endif
 
-        <!-- Content Area (Clean Fluid Container) -->
-        <main class="flex-grow p-4 sm:p-6 w-full min-w-0">
+        <!-- Content Area -->
+        <main class="flex-grow p-4 sm:p-6 w-full min-w-0" style="box-sizing: border-box;">
             @yield('content')
         </main>
     </div>
