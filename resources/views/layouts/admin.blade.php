@@ -20,7 +20,7 @@
 <body class="bg-slate-100 text-slate-800 antialiased flex flex-col md:flex-row md:h-screen md:overflow-hidden" x-data="{ mobileMenuOpen: false }">
 
     <!-- Desktop Sticky Fixed Sidebar Navigation -->
-    <aside class="w-64 min-w-[16rem] max-w-[16rem] bg-slate-900 text-slate-300 flex-shrink-0 hidden md:flex flex-col border-r border-slate-800 h-screen sticky top-0 z-30 select-none">
+    <aside style="width: 260px !important; min-width: 260px !important; max-width: 260px !important; flex: 0 0 260px !important;" class="bg-slate-900 text-slate-300 hidden md:flex flex-col border-r border-slate-800 h-screen sticky top-0 z-30 select-none">
         <!-- Brand Header with Crisp White Logo Card Wrapper -->
         <div class="p-4 bg-emerald-950 border-b border-emerald-900 flex items-center space-x-3 flex-shrink-0">
             <div class="flex items-center space-x-1.5 flex-shrink-0">
@@ -96,7 +96,7 @@
     </aside>
 
     <!-- Main Section (Scrolls Independently) -->
-    <div class="flex-grow flex flex-col min-w-0 md:h-screen overflow-hidden w-full">
+    <div class="flex-grow flex flex-col min-w-0 md:h-screen overflow-hidden" style="flex: 1 1 0%; min-width: 0; width: 100%;">
         <!-- Topbar -->
         <header class="bg-white border-b border-slate-200 py-3 px-4 sm:px-6 flex items-center justify-between shadow-xs flex-shrink-0 sticky top-0 z-20">
             <div class="flex items-center space-x-3">
@@ -159,7 +159,7 @@
         @endif
 
         <!-- Content Area (Scrolls Independently) -->
-        <main class="flex-grow p-4 sm:p-6 overflow-y-auto">
+        <main class="flex-grow p-4 sm:p-6 overflow-y-auto overflow-x-hidden">
             @yield('content')
         </main>
     </div>
