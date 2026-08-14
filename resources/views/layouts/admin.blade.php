@@ -17,12 +17,12 @@
         .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased flex flex-col md:flex-row md:h-screen md:overflow-hidden" x-data="{ mobileMenuOpen: false }">
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen" x-data="{ mobileMenuOpen: false }">
 
-    <!-- Desktop Sticky Fixed Sidebar Navigation -->
-    <aside style="width: 260px !important; min-width: 260px !important; max-width: 260px !important; flex: 0 0 260px !important;" class="bg-slate-900 text-slate-300 hidden md:flex flex-col border-r border-slate-800 h-screen sticky top-0 z-30 select-none">
+    <!-- Desktop Fixed Sidebar Navigation (Locked at 260px) -->
+    <aside style="position: fixed; top: 0; bottom: 0; left: 0; width: 260px; z-index: 40;" class="bg-slate-900 text-slate-300 hidden md:flex flex-col border-r border-slate-800 select-none">
         <!-- Brand Header with Crisp White Logo Card Wrapper -->
-        <div class="p-4 bg-emerald-950 border-b border-emerald-900 flex items-center space-x-3 flex-shrink-0">
+        <div class="px-4 py-3 bg-emerald-950 border-b border-emerald-900 flex items-center space-x-3 flex-shrink-0" style="height: 60px;">
             <div class="flex items-center space-x-1.5 flex-shrink-0">
                 <div class="bg-white p-1 rounded-md shadow-sm flex items-center justify-center">
                     <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-7 w-auto object-contain">
@@ -31,13 +31,13 @@
                     <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-7 w-auto object-contain">
                 </div>
             </div>
-            <div>
-                <h1 class="text-xs font-bold text-white uppercase tracking-wider">SIMPEG ADMIN</h1>
-                <p class="text-[10px] text-amber-400 font-semibold">Dispanperta Kab. Sidoarjo</p>
+            <div class="overflow-hidden">
+                <h1 class="text-xs font-bold text-white uppercase tracking-wider truncate">SIMPEG ADMIN</h1>
+                <p class="text-[10px] text-amber-400 font-semibold truncate">Dispanperta Kab. Sidoarjo</p>
             </div>
         </div>
 
-        <!-- Sidebar Links (Internal Scrollable) -->
+        <!-- Sidebar Links (Smooth Non-shifting Scroll) -->
         <nav class="flex-grow p-3 space-y-1 text-xs font-medium overflow-y-auto sidebar-scroll">
             <a href="{{ route('admin.dashboard') }}" 
                class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.dashboard') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
@@ -95,10 +95,10 @@
         </div>
     </aside>
 
-    <!-- Main Section (Scrolls Independently) -->
-    <div class="flex-grow flex flex-col min-w-0 md:h-screen overflow-hidden" style="flex: 1 1 0%; min-width: 0; width: 100%;">
-        <!-- Topbar -->
-        <header class="bg-white border-b border-slate-200 py-3 px-4 sm:px-6 flex items-center justify-between shadow-xs flex-shrink-0 sticky top-0 z-20">
+    <!-- Main Section (Offset Left by 260px on Desktop) -->
+    <div class="min-h-screen flex flex-col md:pl-[260px] w-full min-w-0" style="box-sizing: border-box;">
+        <!-- Topbar Header (Fixed Top) -->
+        <header class="bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between shadow-xs sticky top-0 z-30" style="height: 60px;">
             <div class="flex items-center space-x-3">
                 <!-- Mobile Hamburger Toggle Button -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none border border-slate-300">
@@ -108,9 +108,9 @@
                     </svg>
                 </button>
 
-                <div class="bg-white p-1 rounded shadow-sm border border-slate-200 flex items-center space-x-1">
+                <div class="bg-white p-1 rounded shadow-sm border border-slate-200 flex items-center space-x-1 md:hidden">
                     <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-6 w-auto">
-                    <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-6 w-auto md:hidden">
+                    <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-6 w-auto">
                 </div>
                 <div class="font-bold text-slate-800 text-xs sm:text-sm uppercase tracking-wider">
                     Panel Admin <span class="hidden sm:inline">- SIMPEG Dispanperta Sidoarjo</span>
@@ -158,8 +158,8 @@
         </div>
         @endif
 
-        <!-- Content Area (Scrolls Independently) -->
-        <main class="flex-grow p-4 sm:p-6 overflow-y-auto overflow-x-hidden">
+        <!-- Content Area (Clean Fluid Container) -->
+        <main class="flex-grow p-4 sm:p-6 w-full min-w-0">
             @yield('content')
         </main>
     </div>
