@@ -60,10 +60,10 @@
         <div class="px-4 py-3 bg-emerald-950 border-b border-emerald-900 flex items-center space-x-3 flex-shrink-0" style="height: 64px; box-sizing: border-box;">
             <div class="flex items-center space-x-1.5 flex-shrink-0">
                 <div class="bg-white p-1 rounded-md shadow-sm flex items-center justify-center">
-                    <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-7 w-auto object-contain">
+                    <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-7 w-auto object-contain">
                 </div>
                 <div class="bg-white p-1 rounded-md shadow-sm flex items-center justify-center">
-                    <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-7 w-auto object-contain">
+                    <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-7 w-auto object-contain">
                 </div>
             </div>
             <div class="overflow-hidden">
@@ -144,8 +144,8 @@
                 </button>
 
                 <div class="bg-white p-1 rounded shadow-sm border border-slate-200 flex items-center space-x-1 md:hidden">
-                    <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-6 w-auto">
-                    <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-6 w-auto">
+                    <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-6 w-auto">
+                    <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-6 w-auto">
                 </div>
                 <div class="font-bold text-slate-800 text-xs sm:text-sm uppercase tracking-wider">
                     Panel Admin <span class="hidden sm:inline">- SIMPEG Dispanperta Sidoarjo</span>
@@ -156,7 +156,7 @@
                 <a href="{{ route('public.dashboard') }}" target="_blank" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-[11px] rounded border border-emerald-300 transition">
                     Web Publik
                 </a>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="/logout">
                     @csrf
                     <button type="submit" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs rounded border border-rose-300 transition">
                         Logout

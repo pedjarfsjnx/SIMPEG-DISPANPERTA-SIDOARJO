@@ -51,10 +51,10 @@
                 <!-- Logos Wrapper in Crisp White Cards for High Contrast -->
                 <div class="flex items-center space-x-2 flex-shrink-0">
                     <div class="bg-white p-1.5 rounded-lg shadow-sm border border-emerald-800/40 flex items-center justify-center h-14">
-                        <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-11 w-auto object-contain">
+                        <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-11 w-auto object-contain">
                     </div>
                     <div class="bg-white p-1.5 rounded-lg shadow-sm border border-emerald-800/40 flex items-center justify-center h-14">
-                        <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-11 w-auto object-contain">
+                        <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-11 w-auto object-contain">
                     </div>
                 </div>
 
