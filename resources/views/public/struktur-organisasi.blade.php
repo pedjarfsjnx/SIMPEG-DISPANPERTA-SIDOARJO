@@ -82,9 +82,7 @@
                             <div class="text-emerald-800 font-semibold text-xs mt-0.5">{{ $peg->formasiJabatan?->nama_jabatan }}</div>
                             <div class="text-slate-500 font-mono text-[11px] mt-0.5">NIP. {{ $peg->nip }} &bull; Gol. {{ $peg->golongan }}</div>
                         </div>
-                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-md transition flex-shrink-0">
-                            Detail &rarr;
-                        </a>
+                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="inline-flex items-center px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-lg shadow-2xs transition flex-shrink-0">Detail &rarr;</a>
                     </div>
                     @empty
                     <p class="text-xs text-slate-400 italic">Data Eselon II.b belum terdata.</p>
@@ -112,9 +110,7 @@
                             <div class="text-emerald-800 font-semibold text-[11px] mt-0.5">{{ $peg->formasiJabatan?->nama_jabatan }}</div>
                             <div class="text-slate-500 text-[11px] mt-0.5">{{ $peg->bidang?->nama ?: $peg->unitKerja?->nama }}</div>
                         </div>
-                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="px-2.5 py-1 bg-slate-100 hover:bg-emerald-800 hover:text-white font-semibold text-slate-800 border border-slate-300 rounded transition flex-shrink-0">
-                            Detail &rarr;
-                        </a>
+                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="inline-flex items-center px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-lg shadow-2xs transition flex-shrink-0">Detail &rarr;</a>
                     </div>
                     @empty
                     <p class="text-xs text-slate-400 italic">Data Eselon III.a belum terdata.</p>
@@ -146,7 +142,7 @@
                     </div>
                     <div class="pt-2 border-t border-slate-200 flex items-center justify-between">
                         <span class="text-[10px] text-slate-500">{{ $peg->unitKerja?->nama }}</span>
-                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="text-emerald-800 font-bold hover:underline text-[11px]">Detail &rarr;</a>
+                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="inline-flex items-center px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-lg shadow-2xs transition flex-shrink-0">Detail &rarr;</a>
                     </div>
                 </div>
                 @empty
@@ -242,7 +238,7 @@
                                         </div>
                                     </div>
                                     <div class="pt-1.5 border-t border-slate-200 text-right">
-                                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="text-emerald-800 font-bold hover:underline text-[11px]">Detail &rarr;</a>
+                                        <a href="{{ route('public.pegawai.show', $peg->id) }}" class="inline-flex items-center px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-lg shadow-2xs transition flex-shrink-0">Detail &rarr;</a>
                                     </div>
                                 </div>
                                 @empty

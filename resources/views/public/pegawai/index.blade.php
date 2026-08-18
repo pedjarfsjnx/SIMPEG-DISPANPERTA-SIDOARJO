@@ -122,7 +122,7 @@
                             {{ $peg->golongan ?? '-' }}
                         </td>
                         <td class="py-3 px-4 text-center">
-                            <a href="{{ route('public.pegawai.show', $peg->id) }}" class="inline-flex items-center px-2.5 py-1 bg-slate-100 text-slate-800 hover:bg-emerald-800 hover:text-white font-medium rounded border border-slate-300 transition text-xs">
+                            <a href="{{ route('public.pegawai.show', $peg->id) }}" class="inline-flex items-center px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-lg shadow-2xs transition">
                                 Lihat &rarr;
                             </a>
                         </td>
