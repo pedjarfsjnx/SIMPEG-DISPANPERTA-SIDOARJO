@@ -33,4 +33,4 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "php artisan simpeg:init && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+CMD ["sh", "-c", "php artisan config:clear && php artisan route:clear && php artisan view:clear && php -S 0.0.0.0:${PORT:-8080} -t public/"]
