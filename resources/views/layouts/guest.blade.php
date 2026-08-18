@@ -27,102 +27,111 @@
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col justify-between">
     <script>
-        // Check if splash screen was already shown in this browser session
-        if (sessionStorage.getItem('simpeg_splash_shown')) {
-            document.write('<style>#simpeg-preloader { display: none !important; }</style>');
-        }
+        // Bulletproof Session Check with try-catch (Protects Incognito & iOS Safari)
+        try {
+            if (sessionStorage.getItem('simpeg_splash_shown')) {
+                document.write('<style>#simpeg-preloader { display: none !important; }</style>');
+            }
+        } catch (e) {}
     </script>
 
-    <!-- Preloader Splash Screen: Sequential Cinematic Logo Transition (Once per Session) -->
-    <div id="simpeg-preloader" class="fixed inset-0 z-[9999] bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-500 ease-out select-none">
+    <!-- Preloader Splash Screen: Bulletproof Sequential Cinematic Logo (Auto-Dismiss Guaranteed) -->
+    <div id="simpeg-preloader" class="fixed inset-0 z-[9999] bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-400 ease-out select-none cursor-pointer" onclick="this.remove()">
         
         <!-- Ambient Background Glow -->
-        <div class="absolute w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+        <div class="absolute w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
 
-        <!-- Stage 1: Logo Kabupaten Sidoarjo (Besar & Resmi) -->
+        <!-- Stage 1: Logo Kabupaten Sidoarjo -->
         <div id="splash-stage-1" class="flex flex-col items-center justify-center p-6 text-center transition-all duration-300 transform opacity-100 scale-100">
-            <div class="relative bg-white p-5 rounded-3xl shadow-2xl border-2 border-emerald-500/40 mb-4 transform transition duration-500 hover:scale-105">
-                <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kabupaten Sidoarjo" class="h-28 sm:h-32 w-auto object-contain">
+            <div class="relative bg-white p-4 sm:p-5 rounded-3xl shadow-2xl border-2 border-emerald-500/40 mb-3 transform transition duration-500 hover:scale-105">
+                <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kabupaten Sidoarjo" class="h-24 sm:h-32 w-auto object-contain">
             </div>
-            <h2 class="text-white font-extrabold text-base sm:text-xl uppercase tracking-wider mb-1">
+            <h2 class="text-white font-extrabold text-sm sm:text-lg uppercase tracking-wider mb-0.5">
                 Pemerintah Kabupaten Sidoarjo
             </h2>
-            <p class="text-amber-400 font-bold text-xs uppercase tracking-widest">
+            <p class="text-amber-400 font-bold text-[11px] sm:text-xs uppercase tracking-widest">
                 Jawa Timur
             </p>
         </div>
 
-        <!-- Stage 2: Logo Dispanperta Sidoarjo (Besar & Transisi Bergantian) -->
+        <!-- Stage 2: Logo Dispanperta Sidoarjo -->
         <div id="splash-stage-2" class="flex flex-col items-center justify-center p-6 text-center transition-all duration-300 transform opacity-0 scale-95 hidden">
-            <div class="relative bg-white p-5 rounded-3xl shadow-2xl border-2 border-amber-500/40 mb-4 transform transition duration-500 hover:scale-105">
-                <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-28 sm:h-32 w-auto object-contain">
+            <div class="relative bg-white p-4 sm:p-5 rounded-3xl shadow-2xl border-2 border-amber-500/40 mb-3 transform transition duration-500 hover:scale-105">
+                <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-24 sm:h-32 w-auto object-contain">
             </div>
-            <h2 class="text-white font-extrabold text-base sm:text-xl uppercase tracking-wider mb-1">
+            <h2 class="text-white font-extrabold text-sm sm:text-lg uppercase tracking-wider mb-0.5">
                 Dinas Pangan dan Pertanian
             </h2>
-            <p class="text-emerald-400 font-bold text-xs uppercase tracking-widest mb-5">
+            <p class="text-emerald-400 font-bold text-[11px] sm:text-xs uppercase tracking-widest mb-4">
                 Sistem Informasi Kepegawaian (SIMPEG)
             </p>
 
-            <!-- Progress Indicator -->
-            <div class="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700/60 relative">
+            <!-- Progress Bar -->
+            <div class="w-40 sm:w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700/60 relative">
                 <div class="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-400 rounded-full w-full animate-[loading_1s_ease-in-out_infinite]"></div>
             </div>
-            <span class="text-[10px] text-slate-500 font-mono mt-2 tracking-widest uppercase">Membuka SIMPEG...</span>
+            <span class="text-[9px] sm:text-[10px] text-slate-500 font-mono mt-1.5 tracking-widest uppercase">Membuka SIMPEG...</span>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const preloader = document.getElementById('simpeg-preloader');
-            
-            // If already shown previously in this session, remove immediately
-            if (sessionStorage.getItem('simpeg_splash_shown')) {
-                if (preloader) preloader.remove();
-                return;
-            }
+        (function() {
+            var preloader = document.getElementById('simpeg-preloader');
+            if (!preloader) return;
 
-            // Mark as shown for the rest of the session
-            sessionStorage.setItem('simpeg_splash_shown', 'true');
+            // Safe session check
+            try {
+                if (sessionStorage.getItem('simpeg_splash_shown')) {
+                    preloader.remove();
+                    return;
+                }
+                sessionStorage.setItem('simpeg_splash_shown', 'true');
+            } catch(e) {}
 
-            const stage1 = document.getElementById('splash-stage-1');
-            const stage2 = document.getElementById('splash-stage-2');
+            var stage1 = document.getElementById('splash-stage-1');
+            var stage2 = document.getElementById('splash-stage-2');
 
-            if (preloader && stage1 && stage2) {
-                setTimeout(() => {
+            // 1. Stage 1 to Stage 2 transition after 750ms
+            setTimeout(function() {
+                if (stage1 && stage2) {
                     stage1.classList.remove('opacity-100', 'scale-100');
                     stage1.classList.add('opacity-0', 'scale-90');
                     
-                    setTimeout(() => {
+                    setTimeout(function() {
                         stage1.classList.add('hidden');
                         stage2.classList.remove('hidden');
-                        
-                        void stage2.offsetWidth; // Trigger reflow
-                        
+                        void stage2.offsetWidth; // force reflow
                         stage2.classList.remove('opacity-0', 'scale-95');
                         stage2.classList.add('opacity-100', 'scale-100');
-                    }, 200);
-                }, 850);
-
-                const finishLoading = () => {
-                    setTimeout(() => {
-                        preloader.style.opacity = '0';
-                        preloader.style.pointerEvents = 'none';
-                        setTimeout(() => {
-                            preloader.style.display = 'none';
-                        }, 500);
-                    }, 1900);
-                };
-
-                if (document.readyState === 'complete') {
-                    finishLoading();
-                } else {
-                    window.addEventListener('load', finishLoading);
-                    setTimeout(finishLoading, 3000); // Safety fallback
+                    }, 150);
                 }
+            }, 750);
+
+            // 2. Guaranteed Dismiss Function
+            function closePreloader() {
+                if (!preloader) return;
+                preloader.style.opacity = '0';
+                preloader.style.pointerEvents = 'none';
+                setTimeout(function() {
+                    if (preloader && preloader.parentNode) {
+                        preloader.parentNode.removeChild(preloader);
+                    }
+                }, 400);
             }
-        });
+
+            // Always dismiss gracefully after 1.7s regardless of network status
+            setTimeout(closePreloader, 1700);
+
+            // Safety fail-safe timeout at 2.5s
+            setTimeout(function() {
+                var p = document.getElementById('simpeg-preloader');
+                if (p) p.remove();
+            }, 2500);
+        })();
     </script>
+    
+
+    
         
 
     <!-- Top Ribbon -->
