@@ -18,6 +18,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col justify-between">
 
