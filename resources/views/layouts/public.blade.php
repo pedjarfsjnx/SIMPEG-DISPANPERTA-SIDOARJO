@@ -34,72 +34,84 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 text-slate-800 flex flex-col min-h-screen">
-    <!-- Preloader Splash Screen: Logo Kabupaten Sidoarjo & Dispanperta -->
+        <!-- Preloader Splash Screen: Sequential Cinematic Logo Transition -->
     <div id="simpeg-preloader" class="fixed inset-0 z-[9999] bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-500 ease-out select-none">
-        <div class="relative flex flex-col items-center justify-center p-6 text-center max-w-sm">
-            
-            <!-- Animated Dual Logos Wrapper with Pulsing Ambient Glow -->
-            <div class="relative flex items-center justify-center space-x-3 mb-5">
-                <div class="absolute -inset-4 bg-emerald-500/20 rounded-full blur-xl animate-pulse"></div>
-                
-                <!-- Logo 1: Kab Sidoarjo -->
-                <div class="relative bg-white p-2.5 rounded-2xl shadow-xl border border-emerald-500/30 transform transition duration-500 hover:scale-105 animate-bounce" style="animation-duration: 2s;">
-                    <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-14 w-auto object-contain">
-                </div>
+        
+        <!-- Ambient Background Glow -->
+        <div class="absolute w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
 
-                <!-- Gold Separator Dot -->
-                <div class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></div>
-
-                <!-- Logo 2: Dispanperta -->
-                <div class="relative bg-white p-2.5 rounded-2xl shadow-xl border border-amber-500/30 transform transition duration-500 hover:scale-105 animate-bounce" style="animation-duration: 2s; animation-delay: 0.3s;">
-                    <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-14 w-auto object-contain">
-                </div>
+        <!-- Stage 1: Logo Kabupaten Sidoarjo (Besar & Resmi) -->
+        <div id="splash-stage-1" class="flex flex-col items-center justify-center p-6 text-center transition-all duration-300 transform opacity-100 scale-100">
+            <div class="relative bg-white p-5 rounded-3xl shadow-2xl border-2 border-emerald-500/40 mb-4 transform transition duration-500 hover:scale-105">
+                <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kabupaten Sidoarjo" class="h-28 sm:h-32 w-auto object-contain">
             </div>
-
-            <!-- Typography Branding -->
-            <h2 class="text-white font-extrabold text-sm uppercase tracking-wider mb-1">
+            <h2 class="text-white font-extrabold text-base sm:text-xl uppercase tracking-wider mb-1">
                 Pemerintah Kabupaten Sidoarjo
             </h2>
-            <p class="text-amber-400 font-bold text-xs uppercase tracking-wide mb-1">
-                Dinas Pangan dan Pertanian
+            <p class="text-amber-400 font-bold text-xs uppercase tracking-widest">
+                Jawa Timur
             </p>
-            <p class="text-slate-400 text-[11px] font-medium tracking-normal mb-5">
+        </div>
+
+        <!-- Stage 2: Logo Dispanperta Sidoarjo (Besar & Transisi Bergantian) -->
+        <div id="splash-stage-2" class="flex flex-col items-center justify-center p-6 text-center transition-all duration-300 transform opacity-0 scale-95 hidden">
+            <div class="relative bg-white p-5 rounded-3xl shadow-2xl border-2 border-amber-500/40 mb-4 transform transition duration-500 hover:scale-105">
+                <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-28 sm:h-32 w-auto object-contain">
+            </div>
+            <h2 class="text-white font-extrabold text-base sm:text-xl uppercase tracking-wider mb-1">
+                Dinas Pangan dan Pertanian
+            </h2>
+            <p class="text-emerald-400 font-bold text-xs uppercase tracking-widest mb-5">
                 Sistem Informasi Kepegawaian (SIMPEG)
             </p>
 
-            <!-- Sleek Gradient Loading Progress Bar -->
-            <div class="w-44 h-1.5 bg-slate-800/80 rounded-full overflow-hidden border border-slate-700/50 relative">
-                <div class="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-400 rounded-full w-full animate-[loading_1.2s_ease-in-out_infinite]"></div>
+            <!-- Progress Indicator -->
+            <div class="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700/60 relative">
+                <div class="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-400 rounded-full w-full animate-[loading_1s_ease-in-out_infinite]"></div>
             </div>
-            <span class="text-[10px] text-slate-500 font-mono mt-2 tracking-widest uppercase">Memuat Sistem...</span>
+            <span class="text-[10px] text-slate-500 font-mono mt-2 tracking-widest uppercase">Membuka SIMPEG...</span>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const preloader = document.getElementById('simpeg-preloader');
-            if (preloader) {
-                const minLoadTime = 600; // 600ms display time for smooth visual aesthetic
-                const startTime = Date.now();
-                
-                const hidePreloader = () => {
-                    const elapsedTime = Date.now() - startTime;
-                    const remainingTime = Math.max(0, minLoadTime - elapsedTime);
+            const stage1 = document.getElementById('splash-stage-1');
+            const stage2 = document.getElementById('splash-stage-2');
+
+            if (preloader && stage1 && stage2) {
+                // Sequence Timing:
+                // Stage 1 (Logo Sidoarjo) -> fade out -> Stage 2 (Logo Dispanperta) -> fade out to main page
+                setTimeout(() => {
+                    stage1.classList.remove('opacity-100', 'scale-100');
+                    stage1.classList.add('opacity-0', 'scale-90');
                     
+                    setTimeout(() => {
+                        stage1.classList.add('hidden');
+                        stage2.classList.remove('hidden');
+                        
+                        void stage2.offsetWidth; // Trigger reflow
+                        
+                        stage2.classList.remove('opacity-0', 'scale-95');
+                        stage2.classList.add('opacity-100', 'scale-100');
+                    }, 200);
+                }, 850);
+
+                const finishLoading = () => {
                     setTimeout(() => {
                         preloader.style.opacity = '0';
                         preloader.style.pointerEvents = 'none';
                         setTimeout(() => {
                             preloader.style.display = 'none';
                         }, 500);
-                    }, remainingTime);
+                    }, 1900);
                 };
 
                 if (document.readyState === 'complete') {
-                    hidePreloader();
+                    finishLoading();
                 } else {
-                    window.addEventListener('load', hidePreloader);
-                    setTimeout(hidePreloader, 2500); // Safety fallback
+                    window.addEventListener('load', finishLoading);
+                    setTimeout(finishLoading, 3000); // Safety fallback
                 }
             }
         });
