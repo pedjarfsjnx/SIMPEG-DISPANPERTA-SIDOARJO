@@ -34,7 +34,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 text-slate-800 flex flex-col min-h-screen">
-        <!-- Preloader Splash Screen: Sequential Cinematic Logo Transition -->
+    <script>
+        // Check if splash screen was already shown in this browser session
+        if (sessionStorage.getItem('simpeg_splash_shown')) {
+            document.write('<style>#simpeg-preloader { display: none !important; }</style>');
+        }
+    </script>
+
+    <!-- Preloader Splash Screen: Sequential Cinematic Logo Transition (Once per Session) -->
     <div id="simpeg-preloader" class="fixed inset-0 z-[9999] bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-500 ease-out select-none">
         
         <!-- Ambient Background Glow -->
@@ -76,12 +83,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const preloader = document.getElementById('simpeg-preloader');
+            
+            // If already shown previously in this session, remove immediately
+            if (sessionStorage.getItem('simpeg_splash_shown')) {
+                if (preloader) preloader.remove();
+                return;
+            }
+
+            // Mark as shown for the rest of the session
+            sessionStorage.setItem('simpeg_splash_shown', 'true');
+
             const stage1 = document.getElementById('splash-stage-1');
             const stage2 = document.getElementById('splash-stage-2');
 
             if (preloader && stage1 && stage2) {
-                // Sequence Timing:
-                // Stage 1 (Logo Sidoarjo) -> fade out -> Stage 2 (Logo Dispanperta) -> fade out to main page
                 setTimeout(() => {
                     stage1.classList.remove('opacity-100', 'scale-100');
                     stage1.classList.add('opacity-0', 'scale-90');
@@ -116,6 +131,7 @@
             }
         });
     </script>
+        
 
     <!-- Top Notice & Real-time Live Clock Bar Sidoarjo with Running Marquee Text -->
     <div class="bg-amber-500 text-slate-950 text-[11px] font-bold py-1 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm overflow-hidden">
