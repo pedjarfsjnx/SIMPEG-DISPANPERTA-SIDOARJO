@@ -49,10 +49,85 @@
                 min-height: 100vh !important;
             }
         }
+            @keyframes loading {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(100%); }
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased min-h-screen" x-data="{ mobileMenuOpen: false }">
+    <!-- Preloader Splash Screen: Logo Kabupaten Sidoarjo & Dispanperta -->
+    <div id="simpeg-preloader" class="fixed inset-0 z-[9999] bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-500 ease-out select-none">
+        <div class="relative flex flex-col items-center justify-center p-6 text-center max-w-sm">
+            
+            <!-- Animated Dual Logos Wrapper with Pulsing Ambient Glow -->
+            <div class="relative flex items-center justify-center space-x-3 mb-5">
+                <div class="absolute -inset-4 bg-emerald-500/20 rounded-full blur-xl animate-pulse"></div>
+                
+                <!-- Logo 1: Kab Sidoarjo -->
+                <div class="relative bg-white p-2.5 rounded-2xl shadow-xl border border-emerald-500/30 transform transition duration-500 hover:scale-105 animate-bounce" style="animation-duration: 2s;">
+                    <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-14 w-auto object-contain">
+                </div>
+
+                <!-- Gold Separator Dot -->
+                <div class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></div>
+
+                <!-- Logo 2: Dispanperta -->
+                <div class="relative bg-white p-2.5 rounded-2xl shadow-xl border border-amber-500/30 transform transition duration-500 hover:scale-105 animate-bounce" style="animation-duration: 2s; animation-delay: 0.3s;">
+                    <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-14 w-auto object-contain">
+                </div>
+            </div>
+
+            <!-- Typography Branding -->
+            <h2 class="text-white font-extrabold text-sm uppercase tracking-wider mb-1">
+                Pemerintah Kabupaten Sidoarjo
+            </h2>
+            <p class="text-amber-400 font-bold text-xs uppercase tracking-wide mb-1">
+                Dinas Pangan dan Pertanian
+            </p>
+            <p class="text-slate-400 text-[11px] font-medium tracking-normal mb-5">
+                Sistem Informasi Kepegawaian (SIMPEG)
+            </p>
+
+            <!-- Sleek Gradient Loading Progress Bar -->
+            <div class="w-44 h-1.5 bg-slate-800/80 rounded-full overflow-hidden border border-slate-700/50 relative">
+                <div class="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-400 rounded-full w-full animate-[loading_1.2s_ease-in-out_infinite]"></div>
+            </div>
+            <span class="text-[10px] text-slate-500 font-mono mt-2 tracking-widest uppercase">Memuat Sistem...</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const preloader = document.getElementById('simpeg-preloader');
+            if (preloader) {
+                const minLoadTime = 600; // 600ms display time for smooth visual aesthetic
+                const startTime = Date.now();
+                
+                const hidePreloader = () => {
+                    const elapsedTime = Date.now() - startTime;
+                    const remainingTime = Math.max(0, minLoadTime - elapsedTime);
+                    
+                    setTimeout(() => {
+                        preloader.style.opacity = '0';
+                        preloader.style.pointerEvents = 'none';
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                        }, 500);
+                    }, remainingTime);
+                };
+
+                if (document.readyState === 'complete') {
+                    hidePreloader();
+                } else {
+                    window.addEventListener('load', hidePreloader);
+                    setTimeout(hidePreloader, 2500); // Safety fallback
+                }
+            }
+        });
+    </script>
 
     <!-- Desktop Fixed Sidebar Navigation -->
     <aside class="admin-sidebar bg-slate-900 text-slate-300 flex-col border-r border-slate-800 select-none">
