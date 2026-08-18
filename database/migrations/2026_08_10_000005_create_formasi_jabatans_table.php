@@ -14,7 +14,9 @@ return new class extends Migration
             $table->foreignId('bidang_id')->nullable()->constrained('bidang')->nullOnDelete();
             $table->string('nama_jabatan', 200);
             $table->string('kelas_jabatan', 20)->nullable();
+            $table->integer('kuota')->default(1)->nullable();
             $table->string('status_formasi', 30)->default('kosong'); // e.g. "kosong", "terisi"
+            $table->text('keterangan')->nullable();
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('pegawai_id')->constrained('pegawai')->cascadeOnDelete();
             $table->date('tanggal_pengajuan')->nullable();
             $table->date('tmt_pensiun')->nullable();
+            $table->string('status_pengajuan', 50)->default('proses');
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });

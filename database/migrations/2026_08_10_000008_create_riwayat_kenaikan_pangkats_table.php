@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('golongan_lama', 30)->nullable();
             $table->string('golongan_baru', 30)->nullable();
             $table->date('tmt_diusulkan')->nullable();
+            $table->string('status_pengajuan', 50)->default('proses');
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });
