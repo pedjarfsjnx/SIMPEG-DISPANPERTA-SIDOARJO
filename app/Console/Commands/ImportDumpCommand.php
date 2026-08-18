@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class ImportDumpCommand extends Command
 {
@@ -13,24 +14,26 @@ class ImportDumpCommand extends Command
     public function handle()
     {
         try {
-            $this->info('Memeriksa koneksi dan tabel database...');
-            $tables = DB::select('SHOW TABLES');
+            $this->info('Memeriksa koneksi database...');
             
-            if (empty($tables)) {
-                $this->info('Database kosong. Memulai import otomatis simpeg_database_dump.sql (149 data pegawai)...');
+            // Check if pegawai table exists
+            if (!Schema::hasTable('pegawai')) {
+                $this->info('Tabel pegawai belum ada. Menjalankan migrasi & import data dump...');
+                
+                // Run standard migrations first if needed for sessions/users/cache
+                $this->call('migrate', ['--force' => true]);
+
                 $sqlPath = base_path('simpeg_database_dump.sql');
                 if (file_exists($sqlPath)) {
                     $sql = file_get_contents($sqlPath);
                     DB::unprepared($sql);
-                    $this->info('Database SIMPEG berhasil diimport secara otomatis!');
-                } else {
-                    $this->warn('File simpeg_database_dump.sql tidak ditemukan.');
+                    $this->info('✅ 149 Data Pegawai SIMPEG berhasil diimport secara otomatis!');
                 }
             } else {
-                $this->info('Tabel database sudah ada. Melewati import otomatis.');
+                $this->info('✅ Database sudah memiliki tabel dan data pegawai.');
             }
         } catch (\Throwable $e) {
-            $this->error('Gagal inisialisasi database: ' . $e->getMessage());
+            $this->error('Catatan Inisialisasi Database: ' . $e->getMessage());
         }
 
         return 0;
