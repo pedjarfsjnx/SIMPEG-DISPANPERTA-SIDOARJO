@@ -1,1 +1,1 @@
-web: php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan serve --host=0.0.0.0 --port=$PORT
+web: php artisan simpeg:init && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan serve --host=0.0.0.0 --port=$PORT
