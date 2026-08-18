@@ -72,9 +72,31 @@
                                 {{ $peg->bidang?->nama ?: 'Non-Struktural (Pelaksana Unit)' }}
                             </div>
                         </td>
-                        <td class="py-3 px-4">
-                            <div class="text-slate-800 font-mono text-[11px]">{{ $peg->no_hp ?? '-' }}</div>
-                            <div class="text-slate-500 text-[11px]">{{ $peg->email ?? '-' }}</div>
+                                                <td class="py-3 px-4">
+                            @if(!empty($peg->no_hp))
+                                @php
+                                    $cleanWa = preg_replace('/[^0-9]/', '', $peg->no_hp);
+                                    if (str_starts_with($cleanWa, '0')) { $cleanWa = '62' . substr($cleanWa, 1); }
+                                    elseif (str_starts_with($cleanWa, '8')) { $cleanWa = '62' . $cleanWa; }
+                                @endphp
+                                <div class="flex items-center space-x-1.5">
+                                    <span class="text-slate-800 font-mono text-[11px]">{{ $peg->no_hp }}</span>
+                                    <a href="https://wa.me/{{ $cleanWa }}" target="_blank" title="Kirim Pesan WhatsApp" class="text-emerald-600 hover:text-emerald-700 font-bold text-[10px] bg-emerald-50 hover:bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-200 transition">
+                                        WA &rarr;
+                                    </a>
+                                </div>
+                            @else
+                                <div class="text-slate-400 font-mono text-[11px]">-</div>
+                            @endif
+
+                            @if(!empty($peg->email))
+                                <div class="flex items-center space-x-1.5 mt-1">
+                                    <span class="text-slate-500 text-[11px] truncate max-w-[160px]">{{ $peg->email }}</span>
+                                    <a href="mailto:{{ $peg->email }}" title="Kirim Email" class="text-sky-600 hover:text-sky-700 font-bold text-[10px] bg-sky-50 hover:bg-sky-100 px-1.5 py-0.5 rounded border border-sky-200 transition">
+                                        Mail &rarr;
+                                    </a>
+                                </div>
+                            @endif
                         </td>
                         <td class="py-3 px-4 text-center space-x-1">
                             <a href="{{ route('admin.pegawai.show', $peg->id) }}" class="px-2.5 py-1 bg-slate-100 text-slate-700 font-semibold rounded hover:bg-slate-200 text-xs">Detail</a>
