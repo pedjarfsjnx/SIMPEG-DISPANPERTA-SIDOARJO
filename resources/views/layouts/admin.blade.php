@@ -76,7 +76,7 @@
         <!-- Stage 1: Logo Kabupaten Sidoarjo -->
         <div id="splash-stage-1" class="flex flex-col items-center justify-center p-6 text-center transition-all duration-300 transform opacity-100 scale-100">
             <div class="relative bg-white p-4 sm:p-5 rounded-3xl shadow-2xl border-2 border-emerald-500/40 mb-3 transform transition duration-500 hover:scale-105">
-                <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kabupaten Sidoarjo" class="h-24 sm:h-32 w-auto object-contain">
+                <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kabupaten Sidoarjo" class="h-24 sm:h-32 w-auto object-contain">
             </div>
             <h2 class="text-white font-extrabold text-sm sm:text-lg uppercase tracking-wider mb-0.5">
                 Pemerintah Kabupaten Sidoarjo
@@ -89,7 +89,7 @@
         <!-- Stage 2: Logo Dispanperta Sidoarjo -->
         <div id="splash-stage-2" class="flex flex-col items-center justify-center p-6 text-center transition-all duration-300 transform opacity-0 scale-95 hidden">
             <div class="relative bg-white p-4 sm:p-5 rounded-3xl shadow-2xl border-2 border-amber-500/40 mb-3 transform transition duration-500 hover:scale-105">
-                <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-24 sm:h-32 w-auto object-contain">
+                <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta Sidoarjo" class="h-24 sm:h-32 w-auto object-contain">
             </div>
             <h2 class="text-white font-extrabold text-sm sm:text-lg uppercase tracking-wider mb-0.5">
                 Dinas Pangan dan Pertanian
@@ -172,10 +172,10 @@
         <div class="px-4 py-3 bg-emerald-950 border-b border-emerald-900 flex items-center space-x-3 flex-shrink-0" style="height: 64px; box-sizing: border-box;">
             <div class="flex items-center space-x-1.5 flex-shrink-0">
                 <div class="bg-white p-1 rounded-md shadow-sm flex items-center justify-center">
-                    <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-7 w-auto object-contain">
+                    <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-7 w-auto object-contain">
                 </div>
                 <div class="bg-white p-1 rounded-md shadow-sm flex items-center justify-center">
-                    <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-7 w-auto object-contain">
+                    <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-7 w-auto object-contain">
                 </div>
             </div>
             <div class="overflow-hidden">
@@ -256,8 +256,8 @@
                 </button>
 
                 <div class="bg-white p-1 rounded shadow-sm border border-slate-200 flex items-center space-x-1 md:hidden">
-                    <img src="{{ secure_asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-6 w-auto">
-                    <img src="{{ secure_asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-6 w-auto">
+                    <img src="{{ asset('logo/logo kabupaten sidoarjo.png') }}" alt="Logo Kab Sidoarjo" class="h-6 w-auto">
+                    <img src="{{ asset('logo/logo dispanperta sidoarjo.png') }}" alt="Logo Dispanperta" class="h-6 w-auto">
                 </div>
                 <div class="font-bold text-slate-800 text-xs sm:text-sm uppercase tracking-wider">
                     Panel Admin <span class="hidden sm:inline">- SIMPEG Dispanperta Sidoarjo</span>

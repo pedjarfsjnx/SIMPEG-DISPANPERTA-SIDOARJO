@@ -28,9 +28,34 @@
                 @endforeach
             </select>
 
+            <select name="unit_kerja_id" class="text-xs rounded border-slate-300">
+                <option value="">Semua Unit Kerja</option>
+                @foreach($unitKerjaOptions as $unitKerja)
+                    <option value="{{ $unitKerja->id }}" {{ request('unit_kerja_id') == $unitKerja->id ? 'selected' : '' }}>{{ $unitKerja->nama }}</option>
+                @endforeach
+            </select>
+
+            <select name="bidang_id" class="text-xs rounded border-slate-300">
+                <option value="">Semua Bidang</option>
+                @foreach($bidangOptions as $bidang)
+                    <option value="{{ $bidang->id }}" {{ request('bidang_id') == $bidang->id ? 'selected' : '' }}>
+                        {{ $bidang->unitKerja?->nama ? $bidang->unitKerja->nama.' — ' : '' }}{{ $bidang->nama }}
+                    </option>
+                @endforeach
+            </select>
+
             <select name="trashed" class="text-xs rounded border-slate-300">
                 <option value="">Data Aktif</option>
                 <option value="only" {{ request('trashed') == 'only' ? 'selected' : '' }}>Data Terarsip (Soft Deleted)</option>
+            </select>
+
+            <select name="sort_by" class="text-xs rounded border-slate-300">
+                <option value="nama_asc" {{ request('sort_by', 'nama_asc') === 'nama_asc' ? 'selected' : '' }}>Urutkan: Nama A–Z</option>
+                <option value="nama_desc" {{ request('sort_by') === 'nama_desc' ? 'selected' : '' }}>Urutkan: Nama Z–A</option>
+                <option value="unit_kerja_asc" {{ request('sort_by') === 'unit_kerja_asc' ? 'selected' : '' }}>Urutkan: Unit Kerja A–Z</option>
+                <option value="unit_kerja_desc" {{ request('sort_by') === 'unit_kerja_desc' ? 'selected' : '' }}>Urutkan: Unit Kerja Z–A</option>
+                <option value="bidang_asc" {{ request('sort_by') === 'bidang_asc' ? 'selected' : '' }}>Urutkan: Bidang A–Z</option>
+                <option value="bidang_desc" {{ request('sort_by') === 'bidang_desc' ? 'selected' : '' }}>Urutkan: Bidang Z–A</option>
             </select>
 
             <div class="flex gap-2">

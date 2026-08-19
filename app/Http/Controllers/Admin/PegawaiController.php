@@ -39,11 +39,42 @@ class PegawaiController extends Controller
             $query->where('kategori_pegawai_id', $request->input('kategori_id'));
         }
 
-        $pegawaiList = $query->orderBy('nama', 'asc')->paginate(15)->withQueryString();
-        $kategoriOptions = KategoriPegawai::all();
+        if ($request->filled('unit_kerja_id')) {
+            $query->where('unit_kerja_id', $request->integer('unit_kerja_id'));
+        }
+
+        if ($request->filled('bidang_id')) {
+            $query->where('bidang_id', $request->integer('bidang_id'));
+        }
+
+        $sortBy = $request->input('sort_by', 'nama_asc');
+
+        match ($sortBy) {
+            'nama_desc' => $query->orderBy('nama', 'desc'),
+            'unit_kerja_asc', 'unit_kerja_desc' => $query->orderBy(
+                UnitKerja::select('nama')->whereColumn('unit_kerja.id', 'pegawai.unit_kerja_id'),
+                $sortBy === 'unit_kerja_asc' ? 'asc' : 'desc'
+            )->orderBy('nama'),
+            'bidang_asc', 'bidang_desc' => $query->orderBy(
+                Bidang::select('nama')->whereColumn('bidang.id', 'pegawai.bidang_id'),
+                $sortBy === 'bidang_asc' ? 'asc' : 'desc'
+            )->orderBy('nama'),
+            default => $query->orderBy('nama', 'asc'),
+        };
+
+        $pegawaiList = $query->paginate(15)->withQueryString();
+        $kategoriOptions = KategoriPegawai::orderBy('nama')->get();
+        $unitKerjaOptions = UnitKerja::orderBy('nama')->get();
+        $bidangOptions = Bidang::with('unitKerja')->orderBy('nama')->get();
         $kategoriList = $kategoriOptions;
 
-        return view('admin.pegawai.index', compact('pegawaiList', 'kategoriOptions', 'kategoriList'));
+        return view('admin.pegawai.index', compact(
+            'pegawaiList',
+            'kategoriOptions',
+            'kategoriList',
+            'unitKerjaOptions',
+            'bidangOptions'
+        ));
     }
 
     public function create(): View

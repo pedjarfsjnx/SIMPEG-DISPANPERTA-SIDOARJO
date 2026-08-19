@@ -23,4 +23,8 @@ if (getenv('APP_STORAGE')) {
     $app->useStoragePath(getenv('APP_STORAGE'));
 }
 
+// This project keeps its Laravel configuration files in the repository. Avoid
+// merging the framework defaults, which are loaded from vendor at runtime.
+$app->dontMergeFrameworkConfiguration();
+
 return $app;
