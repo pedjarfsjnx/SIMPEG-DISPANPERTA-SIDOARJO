@@ -21,11 +21,23 @@
             }
         }
     </script>
-    <style>
+        <style>
         html, body, input, select, textarea, button {
             font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 38s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
         }
     </style>
 </head>
@@ -34,7 +46,25 @@
         // Bulletproof Session Check with try-catch (Protects Incognito & iOS Safari)
         try {
             if (sessionStorage.getItem('simpeg_splash_shown')) {
-                document.write('<style>#simpeg-preloader { display: none !important; }</style>');
+                document.write('    <style>
+        html, body, input, select, textarea, button {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 38s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>');
             }
         } catch (e) {}
     </script>
@@ -138,13 +168,18 @@
     
         
 
-    <!-- Top Notice & Real-time Live Clock Bar Sidoarjo with Running Marquee Text -->
-    <div class="bg-amber-500 text-slate-950 text-[11px] font-bold py-1 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm overflow-hidden">
+        <!-- Top Notice & Real-time Live Clock Bar Sidoarjo with Running Marquee Text -->
+    <div class="bg-amber-500 text-slate-950 text-xs py-1.5 px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs overflow-hidden">
         <div class="flex-1 overflow-hidden relative w-full sm:w-auto">
-            <div class="animate-marquee font-extrabold uppercase tracking-wider">
-                PEMERINTAH KABUPATEN SIDOARJO &bull; DINAS PANGAN DAN PERTANIAN &bull; SISTEM INFORMASI KEPEGAWAIAN (SIMPEG) &bull; PEMERINTAH KABUPATEN SIDOARJO &bull; DINAS PANGAN DAN PERTANIAN &bull; SISTEM INFORMASI KEPEGAWAIAN (SIMPEG)
+            <div class="animate-marquee font-medium tracking-wide text-slate-950">
+                Pemerintah Kabupaten Sidoarjo &bull; Dinas Pangan dan Pertanian &bull; Sistem Informasi Kepegawaian (SIMPEG) &bull; Pelayanan Administrasi Kepegawaian Terpadu &bull; Pemerintah Kabupaten Sidoarjo &bull; Dinas Pangan dan Pertanian &bull; Sistem Informasi Kepegawaian (SIMPEG)
             </div>
         </div>
+        <!-- Live Real-Time Clock Widget -->
+        <div id="liveClock" class="font-mono bg-slate-950 text-amber-400 px-3.5 py-0.5 rounded-full text-[11px] font-medium shadow-xs flex-shrink-0 z-10 whitespace-nowrap">
+            Memuat waktu...
+        </div>
+    </div>
         <!-- Live Real-Time Clock Widget -->
         <div id="liveClock" class="font-mono bg-slate-950 text-amber-400 px-3 py-0.5 rounded-full text-[11px] font-bold shadow-xs flex-shrink-0 z-10">
              Memuat waktu real-time...
