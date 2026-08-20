@@ -64,13 +64,21 @@ class RiwayatPensiunController extends Controller
                 continue;
             }
 
-            // Hitung sisa masa kerja
-            $diffYears = $now->diffInYears($tmtPensiun, false);
-            $diffMonths = $now->diffInMonths($tmtPensiun, false) % 12;
+                        // Hitung sisa masa kerja dengan integer DateInterval
+            $interval = $now->diff($tmtPensiun);
+            $diffYears = (int) $interval->y;
+            $diffMonths = (int) $interval->m;
+            $isPast = (bool) $interval->invert;
 
             $statusWaktu = '';
-            if ($tmtPensiun->lt($now)) {
+            if ($isPast || $tmtPensiun->lt($now)) {
                 $statusWaktu = 'Purna Tugas';
+            } elseif ($diffYears == 0 && $diffMonths <= 6) {
+                $statusWaktu = '< 6 Bulan (Mendesak)';
+            } elseif ($diffYears == 0) {
+                $statusWaktu = "{$diffMonths} Bulan Lagi";
+            } else {
+                $statusWaktu = "{$diffYears} Thn {$diffMonths} Bln";
             } elseif ($diffYears == 0 && $diffMonths <= 6) {
                 $statusWaktu = '< 6 Bulan (Mendesak)';
             } elseif ($diffYears == 0) {

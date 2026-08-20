@@ -74,19 +74,11 @@ class Pegawai extends Model
     // Accessor: Usia Pegawai Saat Ini
     public function getUsiaAttribute(): ?int
     {
-        $tgl = $this->tanggal_lahir;
-        if (!$tgl && $this->nip) {
-            $clean = preg_replace('/[^0-9]/', '', $this->nip);
-            if (strlen($clean) >= 8) {
-                try {
-                    $tgl = Carbon::createFromFormat('Ymd', substr($clean, 0, 8));
-                } catch (\Exception $e) {}
-            }
-        }
+        $tgl = $this->tanggal_lahir_effektif;
         return $tgl ? $tgl->age : null;
     }
 
-    // Accessor: Tanggal Lahir (Eksplisit atau dari NIP)
+    // Accessor: Tanggal Lahir (Eksplisit atau dari 8 Digit NIP)
     public function getTanggalLahirEffektifAttribute(): ?Carbon
     {
         if ($this->tanggal_lahir) {
@@ -103,33 +95,23 @@ class Pegawai extends Model
         return null;
     }
 
-        // Accessor: Batas Usia Pensiun (60 Thn untuk Kepala & Fungsional, 58 Thn untuk Pelaksana)
+    // Accessor: Batas Usia Pensiun (60 Thn HANYA untuk Pimpinan Tinggi/Kadis & Fungsional Madya/Utama; 58 Thn untuk lainnya)
     public function getBatasUsiaPensiunAttribute(): int
     {
         $jabatan = strtoupper($this->formasiJabatan?->nama_jabatan ?? $this->jabatan ?? '');
         $kelas = (int) ($this->formasiJabatan?->kelas_jabatan ?? 0);
 
-        // 1. Kepala Dinas / Pimpinan Tinggi / Eselon II / Jabatan Struktural Kepala (60 Tahun)
-        if ($kelas >= 14 || str_contains($jabatan, 'KEPALA DINAS') || str_contains($jabatan, 'KEPALA')) {
+        // 1. Kepala Dinas / Pejabat Pimpinan Tinggi (Eselon II, Kelas >= 14) -> 60 Tahun
+        if ($kelas >= 14 || str_contains($jabatan, 'KEPALA DINAS') || str_contains($jabatan, 'PIMPINAN TINGGI')) {
             return 60;
         }
 
-        // 2. Jabatan Fungsional (JFT) -> Ahli, Fungsional, Medik Veteriner, Penyuluh, Dokter Hewan, dll. (60 Tahun)
-        if (
-            str_contains($jabatan, 'AHLI') ||
-            str_contains($jabatan, 'FUNGSIONAL') ||
-            str_contains($jabatan, 'VETERINER') ||
-            str_contains($jabatan, 'PENYULUH') ||
-            str_contains($jabatan, 'PENGAWAS') ||
-            str_contains($jabatan, 'DOKTER') ||
-            str_contains($jabatan, 'PRANATA') ||
-            str_contains($jabatan, 'ANALIS') ||
-            str_contains($jabatan, 'AUDITOR')
-        ) {
+        // 2. Fungsional Jenjang Ahli Madya / Ahli Utama (Golongan IV) -> 60 / 65 Tahun
+        if (str_contains($jabatan, 'AHLI MADYA') || str_contains($jabatan, 'AHLI UTAMA') || str_contains($jabatan, 'MADYA') || str_contains($jabatan, 'UTAMA')) {
             return 60;
         }
 
-        // 3. Pelaksana / Administrasi Umum (58 Tahun)
+        // 3. Fungsional Terampil (Mahir/Terampil/Pemula/Penyelia), Fungsional Ahli Pertama & Muda, Pelaksana, Administrasi -> 58 Tahun
         return 58;
     }
 
