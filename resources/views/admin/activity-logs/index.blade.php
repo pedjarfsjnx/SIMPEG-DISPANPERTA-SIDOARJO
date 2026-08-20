@@ -11,23 +11,45 @@
         </div>
     </div>
 
-    <!-- Filter -->
-    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
-        <form method="GET" action="{{ route('admin.activity-logs.index') }}" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari aktivitas atau nama admin..." class="text-xs rounded border-slate-300">
+        <!-- Filter Card -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm">
+        <form method="GET" action="{{ route('admin.activity-logs.index') }}" class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
             
-            <select name="action" class="text-xs rounded border-slate-300">
-                <option value="">Semua Aksi</option>
-                <option value="CREATE" {{ request('action') == 'CREATE' ? 'selected' : '' }}>CREATE (Tambah)</option>
-                <option value="UPDATE" {{ request('action') == 'UPDATE' ? 'selected' : '' }}>UPDATE (Edit)</option>
-                <option value="DELETE" {{ request('action') == 'DELETE' ? 'selected' : '' }}>DELETE (Arsip)</option>
-                <option value="RESTORE" {{ request('action') == 'RESTORE' ? 'selected' : '' }}>RESTORE (Pulih)</option>
-                <option value="IMPORT" {{ request('action') == 'IMPORT' ? 'selected' : '' }}>IMPORT (Excel)</option>
-            </select>
+            <!-- Search Input with Magnifier Icon -->
+            <div class="md:col-span-6 relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <input type="text" 
+                       name="search" 
+                       value="{{ request('search') }}" 
+                       placeholder="Cari aktivitas, nama admin, atau deskripsi log..." 
+                       class="w-full text-xs pl-10 pr-3.5 py-2.5 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-slate-50/50 shadow-2xs transition">
+            </div>
 
-            <div class="flex gap-2">
-                <button type="submit" class="w-full bg-emerald-800 text-white font-semibold text-xs py-2 rounded">Filter Log</button>
-                <a href="{{ route('admin.activity-logs.index') }}" class="px-3 bg-slate-200 text-slate-700 font-semibold text-xs py-2 rounded">Reset</a>
+            <!-- Action Type Dropdown -->
+            <div class="md:col-span-3">
+                <select name="action" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
+                    <option value="">-- Semua Jenis Aksi --</option>
+                    <option value="CREATE" {{ request('action') == 'CREATE' ? 'selected' : '' }}>CREATE (Tambah Data)</option>
+                    <option value="UPDATE" {{ request('action') == 'UPDATE' ? 'selected' : '' }}>UPDATE (Perbarui Data)</option>
+                    <option value="DELETE" {{ request('action') == 'DELETE' ? 'selected' : '' }}>DELETE (Arsip / Hapus)</option>
+                    <option value="RESTORE" {{ request('action') == 'RESTORE' ? 'selected' : '' }}>RESTORE (Pulihkan Data)</option>
+                    <option value="IMPORT" {{ request('action') == 'IMPORT' ? 'selected' : '' }}>IMPORT (Sinkronisasi Excel)</option>
+                </select>
+            </div>
+
+            <!-- Submit & Reset Buttons -->
+            <div class="md:col-span-3 flex items-center gap-2">
+                <button type="submit" class="flex-1 py-2.5 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center justify-center space-x-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                    <span>Filter Log</span>
+                </button>
+                @if(request()->hasAny(['search', 'action']))
+                    <a href="{{ route('admin.activity-logs.index') }}" title="Reset Filter" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition flex items-center justify-center">
+                        Reset
+                    </a>
+                @endif
             </div>
         </form>
     </div>
