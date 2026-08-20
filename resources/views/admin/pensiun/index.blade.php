@@ -1,61 +1,76 @@
 @extends('layouts.admin')
 
-@section('title', 'Kelola Pensiun - Admin SIMPEG')
+@section('title', 'Rekapitulasi Pensiun Pegawai - Admin SIMPEG')
 
 @section('content')
 <div class="space-y-6 text-xs">
     <!-- Header & Actions -->
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-            <h2 class="text-xl font-bold text-slate-900">Kelola Data & Rekap Pensiun</h2>
-            <p class="text-slate-500">Monitoring jadwal batas usia pensiun (BUP), rekapitulasi bulanan, dan pengajuan masa purna tugas.</p>
+            <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-lg text-[10px] uppercase tracking-wider">Modul Purna Tugas</span>
+                <span class="text-slate-400">&bull;</span>
+                <span class="text-xs text-slate-500 font-medium">BUP Otomatis NIP & Rekapitulasi</span>
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Rekapitulasi Batas Usia Pensiun (BUP) Pegawai</h2>
+            <p class="text-sm text-slate-500">Perhitungan otomatis TMT pensiun berdasarkan tanggal lahir NIP (BUP 60 Thn untuk Kepala & Fungsional, 58 Thn untuk Pelaksana).</p>
         </div>
         <div class="flex gap-2">
-            <button onclick="window.print()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 shadow-2xs transition flex items-center space-x-1.5">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                <span>Cetak Rekap</span>
+            <button onclick="window.print()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 shadow-2xs transition flex items-center space-x-2">
+                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                <span>Cetak Rekap Pensiun</span>
             </button>
-            <a href="{{ route('admin.pensiun.create') }}" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs rounded-xl shadow-sm transition flex items-center space-x-1.5">
-                <span>+ Catat Usulan Pensiun</span>
+            <a href="{{ route('admin.pensiun.create') }}" class="px-4 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center space-x-1.5">
+                <span>+ Catat Berkas Pensiun</span>
             </a>
         </div>
     </div>
 
-    <!-- 3 Stat Highlight Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex items-center space-x-3.5">
-            <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm">
-                📋
+    <!-- 4 Highlight Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs flex items-center space-x-3.5">
+            <div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-lg">
+                👥
             </div>
             <div>
-                <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Usulan Terdata</div>
-                <div class="text-xl font-extrabold text-slate-900">{{ number_format($totalPensiun) }} <span class="text-xs font-normal text-slate-500">Berkas</span></div>
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Total Pegawai NIP</div>
+                <div class="text-2xl font-extrabold text-slate-900">{{ number_format($totalPNS) }} <span class="text-xs font-normal text-slate-500">Personel</span></div>
             </div>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex items-center space-x-3.5">
-            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm">
+        <a href="{{ route('admin.pensiun.index', ['tahun' => date('Y')]) }}" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs border-l-4 border-l-amber-500 flex items-center space-x-3.5 hover:shadow-md transition">
+            <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-lg">
                 📅
             </div>
             <div>
-                <div class="text-[11px] font-semibold text-amber-700 uppercase tracking-wider">Pensiun Tahun {{ date('Y') }}</div>
-                <div class="text-xl font-extrabold text-amber-900">{{ number_format($pensiunTahunIni) }} <span class="text-xs font-normal text-slate-500">Pegawai</span></div>
+                <div class="text-[10px] font-bold text-amber-700 uppercase tracking-wider">Pensiun Tahun {{ date('Y') }}</div>
+                <div class="text-2xl font-extrabold text-amber-900">{{ number_format($pensiunTahunIni) }} <span class="text-xs font-normal text-slate-500">Pegawai</span></div>
             </div>
-        </div>
+        </a>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex items-center space-x-3.5">
-            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-sm">
-                🌴
+        <a href="{{ route('admin.pensiun.index', ['tahun' => date('Y') + 1]) }}" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs border-l-4 border-l-emerald-700 flex items-center space-x-3.5 hover:shadow-md transition">
+            <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg">
+                ⏳
             </div>
             <div>
-                <div class="text-[11px] font-semibold text-emerald-700 uppercase tracking-wider">Masa Purna Mendatang</div>
-                <div class="text-xl font-extrabold text-emerald-900">{{ number_format($pensiunMendatang) }} <span class="text-xs font-normal text-slate-500">Personel</span></div>
+                <div class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Pensiun Tahun {{ date('Y') + 1 }}</div>
+                <div class="text-2xl font-extrabold text-emerald-900">{{ number_format($pensiunTahunDepan) }} <span class="text-xs font-normal text-slate-500">Pegawai</span></div>
+            </div>
+        </a>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs border-l-4 border-l-sky-600 flex items-center space-x-3.5">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center font-bold text-lg">
+                📊
+            </div>
+            <div>
+                <div class="text-[10px] font-bold text-sky-700 uppercase tracking-wider">Pensiun 5 Thn Ke Depan</div>
+                <div class="text-2xl font-extrabold text-sky-900">{{ number_format($pensiun5Tahun) }} <span class="text-xs font-normal text-slate-500">Pegawai</span></div>
             </div>
         </div>
     </div>
 
     <!-- Filter Card: Bulan, Tahun, Unit Kerja, & Search -->
-    <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm">
+    <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
         <form method="GET" action="{{ route('admin.pensiun.index') }}" class="space-y-3">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
                 <!-- Search -->
@@ -66,7 +81,7 @@
                     <input type="text" 
                            name="search" 
                            value="{{ request('search') }}" 
-                           placeholder="Cari Nama Pegawai atau NIP..." 
+                           placeholder="Cari Nama Pegawai atau 18 digit NIP..." 
                            class="w-full text-xs pl-10 pr-3.5 py-2.5 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-slate-50/50 shadow-2xs transition">
                 </div>
 
@@ -76,7 +91,7 @@
                         <option value="">-- Semua Bulan Pensiun --</option>
                         @foreach($bulanOptions as $num => $namaBulan)
                             <option value="{{ $num }}" {{ request('bulan') == $num ? 'selected' : '' }}>
-                                Bulan {{ $namaBulan }}
+                                Bulan {{ $namaBulan }} (Bulan {{ str_pad($num, 2, '0', STR_PAD_LEFT) }})
                             </option>
                         @endforeach
                     </select>
@@ -107,25 +122,28 @@
                 </div>
             </div>
 
-            <div class="flex items-center justify-between pt-1 border-t border-slate-100">
-                <div class="text-[11px] text-slate-500">
-                    @if(request()->filled('bulan') || request()->filled('tahun'))
-                        <span class="font-semibold text-emerald-800">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-100">
+                <div class="text-[11px] text-slate-600">
+                    @if(request()->filled('bulan') || request()->filled('tahun') || request()->filled('search') || request()->filled('unit_kerja_id'))
+                        <span class="font-bold text-emerald-800">
                             🔍 Filter Aktif: 
                             {{ request('bulan') ? 'Bulan '.$bulanOptions[(int)request('bulan')] : '' }} 
                             {{ request('tahun') ? 'Tahun '.request('tahun') : '' }}
+                            {{ request('search') ? 'Kata Kunci: "'.request('search').'"' : '' }}
                         </span>
+                        <span class="text-slate-400">({{ $pensiunList->total() }} pegawai ditemukan)</span>
                     @else
-                        <span>Menampilkan seluruh jadwal pensiun terdaftar.</span>
+                        <span>Menampilkan seluruh daftar rekapitulasi proyeksi pensiun pegawai instansi.</span>
                     @endif
                 </div>
+
                 <div class="flex items-center gap-2">
-                    <button type="submit" class="py-2 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center space-x-1.5">
+                    <button type="submit" class="py-2.5 px-5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center space-x-1.5">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
-                        <span>Filter & Rekap</span>
+                        <span>Terapkan Rekap</span>
                     </button>
-                    @if(request()->hasAny(['search', 'bulan', 'tahun', 'unit_kerja_id']))
-                        <a href="{{ route('admin.pensiun.index') }}" title="Reset Filter" class="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition">
+                    @if(request()->hasAny(['search', 'bulan', 'tahun', 'unit_kerja_id', 'kategori_id']))
+                        <a href="{{ route('admin.pensiun.index') }}" title="Reset Filter" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition">
                             Reset
                         </a>
                     @endif
@@ -137,58 +155,74 @@
     <!-- Data Table -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse min-w-[700px]">
+            <table class="w-full text-left border-collapse min-w-[800px]">
                 <thead>
                     <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 font-semibold uppercase text-[11px]">
+                        <th class="py-3 px-4" width="40">No</th>
                         <th class="py-3 px-4">Nama Pegawai & NIP</th>
                         <th class="py-3 px-4">Unit Kerja & Jabatan</th>
-                        <th class="py-3 px-4">BUP</th>
-                        <th class="py-3 px-4">Tgl Pengajuan</th>
-                        <th class="py-3 px-4">TMT Pensiun</th>
-                        <th class="py-3 px-4">Keterangan</th>
-                        <th class="py-3 px-4 text-center">Aksi</th>
+                        <th class="py-3 px-4 text-center">Tgl Lahir (NIP)</th>
+                        <th class="py-3 px-4 text-center">BUP</th>
+                        <th class="py-3 px-4 text-center">TMT Pensiun</th>
+                        <th class="py-3 px-4 text-center">Sisa Masa Kerja</th>
+                        <th class="py-3 px-4 text-center" width="100">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-200">
-                    @forelse($pensiunList as $p)
+                    @forelse($pensiunList as $idx => $p)
                     <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 text-slate-400 font-mono text-center">
+                            {{ ($pensiunList->currentPage() - 1) * $pensiunList->perPage() + $idx + 1 }}
+                        </td>
                         <td class="py-3 px-4">
                             <a href="{{ route('admin.pegawai.show', $p->pegawai_id) }}" class="font-bold text-slate-900 hover:text-emerald-800 hover:underline">
-                                {{ $p->pegawai?->nama }}
+                                {{ $p->nama }}
                             </a>
-                            <div class="text-[11px] text-slate-400 font-mono">NIP. {{ $p->pegawai?->nip ?? '-' }}</div>
+                            <div class="text-[11px] text-slate-400 font-mono">NIP. {{ $p->nip }}</div>
                         </td>
                         <td class="py-3 px-4">
-                            <div class="text-slate-800 font-medium">{{ $p->pegawai?->formasiJabatan?->nama_jabatan ?? $p->pegawai?->jabatan ?? '-' }}</div>
-                            <div class="text-slate-400 text-[11px]">{{ $p->pegawai?->unitKerja?->nama ?? '-' }}</div>
+                            <div class="text-slate-800 font-medium">{{ $p->jabatan }}</div>
+                            <div class="text-slate-400 text-[11px]">{{ $p->unit_kerja }}</div>
                         </td>
-                        <td class="py-3 px-4 font-mono font-bold text-slate-700">
-                            <span class="px-2 py-0.5 bg-slate-100 rounded text-[11px]">{{ $p->pegawai?->batas_usia_pensiun ?? 58 }} Thn</span>
+                        <td class="py-3 px-4 font-mono text-center text-slate-600">
+                            {{ $p->tanggal_lahir ? $p->tanggal_lahir->format('d/m/Y') : '-' }}
                         </td>
-                        <td class="py-3 px-4 font-mono text-slate-500">{{ $p->tanggal_pengajuan?->format('d/m/Y') ?? '-' }}</td>
-                        <td class="py-3 px-4 font-mono font-bold text-amber-800">
-                            <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg font-semibold inline-block">
-                                {{ $p->tmt_pensiun?->format('d/m/Y') ?? '-' }}
+                        <td class="py-3 px-4 text-center">
+                            @if($p->bup === 60)
+                                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-lg text-[10px] border border-emerald-200">60 Tahun</span>
+                            @else
+                                <span class="px-2 py-0.5 bg-slate-100 text-slate-700 font-bold rounded-lg text-[10px]">58 Tahun</span>
+                            @endif
+                        </td>
+                        <td class="py-3 px-4 font-mono font-bold text-center text-amber-800">
+                            <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg inline-block">
+                                {{ $p->tmt_pensiun->format('d/m/Y') }}
                             </span>
                         </td>
-                        <td class="py-3 px-4 text-slate-600">{{ $p->keterangan ?? 'Masa Purna Tugas (BUP)' }}</td>
+                        <td class="py-3 px-4 text-center font-semibold">
+                            @if(str_contains($p->sisa_waktu, 'Purna'))
+                                <span class="px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-[10px]">Purna Tugas</span>
+                            @elseif(str_contains($p->sisa_waktu, 'Mendesak'))
+                                <span class="px-2 py-0.5 bg-rose-100 text-rose-800 border border-rose-200 rounded-lg text-[10px] font-bold animate-pulse">{{ $p->sisa_waktu }}</span>
+                            @else
+                                <span class="text-slate-700 text-[11px]">{{ $p->sisa_waktu }}</span>
+                            @endif
+                        </td>
                         <td class="py-3 px-4 text-center">
-                            <form method="POST" action="{{ route('admin.pensiun.destroy', $p->id) }}" onsubmit="return confirm('Hapus data pengajuan pensiun ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold rounded-lg transition text-[11px]">Hapus</button>
-                            </form>
+                            <a href="{{ route('admin.pegawai.show', $p->pegawai_id) }}" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold rounded-lg text-[11px] transition inline-block">
+                                Profil &rarr;
+                            </a>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="py-12 text-center text-slate-500">
+                        <td colspan="8" class="py-12 text-center text-slate-500">
                             <div class="flex flex-col items-center justify-center space-y-2">
                                 <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-xl">
                                     🌴
                                 </div>
-                                <div class="font-semibold text-slate-700 text-sm">Tidak Ada Data Pensiun Pada Periode Ini</div>
-                                <div class="text-xs text-slate-400">Coba ubah filter bulan / tahun atau klik "+ Catat Usulan Pensiun" untuk menambahkan data.</div>
+                                <div class="font-semibold text-slate-700 text-sm">Tidak Ada Pegawai Yang Pensiun Pada Periode Terpilih</div>
+                                <div class="text-xs text-slate-400">Coba ubah filter bulan atau tahun untuk melihat rekapitulasi periode lain.</div>
                             </div>
                         </td>
                     </tr>
