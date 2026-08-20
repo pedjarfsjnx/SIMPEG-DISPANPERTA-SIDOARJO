@@ -143,7 +143,7 @@
                         </div>
                         <div class="text-slate-500 text-[11px] mt-1">{{ $pensiun->jabatan }}</div>
                         <div class="text-amber-800 font-bold text-[11px] mt-1 flex items-center space-x-1">
-                            <span>📅 TMT: {{ $pensiun->tmt_pensiun->translatedFormat('d F Y') }}</span>
+                            <span>TMT: {{ $pensiun->tmt_pensiun->translatedFormat('d F Y') }}</span>
                             <span class="text-slate-400 font-normal">({{ $pensiun->bup }} Thn)</span>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                             Golongan: <span class="font-mono font-bold text-slate-800">{{ $kp->golongan ?? '-' }}</span> &bull; {{ $kp->jabatan }}
                         </div>
                         <div class="text-emerald-900 font-bold text-[11px] mt-1">
-                            🎯 Periode BKN: {{ $kp->tmt_kp->translatedFormat('d F Y') }}
+                            Periode BKN: {{ $kp->tmt_kp->translatedFormat('d F Y') }}
                         </div>
                     </div>
                     @endforeach

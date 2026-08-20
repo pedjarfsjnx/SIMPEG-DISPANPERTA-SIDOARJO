@@ -98,9 +98,9 @@
                     <tr>
                         <td colspan="7" class="py-12 text-center text-slate-500">
                             <div class="flex flex-col items-center justify-center space-y-2">
-                                <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-xl">
-                                    📄
-                                </div>
+                                <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+</div>
                                 <div class="font-semibold text-slate-700 text-sm">Belum Ada Usulan Kenaikan Pangkat</div>
                                 <div class="text-xs text-slate-400">Klik tombol "+ Tambah Usulan Pangkat" untuk mendaftarkan data baru.</div>
                             </div>

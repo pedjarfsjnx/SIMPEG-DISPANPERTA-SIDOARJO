@@ -147,7 +147,7 @@
         </div>
         <!-- Live Real-Time Clock Widget -->
         <div id="liveClock" class="font-mono bg-slate-950 text-amber-400 px-3 py-0.5 rounded-full text-[11px] font-bold shadow-xs flex-shrink-0 z-10">
-            🕒 Memuat waktu real-time...
+             Memuat waktu real-time...
         </div>
     </div>
 
@@ -244,7 +244,7 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             
-            clockEl.innerHTML = `🕒 ${dayName}, ${dayNum} ${monthName} ${year} &bull; ${hours}:${minutes}:${seconds} WIB`;
+            clockEl.innerHTML = ` ${dayName}, ${dayNum} ${monthName} ${year} &bull; ${hours}:${minutes}:${seconds} WIB`;
         }
         setInterval(updateLiveClock, 1000);
         updateLiveClock();

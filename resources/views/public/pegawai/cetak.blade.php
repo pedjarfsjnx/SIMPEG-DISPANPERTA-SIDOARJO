@@ -23,7 +23,7 @@
 
     <div class="no-print">
         <button onclick="window.print()" style="padding: 8px 16px; background: #166534; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-            🖨️ Cetak Dokumen (Print / Save PDF)
+            ️ Cetak Dokumen (Print / Save PDF)
         </button>
     </div>
 

@@ -40,7 +40,7 @@
             @else
                 <div class="text-center space-y-2 max-w-md py-6">
                     <div class="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center font-bold mx-auto text-lg">
-                        📷
+                        
                     </div>
                     <h4 class="font-bold text-slate-800 text-sm">Upload Foto Bagan Organisasi</h4>
                     <p class="text-xs text-slate-500 leading-relaxed">

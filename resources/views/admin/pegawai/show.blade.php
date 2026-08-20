@@ -83,7 +83,7 @@
         <!-- Column 1: Jabatan & Kedinasan -->
         <div class="bg-white rounded-2xl border border-slate-200/90 p-6 space-y-4 shadow-sm">
             <div class="flex items-center space-x-2.5 border-b border-slate-100 pb-3">
-                <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold text-xs">🏢</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-700"></span>
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Informasi Jabatan & Kedinasan</h3>
             </div>
 
@@ -129,7 +129,7 @@
         <!-- Column 2: Biodata & Kontak -->
         <div class="bg-white rounded-2xl border border-slate-200/90 p-6 space-y-4 shadow-sm">
             <div class="flex items-center space-x-2.5 border-b border-slate-100 pb-3">
-                <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold text-xs">👤</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-700"></span>
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Biodata Pribadi & Kontak</h3>
             </div>
 

@@ -12,7 +12,7 @@
         <form method="POST" action="{{ route('admin.import.commit') }}">
             @csrf
             <button type="submit" class="px-5 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold rounded-lg shadow">
-                ✓ Konfirmasi & Commit Simpan ke Database
+                Valid Konfirmasi & Commit Simpan ke Database
             </button>
         </form>
     </div>
