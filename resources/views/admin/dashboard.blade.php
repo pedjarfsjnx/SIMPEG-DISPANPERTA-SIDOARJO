@@ -18,13 +18,28 @@
         </div>
     </div>
 
-    <!-- Stats Grid -->
+        <!-- Stats Grid (Interactive Hover & Direct Filtering) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm border-l-4 border-l-emerald-800">
-            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Pegawai Aktif</div>
+        <a href="{{ route('admin.pegawai.index') }}" class="block bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs border-l-4 border-l-emerald-800 transform transition duration-200 hover:-translate-y-1 hover:shadow-md group">
+            <div class="flex justify-between items-start">
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-emerald-800">Total Pegawai Aktif</div>
+                <span class="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Kelola &rarr;</span>
+            </div>
             <div class="text-3xl font-bold text-slate-900 mt-1">{{ number_format($totalPegawai) }}</div>
-            <div class="text-xs text-slate-400 mt-1">Dalam database</div>
-        </div>
+            <div class="text-xs text-slate-400 mt-1">Personel dalam database</div>
+        </a>
+
+        @foreach($rekapKategori as $kat)
+        <a href="{{ route('admin.pegawai.index', ['kategori_id' => $kat->id]) }}" class="block bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs border-l-4 border-l-amber-500 transform transition duration-200 hover:-translate-y-1 hover:shadow-md group">
+            <div class="flex justify-between items-start">
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-amber-700">{{ $kat->nama }}</div>
+                <span class="text-[10px] text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Filter &rarr;</span>
+            </div>
+            <div class="text-3xl font-bold text-emerald-800 mt-1">{{ number_format($kat->pegawai_count) }}</div>
+            <div class="text-xs text-slate-400 mt-1">Lihat anggota {{ $kat->nama }}</div>
+        </a>
+        @endforeach
+    </div>
 
         @foreach($rekapKategori as $kat)
         <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm border-l-4 border-l-amber-500">

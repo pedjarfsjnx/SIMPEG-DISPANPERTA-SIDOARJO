@@ -12,16 +12,48 @@ use Illuminate\Http\RedirectResponse;
 
 class FormasiJabatanController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $formasiList = FormasiJabatan::with(['unitKerja', 'bidang', 'pegawai'])->get();
-        return view('admin.formasi-jabatan.index', compact('formasiList'));
+        $query = FormasiJabatan::with(['unitKerja', 'bidang', 'pegawai']);
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('nama_jabatan', 'like', "%{$search}%")
+                  ->orWhereHas('pegawai', function($qp) use ($search) {
+                      $qp->where('nama', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        if ($request->filled('unit_kerja_id')) {
+            $query->where('unit_kerja_id', $request->integer('unit_kerja_id'));
+        }
+
+        if ($request->filled('status_formasi')) {
+            $query->where('status_formasi', $request->input('status_formasi'));
+        }
+
+        $totalCount = FormasiJabatan::count();
+        $terisiCount = FormasiJabatan::where('status_formasi', 'terisi')->count();
+        $kosongCount = FormasiJabatan::where('status_formasi', 'kosong')->count();
+
+        $formasiList = $query->orderBy('unit_kerja_id')->orderBy('nama_jabatan')->paginate(20)->withQueryString();
+        $unitKerjaList = UnitKerja::orderBy('nama')->get();
+
+        return view('admin.formasi-jabatan.index', compact(
+            'formasiList',
+            'unitKerjaList',
+            'totalCount',
+            'terisiCount',
+            'kosongCount'
+        ));
     }
 
     public function create(): View
     {
-        $unitKerjaList = UnitKerja::where('aktif', true)->get();
-        $bidangList = Bidang::where('aktif', true)->get();
+        $unitKerjaList = UnitKerja::orderBy('nama')->get();
+        $bidangList = Bidang::orderBy('nama')->get();
         return view('admin.formasi-jabatan.create', compact('unitKerjaList', 'bidangList'));
     }
 
@@ -37,14 +69,14 @@ class FormasiJabatanController extends Controller
 
         FormasiJabatan::create($validated);
 
-        return redirect()->route('admin.formasi-jabatan.index')->with('success', 'Formasi Jabatan berhasil ditambahkan.');
+        return redirect()->route('admin.formasi-jabatan.index')->with('success', 'Formasi Jabatan baru berhasil ditambahkan.');
     }
 
     public function edit($id): View
     {
         $formasi = FormasiJabatan::findOrFail($id);
-        $unitKerjaList = UnitKerja::where('aktif', true)->get();
-        $bidangList = Bidang::where('unit_kerja_id', $formasi->unit_kerja_id)->get();
+        $unitKerjaList = UnitKerja::orderBy('nama')->get();
+        $bidangList = Bidang::where('unit_kerja_id', $formasi->unit_kerja_id)->orderBy('nama')->get();
 
         return view('admin.formasi-jabatan.edit', compact('formasi', 'unitKerjaList', 'bidangList'));
     }
