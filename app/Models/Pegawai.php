@@ -71,6 +71,24 @@ class Pegawai extends Model
         return $this->hasMany(RiwayatKenaikanPangkat::class, 'pegawai_id');
     }
 
+    // Helper: Apakah Pegawai adalah PNS Murni (Bukan PPPK / Honorer)
+    public function getIsPnsAttribute(): bool
+    {
+        $kategoriNama = strtoupper($this->kategori?->nama ?? '');
+        return ($this->kategori_pegawai_id === 1 || str_contains($kategoriNama, 'PNS')) 
+            && !str_contains($kategoriNama, 'PPPK') 
+            && !str_contains($kategoriNama, 'NON-PNS')
+            && !empty($this->golongan) 
+            && $this->golongan !== '-';
+    }
+
+    // Helper: Apakah Pegawai adalah PPPK
+    public function getIsPppkAttribute(): bool
+    {
+        $kategoriNama = strtoupper($this->kategori?->nama ?? '');
+        return str_contains($kategoriNama, 'PPPK');
+    }
+
     // Accessor: Usia Pegawai Saat Ini
     public function getUsiaAttribute(): ?int
     {
@@ -111,7 +129,7 @@ class Pegawai extends Model
             return 60;
         }
 
-        // 3. Fungsional Terampil (Mahir/Terampil/Pemula/Penyelia), Fungsional Ahli Pertama & Muda, Pelaksana, Administrasi -> 58 Tahun
+        // 3. Fungsional Kategori Terampil (Pemula/Terampil/Mahir/Penyelia), Fungsional Ahli Pertama & Muda, Pelaksana, Administrasi -> 58 Tahun
         return 58;
     }
 
@@ -132,10 +150,11 @@ class Pegawai extends Model
         ];
     }
 
-    // Accessor: Estimasi Jadwal Kenaikan Pangkat Reguler (Setiap 4 Tahun dari TMT)
+    // Accessor: Estimasi Jadwal Kenaikan Pangkat Reguler (Khusus PNS, disesuaikan 6 Periode BKN)
     public function getEstimasiKpBerikutnyaAttribute(): ?Carbon
     {
-        if (!$this->tmt_jabatan) {
+        // Kenaikan Pangkat HANYA untuk PNS yang memiliki golongan
+        if (!$this->is_pns || !$this->tmt_jabatan) {
             return null;
         }
         
@@ -145,7 +164,34 @@ class Pegawai extends Model
         while ($tmt->isPast()) {
             $tmt->addYears(4);
         }
+
+        // 6 Periode Kenaikan Pangkat Resmi BKN (1 Feb, 1 Apr, 1 Jun, 1 Ags, 1 Okt, 1 Des)
+        $month = (int) $tmt->format('m');
+        $year = (int) $tmt->format('Y');
+
+        $periodeBkn = [2, 4, 6, 8, 10, 12];
+        $targetMonth = 2;
+        $targetYear = $year;
+
+        foreach ($periodeBkn as $pMonth) {
+            if ($pMonth >= $month) {
+                $targetMonth = $pMonth;
+                break;
+            }
+        }
+        if ($month > 12) {
+            $targetMonth = 2;
+            $targetYear = $year + 1;
+        }
+
+        $tmtKp = Carbon::createFromDate($targetYear, $targetMonth, 1);
+
+        // Jika tanggal KP melebihi batas usia pensiun, maka tidak ada kenaikan pangkat setelah pensiun
+        $estPensiun = $this->estimasi_pensiun['tanggal'];
+        if ($estPensiun && $tmtKp->gt($estPensiun)) {
+            return null;
+        }
         
-        return $tmt;
+        return $tmtKp;
     }
 }

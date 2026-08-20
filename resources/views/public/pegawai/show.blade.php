@@ -3,119 +3,234 @@
 @section('title', 'Detail Pegawai - '.$pegawai->nama)
 
 @section('content')
-<div class="max-w-4xl mx-auto space-y-5 text-xs">
+<div class="max-w-5xl mx-auto space-y-6 text-xs">
     
-    <a href="{{ route('public.pegawai.index') }}" class="inline-flex items-center font-medium text-emerald-800 hover:text-emerald-950 transition">
-        &larr; Kembali ke Direktori Pegawai
-    </a>
-
-    <!-- Header Card -->
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-            <span class="inline-block px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-semibold rounded mb-2">
-                {{ $pegawai->kategori?->nama ?? 'Pegawai' }}
-            </span>
-            <h2 class="text-2xl font-bold text-slate-900">{{ $pegawai->nama }}</h2>
-            <p class="text-xs text-slate-500 font-mono mt-1">
-                {{ $pegawai->nip ? 'NIP. '.$pegawai->nip : ($pegawai->nik ? 'NIK. '.$pegawai->nik : 'NIP / NIK tidak tertera di Excel master') }}
-            </p>
-        </div>
-        <div class="text-left sm:text-right border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100">
-            <div class="text-[11px] text-slate-400 font-medium uppercase">Status Kepegawaian</div>
-            <div class="text-sm font-bold text-slate-900 mt-0.5">{{ $pegawai->status?->nama ?? 'Aktif' }}</div>
-        </div>
+    <!-- Top Back Navigation -->
+    <div>
+        <a href="{{ route('public.pegawai.index') }}" class="inline-flex items-center space-x-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition border border-slate-200 shadow-2xs">
+            <span>&larr;</span>
+            <span>Kembali ke Direktori Pegawai</span>
+        </a>
     </div>
 
-    <!-- Details Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <!-- Executive Profile Banner Card -->
+    <div class="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-full blur-3xl -z-10 opacity-70"></div>
         
-        <!-- Column 1: Jabatan & Unit -->
-        <div class="bg-white rounded-lg border border-slate-200 p-5 space-y-4 shadow-sm">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-100 pb-2">Informasi Jabatan & Unit Kerja</h3>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div class="flex items-start sm:items-center space-x-5">
+                <!-- Monogram Avatar -->
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-emerald-800 to-teal-900 text-white flex items-center justify-center font-black text-2xl sm:text-3xl shadow-md border-2 border-emerald-700/20 flex-shrink-0">
+                    {{ strtoupper(substr($pegawai->nama, 0, 1)) }}
+                </div>
 
-            <div>
-                <label class="text-slate-400 block text-[11px]">Unit Kerja Utama</label>
-                <p class="font-semibold text-slate-900 text-sm">{{ $pegawai->unitKerja?->nama ?? '-' }}</p>
+                <div class="space-y-1.5">
+                    <div class="flex flex-wrap items-center gap-2">
+                        @if($pegawai->is_pns)
+                            <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-lg text-[10px] uppercase tracking-wider border border-emerald-200">
+                                PNS (Pegawai Negeri Sipil)
+                            </span>
+                        @elseif($pegawai->is_pppk)
+                            <span class="px-2.5 py-0.5 bg-amber-100 text-amber-900 font-bold rounded-lg text-[10px] uppercase tracking-wider border border-amber-200">
+                                {{ $pegawai->kategori?->nama ?? 'PPPK' }}
+                            </span>
+                        @else
+                            <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 font-bold rounded-lg text-[10px] uppercase tracking-wider border border-slate-200">
+                                {{ $pegawai->kategori?->nama ?? 'Non-ASN' }}
+                            </span>
+                        @endif
+                        <span class="inline-flex items-center space-x-1 px-2.5 py-0.5 bg-emerald-50 text-emerald-800 font-semibold rounded-lg text-[10px] border border-emerald-200">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <span>{{ $pegawai->status?->nama ?? 'Aktif' }}</span>
+                        </span>
+                    </div>
+
+                    <h2 class="text-2xl font-black text-slate-900 tracking-tight">{{ $pegawai->nama }}</h2>
+
+                    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-500 text-xs">
+                        <span class="font-mono font-medium">
+                            {{ $pegawai->nip ? 'NIP. '.$pegawai->nip : ($pegawai->nik ? 'NIK. '.$pegawai->nik : 'NIP / NIK Belum Terdata') }}
+                        </span>
+                        @if($pegawai->golongan)
+                            <span class="text-slate-300">&bull;</span>
+                            <span class="font-bold text-emerald-900">Golongan {{ $pegawai->golongan }}</span>
+                        @endif
+                    </div>
+                </div>
             </div>
 
-            <div>
-                <label class="text-slate-400 block text-[11px]">Bidang / Sub-Unit</label>
-                <p class="font-semibold text-slate-900 text-sm">
-                    {{ $pegawai->bidang?->nama ?: 'Non-Struktural (Pelaksana Unit Kerja)' }}
-                </p>
-            </div>
-
-            <div>
-                <label class="text-slate-400 block text-[11px]">Jabatan / Kebutuhan Posisi</label>
-                <p class="font-semibold text-slate-900 text-sm">{{ $pegawai->formasiJabatan?->nama_jabatan ?? '-' }}</p>
-            </div>
-
-            <div>
-                <label class="text-slate-400 block text-[11px]">Golongan / Ruang</label>
-                <p class="font-mono font-semibold text-slate-900 text-sm">{{ $pegawai->golongan ?: '-' }}</p>
-            </div>
-        </div>
-
-        <!-- Column 2: Umum & TMT -->
-        <div class="bg-white rounded-lg border border-slate-200 p-5 space-y-4 shadow-sm">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-100 pb-2">Informasi Umum & TMT</h3>
-
-            <div>
-                <label class="text-slate-400 block text-[11px]">Pendidikan Terakhir</label>
-                <p class="font-semibold text-slate-900 text-sm">{{ $pegawai->pendidikan ?: '-' }}</p>
-            </div>
-
-            <div>
-                <label class="text-slate-400 block text-[11px]">TMT Jabatan / Pengangkatan (Terhitung Mulai Tanggal)</label>
-                <p class="font-semibold text-emerald-900 text-sm font-mono">
-                    {{ $pegawai->tmt_jabatan ? \Carbon\Carbon::parse($pegawai->tmt_jabatan)->translatedFormat('d F Y') : '-' }}
-                </p>
-            </div>
-
-            <div>
-                <label class="text-slate-400 block text-[11px]">Usia Pegawai Saat Ini</label>
-                <p class="font-semibold text-slate-900 text-sm">
-                    {{ $pegawai->usia ? $pegawai->usia.' Tahun' : '-' }}
-                </p>
-            </div>
-
-            <div class="bg-slate-50 border border-slate-200 p-3 rounded text-[11px] text-slate-600">
-                Informasi Kontak Pribadi (NIK, Telepon, Email) dibatasi aksesnya hanya untuk pengelola administrasi kepegawaian.
+            <div class="sm:text-right border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100 w-full sm:w-auto">
+                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Unit Kerja Induk</div>
+                <div class="text-sm font-extrabold text-slate-800 mt-0.5">{{ $pegawai->unitKerja?->nama ?? '-' }}</div>
+                <div class="text-xs text-slate-400 mt-0.5">{{ $pegawai->bidang?->nama ?? 'Non-Bidang / Fungsional' }}</div>
             </div>
         </div>
-
     </div>
 
-    <!-- Smart Auto-Calculated Career & Pension Section -->
-    <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-4">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-800 border-b border-slate-100 pb-2 flex items-center justify-between">
-            <span>Estimasi Karir & Usia Pensiun (Otomatis Terhitung dari NIP/TMT)</span>
-            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Otomatis BKN</span>
-        </h3>
+    <!-- 2 Column Details Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Column 1: Jabatan & Kedinasan -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 space-y-4 shadow-sm">
+            <div class="flex items-center space-x-2.5 border-b border-slate-100 pb-3">
+                <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold text-xs">🏢</span>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Informasi Jabatan & Kedinasan</h3>
+            </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="space-y-3.5">
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Unit Kerja</label>
+                    <p class="font-bold text-slate-900 text-sm mt-0.5">{{ $pegawai->unitKerja?->nama ?? '-' }}</p>
+                </div>
+
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Bidang / Sub-Unit</label>
+                    <p class="font-semibold text-slate-800 text-sm mt-0.5">
+                        {{ $pegawai->bidang?->nama ?: 'Non-Struktural (Pelaksana Unit Kerja)' }}
+                    </p>
+                </div>
+
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Nama Jabatan / Posisi</label>
+                    <p class="font-bold text-slate-900 text-sm mt-0.5">{{ $pegawai->formasiJabatan?->nama_jabatan ?? $pegawai->jabatan ?? '-' }}</p>
+                </div>
+
+                <div class="pt-2 border-t border-slate-100">
+                    <label class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Golongan / Ruang</label>
+                    <p class="font-mono font-bold text-slate-900 text-sm mt-0.5">{{ $pegawai->golongan ?: '-' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 2: Data Publik & TMT -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 space-y-4 shadow-sm">
+            <div class="flex items-center space-x-2.5 border-b border-slate-100 pb-3">
+                <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold text-xs">📋</span>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Informasi Riwayat & Pendidikan</h3>
+            </div>
+
+            <div class="space-y-3.5">
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Pendidikan Terakhir</label>
+                    <p class="font-bold text-slate-900 text-sm mt-0.5">{{ $pegawai->pendidikan ?: '-' }}</p>
+                </div>
+
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">TMT Jabatan / Pengangkatan</label>
+                    <p class="font-mono font-bold text-emerald-900 text-sm mt-0.5">
+                        {{ $pegawai->tmt_jabatan ? $pegawai->tmt_jabatan->translatedFormat('d F Y') : '-' }}
+                    </p>
+                </div>
+
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Usia Saat Ini</label>
+                    <p class="font-bold text-slate-900 text-sm mt-0.5">{{ $pegawai->usia ? $pegawai->usia.' Tahun' : '-' }}</p>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl text-[11px] text-slate-500 mt-2">
+                    🔒 Informasi Kontak Pribadi (NIK, Telepon, Email) dirahasiakan untuk perlindungan privasi data pegawai.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Career & Pension Projection Box -->
+    <div class="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+            <div>
+                <h3 class="text-sm font-extrabold uppercase tracking-wider text-slate-900">
+                    Proyeksi Karir & Batas Usia Pensiun (BUP)
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">Dihitung otomatis sesuai regulasi resmi BKN & UU ASN No. 20 Tahun 2023.</p>
+            </div>
+            <span class="px-3 py-1 bg-emerald-100 text-emerald-900 font-bold rounded-lg text-[10px] tracking-wider self-start sm:self-auto border border-emerald-200">
+                Standar BKN
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             
-            <!-- Estimasi Pensiun -->
-            <div class="bg-amber-50/60 border border-amber-200 rounded p-4 space-y-1">
-                <div class="text-[11px] font-bold text-amber-900 uppercase">Jadwal Batas Usia Pensiun (BUP {{ $pegawai->estimasi_pensiun['usia'] }} Thn)</div>
-                <div class="text-base font-bold text-slate-900 font-mono">
-                    {{ $pegawai->estimasi_pensiun['tanggal'] ? $pegawai->estimasi_pensiun['tanggal']->translatedFormat('d F Y') : 'Membutuhkan Tanggal Lahir / NIP' }}
+            <!-- Box 1: Batas Usia Pensiun (BUP) -->
+            <div class="bg-gradient-to-br from-amber-50/70 to-orange-50/40 border border-amber-200/80 rounded-2xl p-5 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-amber-900 uppercase tracking-wider">Jadwal Batas Usia Pensiun</span>
+                    <span class="px-2 py-0.5 bg-amber-200/60 text-amber-950 font-bold rounded text-[10px]">
+                        BUP {{ $pegawai->estimasi_pensiun['usia'] }} Tahun
+                    </span>
                 </div>
-                <p class="text-[10px] text-amber-800">
-                    Dihitung otomatis berdasarkan usia pensiun resmi ASN ({{ $pegawai->estimasi_pensiun['usia'] }} tahun).
+                
+                <div class="text-xl font-extrabold text-slate-900 font-mono">
+                    {{ $pegawai->estimasi_pensiun['tanggal'] ? $pegawai->estimasi_pensiun['tanggal']->translatedFormat('d F Y') : 'Memerlukan NIP / Tanggal Lahir' }}
+                </div>
+
+                <p class="text-xs text-amber-900/80 leading-relaxed">
+                    @if($pegawai->estimasi_pensiun['usia'] === 60)
+                        Pejabat Pimpinan Tinggi / Fungsional Ahli Madya purna tugas pada usia 60 tahun (UU ASN No. 20/2023).
+                    @else
+                        Pejabat Pelaksana, Pengawas, Administrasi, & Fungsional Pertama/Muda purna tugas pada usia 58 tahun.
+                    @endif
                 </p>
             </div>
 
-            <!-- Estimasi Kenaikan Pangkat -->
-            <div class="bg-emerald-50/60 border border-emerald-200 rounded p-4 space-y-1">
-                <div class="text-[11px] font-bold text-emerald-900 uppercase">Perkiraan Kenaikan Pangkat (KP 4 Thn Sekali)</div>
-                <div class="text-base font-bold text-slate-900 font-mono">
-                    {{ $pegawai->estimasi_kp_berikutnya ? $pegawai->estimasi_kp_berikutnya->translatedFormat('d F Y') : 'Membutuhkan TMT Jabatan / NIP' }}
+            <!-- Box 2: Kenaikan Pangkat (PNS) ATAU Skema PPPK -->
+            @if($pegawai->is_pns)
+                <div class="bg-gradient-to-br from-emerald-50/70 to-teal-50/40 border border-emerald-200/80 rounded-2xl p-5 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-bold text-emerald-900 uppercase tracking-wider">Proyeksi Kenaikan Pangkat</span>
+                        <span class="px-2 py-0.5 bg-emerald-200/60 text-emerald-950 font-bold rounded text-[10px]">
+                            Periode BKN
+                        </span>
+                    </div>
+
+                    @if($pegawai->estimasi_kp_berikutnya)
+                        <div class="text-xl font-extrabold text-emerald-950 font-mono">
+                            {{ $pegawai->estimasi_kp_berikutnya->translatedFormat('d F Y') }}
+                        </div>
+                        <p class="text-xs text-emerald-900/80 leading-relaxed">
+                            Dihitung per siklus 4 tahunan disesuaikan dengan 6 periode kenaikan pangkat resmi BKN (PerBKN No. 4/2023).
+                        </p>
+                    @else
+                        <div class="text-sm font-bold text-slate-700 mt-1">
+                            Mencapai Masa Purna Tugas / Batas Golongan
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Pegawai telah mencapai jenjang puncak atau memasuki batas usia pensiun.
+                        </p>
+                    @endif
                 </div>
-                <p class="text-[10px] text-emerald-800">
-                    Dihitung otomatis per siklus 4 tahunan dari TMT Pengangkatan/Jabatan.
-                </p>
-            </div>
+            @elseif($pegawai->is_pppk)
+                <div class="bg-gradient-to-br from-sky-50/70 to-blue-50/40 border border-sky-200/80 rounded-2xl p-5 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-bold text-sky-900 uppercase tracking-wider">Skema Perjanjian Kerja PPPK</span>
+                        <span class="px-2 py-0.5 bg-sky-200/60 text-sky-950 font-bold rounded text-[10px]">
+                            PP No. 49/2018
+                        </span>
+                    </div>
+
+                    <div class="text-sm font-bold text-sky-950 mt-1">
+                        Evaluasi Kinerja & Kenaikan Gaji Berkala
+                    </div>
+                    <p class="text-xs text-sky-900/80 leading-relaxed">
+                        Sesuai PP Manajemen PPPK, formasi PPPK tidak menggunakan sistem kenaikan pangkat PNS reguler.
+                    </p>
+                </div>
+            @else
+                <div class="bg-gradient-to-br from-slate-50 to-gray-50 border border-slate-200 rounded-2xl p-5 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Status Tenaga Non-ASN</span>
+                        <span class="px-2 py-0.5 bg-slate-200 text-slate-800 font-bold rounded text-[10px]">
+                            THL / Honorer
+                        </span>
+                    </div>
+
+                    <div class="text-sm font-bold text-slate-800 mt-1">
+                        Tenaga Pendukung Operasional
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Masa penugasan mengikuti surat keputusan (SK) penugasan instansi.
+                    </p>
+                </div>
+            @endif
 
         </div>
     </div>
