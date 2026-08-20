@@ -103,16 +103,45 @@ class Pegawai extends Model
         return null;
     }
 
-    // Accessor: Estimasi Tanggal Batas Usia Pensiun (58 Thn / 60 Thn untuk Kadis)
+        // Accessor: Batas Usia Pensiun (60 Thn untuk Kepala & Fungsional, 58 Thn untuk Pelaksana)
+    public function getBatasUsiaPensiunAttribute(): int
+    {
+        $jabatan = strtoupper($this->formasiJabatan?->nama_jabatan ?? $this->jabatan ?? '');
+        $kelas = (int) ($this->formasiJabatan?->kelas_jabatan ?? 0);
+
+        // 1. Kepala Dinas / Pimpinan Tinggi / Eselon II / Jabatan Struktural Kepala (60 Tahun)
+        if ($kelas >= 14 || str_contains($jabatan, 'KEPALA DINAS') || str_contains($jabatan, 'KEPALA')) {
+            return 60;
+        }
+
+        // 2. Jabatan Fungsional (JFT) -> Ahli, Fungsional, Medik Veteriner, Penyuluh, Dokter Hewan, dll. (60 Tahun)
+        if (
+            str_contains($jabatan, 'AHLI') ||
+            str_contains($jabatan, 'FUNGSIONAL') ||
+            str_contains($jabatan, 'VETERINER') ||
+            str_contains($jabatan, 'PENYULUH') ||
+            str_contains($jabatan, 'PENGAWAS') ||
+            str_contains($jabatan, 'DOKTER') ||
+            str_contains($jabatan, 'PRANATA') ||
+            str_contains($jabatan, 'ANALIS') ||
+            str_contains($jabatan, 'AUDITOR')
+        ) {
+            return 60;
+        }
+
+        // 3. Pelaksana / Administrasi Umum (58 Tahun)
+        return 58;
+    }
+
+    // Accessor: Estimasi Tanggal Batas Usia Pensiun
     public function getEstimasiPensiunAttribute(): array
     {
         $tglLahir = $this->tanggal_lahir_effektif;
+        $batasUsia = $this->batas_usia_pensiun;
         if (!$tglLahir) {
-            return ['usia' => 58, 'tanggal' => null];
+            return ['usia' => $batasUsia, 'tanggal' => null];
         }
 
-        // Kadis / Eselon II.b = 60 Tahun, Lainnya = 58 Tahun
-        $batasUsia = ($this->formasiJabatan?->kelas_jabatan >= 14) ? 60 : 58;
         $tglPensiun = $tglLahir->copy()->addYears($batasUsia)->endOfMonth();
 
         return [
