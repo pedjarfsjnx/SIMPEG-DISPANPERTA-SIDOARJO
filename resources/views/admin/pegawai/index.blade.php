@@ -16,51 +16,91 @@
         </div>
     </div>
 
-    <!-- Filters & Search -->
-    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
-        <form method="GET" action="{{ route('admin.pegawai.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari Nama, NIP, atau NIK..." class="text-xs rounded border-slate-300">
+        <!-- Filters & Search Card -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+        <form method="GET" action="{{ route('admin.pegawai.index') }}" class="space-y-3">
             
-            <select name="kategori_id" class="text-xs rounded border-slate-300">
-                <option value="">Semua Kategori</option>
-                @foreach($kategoriOptions as $kat)
-                    <option value="{{ $kat->id }}" {{ request('kategori_id') == $kat->id ? 'selected' : '' }}>{{ $kat->nama }}</option>
-                @endforeach
-            </select>
+            <!-- Row 1: Search Bar & Primary Filters -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+                <!-- Search Input with Magnifier Icon -->
+                <div class="md:col-span-5 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <input type="text" 
+                           name="search" 
+                           value="{{ request('search') }}" 
+                           placeholder="Cari Nama Lengkap, NIP (18 digit), atau NIK..." 
+                           class="w-full text-xs pl-10 pr-3.5 py-2.5 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-slate-50/50 shadow-2xs transition">
+                </div>
 
-            <select name="unit_kerja_id" class="text-xs rounded border-slate-300">
-                <option value="">Semua Unit Kerja</option>
-                @foreach($unitKerjaOptions as $unitKerja)
-                    <option value="{{ $unitKerja->id }}" {{ request('unit_kerja_id') == $unitKerja->id ? 'selected' : '' }}>{{ $unitKerja->nama }}</option>
-                @endforeach
-            </select>
+                <!-- Kategori Pegawai -->
+                <div class="md:col-span-3">
+                    <select name="kategori_id" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
+                        <option value="">-- Semua Kategori Pegawai --</option>
+                        @foreach($kategoriOptions as $kat)
+                            <option value="{{ $kat->id }}" {{ request('kategori_id') == $kat->id ? 'selected' : '' }}>{{ $kat->nama }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <select name="bidang_id" class="text-xs rounded border-slate-300">
-                <option value="">Semua Bidang</option>
-                @foreach($bidangOptions as $bidang)
-                    <option value="{{ $bidang->id }}" {{ request('bidang_id') == $bidang->id ? 'selected' : '' }}>
-                        {{ $bidang->unitKerja?->nama ? $bidang->unitKerja->nama.' — ' : '' }}{{ $bidang->nama }}
-                    </option>
-                @endforeach
-            </select>
+                <!-- Unit Kerja -->
+                <div class="md:col-span-4">
+                    <select name="unit_kerja_id" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
+                        <option value="">-- Semua Unit Kerja --</option>
+                        @foreach($unitKerjaOptions as $unitKerja)
+                            <option value="{{ $unitKerja->id }}" {{ request('unit_kerja_id') == $unitKerja->id ? 'selected' : '' }}>{{ $unitKerja->nama }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
 
-            <select name="trashed" class="text-xs rounded border-slate-300">
-                <option value="">Data Aktif</option>
-                <option value="only" {{ request('trashed') == 'only' ? 'selected' : '' }}>Data Terarsip (Soft Deleted)</option>
-            </select>
+            <!-- Row 2: Secondary Filters & Action Buttons -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-3 pt-1 border-t border-slate-100">
+                <!-- Bidang / Sub-Unit -->
+                <div class="md:col-span-4">
+                    <select name="bidang_id" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
+                        <option value="">-- Semua Bidang / Sub-Unit --</option>
+                        @foreach($bidangOptions as $bidang)
+                            <option value="{{ $bidang->id }}" {{ request('bidang_id') == $bidang->id ? 'selected' : '' }}>
+                                {{ $bidang->unitKerja?->nama ? $bidang->unitKerja->nama.' — ' : '' }}{{ $bidang->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <select name="sort_by" class="text-xs rounded border-slate-300">
-                <option value="nama_asc" {{ request('sort_by', 'nama_asc') === 'nama_asc' ? 'selected' : '' }}>Urutkan: Nama A–Z</option>
-                <option value="nama_desc" {{ request('sort_by') === 'nama_desc' ? 'selected' : '' }}>Urutkan: Nama Z–A</option>
-                <option value="unit_kerja_asc" {{ request('sort_by') === 'unit_kerja_asc' ? 'selected' : '' }}>Urutkan: Unit Kerja A–Z</option>
-                <option value="unit_kerja_desc" {{ request('sort_by') === 'unit_kerja_desc' ? 'selected' : '' }}>Urutkan: Unit Kerja Z–A</option>
-                <option value="bidang_asc" {{ request('sort_by') === 'bidang_asc' ? 'selected' : '' }}>Urutkan: Bidang A–Z</option>
-                <option value="bidang_desc" {{ request('sort_by') === 'bidang_desc' ? 'selected' : '' }}>Urutkan: Bidang Z–A</option>
-            </select>
+                <!-- Status Arsip / Soft Delete -->
+                <div class="md:col-span-2">
+                    <select name="trashed" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
+                        <option value="">Data Aktif</option>
+                        <option value="only" {{ request('trashed') == 'only' ? 'selected' : '' }}>Terarsip (Deleted)</option>
+                    </select>
+                </div>
 
-            <div class="flex gap-2">
-                <button type="submit" class="w-full bg-emerald-800 text-white font-semibold text-xs py-2 rounded">Filter</button>
-                <a href="{{ route('admin.pegawai.index') }}" class="px-3 bg-slate-200 text-slate-700 font-semibold text-xs py-2 rounded">Reset</a>
+                <!-- Sort By Dropdown -->
+                <div class="md:col-span-3">
+                    <select name="sort_by" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
+                        <option value="nama_asc" {{ request('sort_by', 'nama_asc') === 'nama_asc' ? 'selected' : '' }}>Urutan: Nama (A &rarr; Z)</option>
+                        <option value="nama_desc" {{ request('sort_by') === 'nama_desc' ? 'selected' : '' }}>Urutan: Nama (Z &rarr; A)</option>
+                        <option value="unit_kerja_asc" {{ request('sort_by') === 'unit_kerja_asc' ? 'selected' : '' }}>Urutan: Unit Kerja (A &rarr; Z)</option>
+                        <option value="unit_kerja_desc" {{ request('sort_by') === 'unit_kerja_desc' ? 'selected' : '' }}>Urutan: Unit Kerja (Z &rarr; A)</option>
+                        <option value="bidang_asc" {{ request('sort_by') === 'bidang_asc' ? 'selected' : '' }}>Urutan: Bidang (A &rarr; Z)</option>
+                        <option value="bidang_desc" {{ request('sort_by') === 'bidang_desc' ? 'selected' : '' }}>Urutan: Bidang (Z &rarr; A)</option>
+                    </select>
+                </div>
+
+                <!-- Submit & Reset Buttons -->
+                <div class="md:col-span-3 flex items-center gap-2">
+                    <button type="submit" class="flex-1 py-2.5 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center justify-center space-x-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                        <span>Terapkan Filter</span>
+                    </button>
+                    @if(request()->hasAny(['search', 'kategori_id', 'unit_kerja_id', 'bidang_id', 'trashed', 'sort_by']))
+                        <a href="{{ route('admin.pegawai.index') }}" title="Reset Semua Filter" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition flex items-center justify-center">
+                            Reset
+                        </a>
+                    @endif
+                </div>
             </div>
         </form>
     </div>
