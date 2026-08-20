@@ -87,6 +87,25 @@
         </form>
     </div>
 
+        <!-- Result Summary Counter Banner -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 bg-white rounded-xl border border-slate-200 shadow-2xs text-xs">
+        <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-lg text-xs">
+                {{ $pegawaiList->total() }} Pegawai Ditemukan
+            </span>
+            <span class="text-slate-500">
+                @if(request()->hasAny(['search', 'kategori_id', 'unit_kerja_id', 'bidang_id', 'kelas_jabatan']))
+                    Hasil pencarian dan penyaringan dari total <strong>{{ \App\Models\Pegawai::count() }}</strong> personel.
+                @else
+                    Menampilkan seluruh personel aktif Dinas Pangan dan Pertanian Sidoarjo.
+                @endif
+            </span>
+        </div>
+        <div class="text-slate-400 text-[11px]">
+            Halaman {{ $pegawaiList->currentPage() }} dari {{ $pegawaiList->lastPage() ?: 1 }}
+        </div>
+    </div>
+
     <!-- Data Table -->
     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden text-xs">
         <div class="overflow-x-auto">
