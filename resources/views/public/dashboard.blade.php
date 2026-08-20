@@ -117,63 +117,79 @@
 
         </div>
 
-        <!-- Column 3: Informational Widgets -->
+                <!-- Column 3: Informational Widgets -->
         <div class="space-y-6">
             
-            <!-- Widget Usulan Pensiun -->
-            <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-3">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-                    <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Usulan Pensiun</h3>
-                    <span class="text-[10px] font-semibold uppercase px-2 py-0.5 bg-slate-100 text-slate-600 rounded">Info</span>
+            <!-- Widget Usulan Pensiun Terdekat -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Jadwal Pensiun Terdekat</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Urutan purna tugas paling dekat</p>
+                    </div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-900 rounded-lg">BUP Otomatis</span>
                 </div>
                 @if($pensiunMendatang->count() > 0)
                 <div class="divide-y divide-slate-100 text-xs">
                     @foreach($pensiunMendatang as $pensiun)
-                    <div class="py-2.5 first:pt-0 last:pb-0">
-                        <a href="{{ route('public.pegawai.show', $pensiun->pegawai_id) }}" class="font-bold text-slate-900 hover:text-emerald-800 hover:underline block">
-                            {{ $pensiun->pegawai?->nama ?? 'Pegawai' }}
-                        </a>
-                        <div class="text-slate-500 text-[11px] mt-0.5">Unit: {{ $pensiun->pegawai?->unitKerja?->nama ?? '-' }}</div>
-                        <div class="text-amber-700 font-semibold text-[11px] mt-0.5">
-                            TMT Pensiun: {{ \Carbon\Carbon::parse($pensiun->tmt_pensiun)->format('d/m/Y') }}
+                    <div class="py-3 first:pt-1 last:pb-1">
+                        <div class="flex items-start justify-between gap-2">
+                            <a href="{{ route('public.pegawai.show', $pensiun->pegawai_id) }}" class="font-bold text-slate-900 hover:text-emerald-800 hover:underline block leading-snug">
+                                {{ $pensiun->nama }}
+                            </a>
+                            <span class="px-2 py-0.5 bg-amber-50 text-amber-900 font-bold rounded text-[10px] border border-amber-200 flex-shrink-0">
+                                {{ $pensiun->sisa_waktu }}
+                            </span>
+                        </div>
+                        <div class="text-slate-500 text-[11px] mt-1">{{ $pensiun->jabatan }}</div>
+                        <div class="text-amber-800 font-bold text-[11px] mt-1 flex items-center space-x-1">
+                            <span>📅 TMT: {{ $pensiun->tmt_pensiun->translatedFormat('d F Y') }}</span>
+                            <span class="text-slate-400 font-normal">({{ $pensiun->bup }} Thn)</span>
                         </div>
                     </div>
                     @endforeach
                 </div>
                 @else
-                <p class="text-xs text-slate-400 italic">Belum ada data usulan pensiun.</p>
+                <p class="text-xs text-slate-400 italic py-4 text-center">Belum ada data proyeksi pensiun.</p>
                 @endif
             </div>
 
-            <!-- Widget Usulan Kenaikan Pangkat -->
-            <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-3">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-                    <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Usulan Naik Pangkat</h3>
-                    <span class="text-[10px] font-semibold uppercase px-2 py-0.5 bg-slate-100 text-slate-600 rounded">Info</span>
+            <!-- Widget Usulan Kenaikan Pangkat PNS Terdekat -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Kenaikan Pangkat PNS</h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Periode KP terdekat (6x setahun BKN)</p>
+                    </div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-900 rounded-lg">PNS</span>
                 </div>
                 @if($kpMendatang->count() > 0)
                 <div class="divide-y divide-slate-100 text-xs">
                     @foreach($kpMendatang as $kp)
-                    <div class="py-2.5 first:pt-0 last:pb-0">
-                        <a href="{{ route('public.pegawai.show', $kp->pegawai_id) }}" class="font-bold text-slate-900 hover:text-emerald-800 hover:underline block">
-                            {{ $kp->pegawai?->nama ?? 'Pegawai' }}
-                        </a>
-                        <div class="text-slate-500 text-[11px] mt-0.5">
-                            Usulan Gol: <span class="font-mono text-slate-700">{{ $kp->golongan_baru ?? '-' }}</span>
+                    <div class="py-3 first:pt-1 last:pb-1">
+                        <div class="flex items-start justify-between gap-2">
+                            <a href="{{ route('public.pegawai.show', $kp->pegawai_id) }}" class="font-bold text-slate-900 hover:text-emerald-800 hover:underline block leading-snug">
+                                {{ $kp->nama }}
+                            </a>
+                            <span class="px-2 py-0.5 bg-emerald-50 text-emerald-900 font-bold rounded text-[10px] border border-emerald-200 flex-shrink-0">
+                                {{ $kp->sisa_waktu }}
+                            </span>
                         </div>
-                        <div class="text-emerald-800 font-semibold text-[11px] mt-0.5">
-                            TMT Diusulkan: {{ \Carbon\Carbon::parse($kp->tmt_diusulkan)->format('d/m/Y') }}
+                        <div class="text-slate-500 text-[11px] mt-1">
+                            Golongan: <span class="font-mono font-bold text-slate-800">{{ $kp->golongan ?? '-' }}</span> &bull; {{ $kp->jabatan }}
+                        </div>
+                        <div class="text-emerald-900 font-bold text-[11px] mt-1">
+                            🎯 Periode BKN: {{ $kp->tmt_kp->translatedFormat('d F Y') }}
                         </div>
                     </div>
                     @endforeach
                 </div>
                 @else
-                <p class="text-xs text-slate-400 italic">Belum ada data usulan kenaikan pangkat.</p>
+                <p class="text-xs text-slate-400 italic py-4 text-center">Belum ada usulan kenaikan pangkat.</p>
                 @endif
             </div>
 
         </div>
-
     </div>
 </div>
 
