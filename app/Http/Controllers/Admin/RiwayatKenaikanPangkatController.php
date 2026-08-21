@@ -48,6 +48,10 @@ class RiwayatKenaikanPangkatController extends Controller
                 if ($est['tanggal'] && $est['tanggal']->lt($now)) {
                     return false;
                 }
+                // Hanya PNS yang berhak naik pangkat
+                if (!$p->is_pns) {
+                    return false;
+                }
                 return true;
             });
 

@@ -90,10 +90,17 @@ class ImportExportController extends Controller
         foreach ($previewRows as $row) {
             if (empty($row['nama'])) continue;
 
+            $formasiId = null;
+            if (!empty($row['jabatan'])) {
+                $formasi = FormasiJabatan::firstOrCreate(['nama_jabatan' => $row['jabatan']]);
+                $formasiId = $formasi->id;
+            }
+
             Pegawai::create([
                 'kategori_pegawai_id' => $pnsKat->id,
                 'status_kepegawaian_id' => $aktifStatus->id,
                 'unit_kerja_id' => $dinasUnit->id,
+                'formasi_jabatan_id' => $formasiId,
                 'nama' => $row['nama'],
                 'nip' => $row['nip'] ?: null,
                 'golongan' => $row['golongan'] ?: null,
