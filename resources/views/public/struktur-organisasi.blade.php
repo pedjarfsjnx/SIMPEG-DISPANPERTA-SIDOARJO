@@ -176,10 +176,13 @@
                 </div>
 
                 <div class="p-5">
-                    @if($unit->bidang->count() > 0)
+                    @php 
+                        $activeBidangs = $unit->bidang->filter(fn($b) => $b->pegawai->count() > 0);
+                    @endphp
+                    @if($activeBidangs->count() > 0)
                         <!-- Render Bidang Struktural under Dinas Induk -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            @foreach($unit->bidang as $bidang)
+                            @foreach($activeBidangs as $bidang)
                             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3">
                                 <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                                     <h4 class="font-bold text-slate-900 text-xs leading-snug">{{ $bidang->nama }}</h4>
@@ -188,7 +191,6 @@
                                     </span>
                                 </div>
 
-                                @if($bidang->pegawai->count() > 0)
                                 <ul class="text-xs text-slate-700 divide-y divide-slate-200/80 max-h-56 overflow-y-auto pr-1">
                                     @foreach($bidang->pegawai as $peg)
                                     <li class="py-1.5 flex justify-between items-center">
@@ -202,11 +204,6 @@
                                     </li>
                                     @endforeach
                                 </ul>
-                                @else
-                                <div class="text-xs text-slate-500 italic py-3 text-center bg-white rounded-lg border border-dashed border-slate-300">
-                                    Belum ada pegawai di bidang ini.
-                                </div>
-                                @endif
                             </div>
                             @endforeach
                         </div>
@@ -214,7 +211,7 @@
                         <!-- Render Full Personel List under UPTD Units -->
                         <div class="space-y-3">
                             <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-                                <h4 class="font-bold text-slate-900 text-xs">Daftar Personel Operasional UPTD (Total {{ $unit->pegawai->count() }} Personel)</h4>
+                                <h4 class="font-bold text-slate-900 text-xs">Daftar Personel Operasional (Total {{ $unit->pegawai->count() }} Personel)</h4>
                                 <span class="text-[11px] text-slate-500">Klik nama pegawai untuk profil detail</span>
                             </div>
 
@@ -242,7 +239,7 @@
                                     </div>
                                 </div>
                                 @empty
-                                <div class="col-span-3 text-xs text-slate-400 italic text-center py-4">Belum ada personel terdaftar di UPTD ini.</div>
+                                <div class="col-span-3 text-xs text-slate-400 italic text-center py-4">Belum ada personel terdaftar di unit ini.</div>
                                 @endforelse
                             </div>
                         </div>
