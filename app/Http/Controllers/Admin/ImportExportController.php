@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pegawai;
-use App\Models\KategoriPegawai;
-use App\Models\StatusKepegawaian;
-use App\Models\UnitKerja;
 use App\Models\Bidang;
 use App\Models\FormasiJabatan;
+use App\Models\KategoriPegawai;
+use App\Models\Pegawai;
+use App\Models\StatusKepegawaian;
+use App\Models\UnitKerja;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -40,30 +41,33 @@ class ImportExportController extends Controller
 
         // Clean & parse Excel rows (skipping Kop headers)
         foreach ($rows as $rowIndex => $row) {
-            if (!$row || count(array_filter($row)) === 0) continue;
+            if (! $row || count(array_filter($row)) === 0) {
+                continue;
+            }
 
             // Simple header detection (e.g. searching for NAMA or NIP)
-            $firstCell = strtoupper((string)($row[0] ?? ''));
-            $secondCell = strtoupper((string)($row[1] ?? ''));
+            $firstCell = strtoupper((string) ($row[0] ?? ''));
+            $secondCell = strtoupper((string) ($row[1] ?? ''));
 
-            if (!$headerFound && (str_contains($firstCell, 'NAMA') || str_contains($secondCell, 'NAMA') || str_contains($firstCell, 'NO'))) {
+            if (! $headerFound && (str_contains($firstCell, 'NAMA') || str_contains($secondCell, 'NAMA') || str_contains($firstCell, 'NO'))) {
                 $headerFound = true;
+
                 continue;
             }
 
             if ($headerFound) {
                 // Remove leading apostrophe from NIP
-                $nip = trim((string)($row[1] ?? ''));
+                $nip = trim((string) ($row[1] ?? ''));
                 if (str_starts_with($nip, "'")) {
                     $nip = substr($nip, 1);
                 }
 
                 $previewRows[] = [
-                    'nama' => trim((string)($row[0] ?? '')),
+                    'nama' => trim((string) ($row[0] ?? '')),
                     'nip' => $nip,
-                    'jabatan' => trim((string)($row[2] ?? '')),
-                    'golongan' => trim((string)($row[3] ?? '')),
-                    'pendidikan' => trim((string)($row[4] ?? '')),
+                    'jabatan' => trim((string) ($row[2] ?? '')),
+                    'golongan' => trim((string) ($row[3] ?? '')),
+                    'pendidikan' => trim((string) ($row[4] ?? '')),
                 ];
             }
         }
@@ -88,11 +92,16 @@ class ImportExportController extends Controller
 
         $count = 0;
         foreach ($previewRows as $row) {
-            if (empty($row['nama'])) continue;
+            if (empty($row['nama'])) {
+                continue;
+            }
 
             $formasiId = null;
-            if (!empty($row['jabatan'])) {
-                $formasi = FormasiJabatan::firstOrCreate(['nama_jabatan' => $row['jabatan']]);
+            if (! empty($row['jabatan'])) {
+                $formasi = FormasiJabatan::firstOrCreate([
+                    'nama_jabatan' => $row['jabatan'],
+                    'unit_kerja_id' => $dinasUnit->id,
+                ]);
                 $formasiId = $formasi->id;
             }
 
@@ -114,7 +123,7 @@ class ImportExportController extends Controller
         return redirect()->route('admin.pegawai.index')->with('success', "Berhasil mengimpor {$count} data pegawai dari Excel.");
     }
 
-        public function exportExcel(Request $request): StreamedResponse
+    public function exportExcel(Request $request): StreamedResponse
     {
         $query = Pegawai::withTrashed()->with(['kategori', 'status', 'unitKerja', 'bidang', 'formasiJabatan']);
 
@@ -128,8 +137,8 @@ class ImportExportController extends Controller
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('nama', 'LIKE', "%{$search}%")
-                  ->orWhere('nip', 'LIKE', "%{$search}%")
-                  ->orWhere('nik', 'LIKE', "%{$search}%");
+                    ->orWhere('nip', 'LIKE', "%{$search}%")
+                    ->orWhere('nik', 'LIKE', "%{$search}%");
             });
         }
 
@@ -165,7 +174,7 @@ class ImportExportController extends Controller
 
         $pegawaiList = $query->get();
 
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setTitle('Data Pegawai');
 
@@ -192,19 +201,19 @@ class ImportExportController extends Controller
 
         $rowNum = 2;
         foreach ($pegawaiList as $index => $p) {
-            $sheet->setCellValue('A' . $rowNum, $index + 1);
-            $sheet->setCellValue('B' . $rowNum, $p->nama);
-            $sheet->setCellValueExplicit('C' . $rowNum, $p->nip ?? '', \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('D' . $rowNum, $p->nik ?? '', \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValue('E' . $rowNum, $p->kategori?->nama ?? '');
-            $sheet->setCellValue('F' . $rowNum, $p->status?->nama ?? '');
-            $sheet->setCellValue('G' . $rowNum, $p->unitKerja?->nama ?? '');
-            $sheet->setCellValue('H' . $rowNum, $p->bidang?->nama ?? '');
-            $sheet->setCellValue('I' . $rowNum, $p->formasiJabatan?->nama_jabatan ?? $p->jabatan ?? '');
-            $sheet->setCellValue('J' . $rowNum, $p->golongan ?? '');
-            $sheet->setCellValue('K' . $rowNum, $p->pendidikan ?? '');
-            $sheet->setCellValueExplicit('L' . $rowNum, $p->no_hp ?? '', \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValue('M' . $rowNum, $p->email ?? '');
+            $sheet->setCellValue('A'.$rowNum, $index + 1);
+            $sheet->setCellValue('B'.$rowNum, $p->nama);
+            $sheet->setCellValueExplicit('C'.$rowNum, $p->nip ?? '', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('D'.$rowNum, $p->nik ?? '', DataType::TYPE_STRING);
+            $sheet->setCellValue('E'.$rowNum, $p->kategori?->nama ?? '');
+            $sheet->setCellValue('F'.$rowNum, $p->status?->nama ?? '');
+            $sheet->setCellValue('G'.$rowNum, $p->unitKerja?->nama ?? '');
+            $sheet->setCellValue('H'.$rowNum, $p->bidang?->nama ?? '');
+            $sheet->setCellValue('I'.$rowNum, $p->formasiJabatan?->nama_jabatan ?? $p->jabatan ?? '');
+            $sheet->setCellValue('J'.$rowNum, $p->golongan ?? '');
+            $sheet->setCellValue('K'.$rowNum, $p->pendidikan ?? '');
+            $sheet->setCellValueExplicit('L'.$rowNum, $p->no_hp ?? '', DataType::TYPE_STRING);
+            $sheet->setCellValue('M'.$rowNum, $p->email ?? '');
             $rowNum++;
         }
 
@@ -215,7 +224,7 @@ class ImportExportController extends Controller
 
         $writer = new Xlsx($spreadsheet);
         $totalCount = $pegawaiList->count();
-        $filename = 'DATA_PEGAWAI_DISPANPERTA_(' . $totalCount . '_Data)_' . date('Ymd_His') . '.xlsx';
+        $filename = 'DATA_PEGAWAI_DISPANPERTA_('.$totalCount.'_Data)_'.date('Ymd_His').'.xlsx';
 
         return response()->stream(
             function () use ($writer) {
@@ -224,15 +233,7 @@ class ImportExportController extends Controller
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-                'Cache-Control' => 'max-age=0',
-            ]
-        );
-    },
-            200,
-            [
-                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                'Content-Disposition' => 'attachment; filename="'.$filename.'"',
                 'Cache-Control' => 'max-age=0',
             ]
         );

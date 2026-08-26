@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pegawai extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'pegawai';
+
     protected $fillable = [
         'kategori_pegawai_id',
         'status_kepegawaian_id',
@@ -75,10 +77,11 @@ class Pegawai extends Model
     public function getIsPnsAttribute(): bool
     {
         $kategoriNama = strtoupper($this->kategori?->nama ?? '');
-        return ($this->kategori_pegawai_id === 1 || str_contains($kategoriNama, 'PNS')) 
-            && !str_contains($kategoriNama, 'PPPK') 
-            && !str_contains($kategoriNama, 'NON-PNS')
-            && !empty($this->golongan) 
+
+        return ($this->kategori_pegawai_id === 1 || str_contains($kategoriNama, 'PNS'))
+            && ! str_contains($kategoriNama, 'PPPK')
+            && ! str_contains($kategoriNama, 'NON-PNS')
+            && ! empty($this->golongan)
             && $this->golongan !== '-';
     }
 
@@ -86,6 +89,7 @@ class Pegawai extends Model
     public function getIsPppkAttribute(): bool
     {
         $kategoriNama = strtoupper($this->kategori?->nama ?? '');
+
         return str_contains($kategoriNama, 'PPPK');
     }
 
@@ -93,6 +97,7 @@ class Pegawai extends Model
     public function getUsiaAttribute(): ?int
     {
         $tgl = $this->tanggal_lahir_effektif;
+
         return $tgl ? $tgl->age : null;
     }
 
@@ -107,9 +112,11 @@ class Pegawai extends Model
             if (strlen($clean) >= 8) {
                 try {
                     return Carbon::createFromFormat('Ymd', substr($clean, 0, 8));
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
             }
         }
+
         return null;
     }
 
@@ -138,7 +145,7 @@ class Pegawai extends Model
     {
         $tglLahir = $this->tanggal_lahir_effektif;
         $batasUsia = $this->batas_usia_pensiun;
-        if (!$tglLahir) {
+        if (! $tglLahir) {
             return ['usia' => $batasUsia, 'tanggal' => null];
         }
 
@@ -146,7 +153,7 @@ class Pegawai extends Model
 
         return [
             'usia' => $batasUsia,
-            'tanggal' => $tglPensiun
+            'tanggal' => $tglPensiun,
         ];
     }
 
@@ -154,13 +161,13 @@ class Pegawai extends Model
     public function getEstimasiKpBerikutnyaAttribute(): ?Carbon
     {
         // Kenaikan Pangkat HANYA untuk PNS yang memiliki golongan
-        if (!$this->is_pns || !$this->tmt_jabatan) {
+        if (! $this->is_pns || ! $this->tmt_jabatan) {
             return null;
         }
-        
+
         $tmt = $this->tmt_jabatan->copy();
         $now = Carbon::now();
-        
+
         while ($tmt->isPast()) {
             $tmt->addYears(4);
         }
@@ -191,7 +198,7 @@ class Pegawai extends Model
         if ($estPensiun && $tmtKp->gt($estPensiun)) {
             return null;
         }
-        
+
         return $tmtKp;
     }
 }

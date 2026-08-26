@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\RiwayatPensiun;
-use App\Models\Pegawai;
-use App\Models\UnitKerja;
 use App\Models\KategoriPegawai;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Pegawai;
+use App\Models\RiwayatPensiun;
+use App\Models\UnitKerja;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\View\View;
 
 class RiwayatPensiunController extends Controller
 {
@@ -25,9 +25,9 @@ class RiwayatPensiunController extends Controller
 
         if ($request->filled('search')) {
             $search = $request->input('search');
-            $pegawaiQuery->where(function($q) use ($search) {
+            $pegawaiQuery->where(function ($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
-                  ->orWhere('nip', 'like', "%{$search}%");
+                    ->orWhere('nip', 'like', "%{$search}%");
             });
         }
 
@@ -45,7 +45,9 @@ class RiwayatPensiunController extends Controller
         $rekapList = [];
         foreach ($allPegawai as $p) {
             $est = $p->estimasi_pensiun;
-            if (!$est['tanggal']) continue;
+            if (! $est['tanggal']) {
+                continue;
+            }
 
             $tmtPensiun = $est['tanggal'];
             $bulanPensiun = (int) $tmtPensiun->format('m');
@@ -55,16 +57,16 @@ class RiwayatPensiunController extends Controller
             $riwayatResmi = $p->riwayatPensiun->sortByDesc('tmt_pensiun')->first();
 
             // Filter Bulan jika ada
-            if ($request->filled('bulan') && (int)$request->input('bulan') !== $bulanPensiun) {
+            if ($request->filled('bulan') && (int) $request->input('bulan') !== $bulanPensiun) {
                 continue;
             }
 
             // Filter Tahun jika ada
-            if ($request->filled('tahun') && (int)$request->input('tahun') !== $tahunPensiun) {
+            if ($request->filled('tahun') && (int) $request->input('tahun') !== $tahunPensiun) {
                 continue;
             }
 
-                        // Hitung sisa masa kerja dengan integer DateInterval
+            // Hitung sisa masa kerja dengan integer DateInterval
             $interval = $now->diff($tmtPensiun);
             $diffYears = (int) $interval->y;
             $diffMonths = (int) $interval->m;
@@ -73,12 +75,6 @@ class RiwayatPensiunController extends Controller
             $statusWaktu = '';
             if ($isPast || $tmtPensiun->lt($now)) {
                 $statusWaktu = 'Purna Tugas';
-            } elseif ($diffYears == 0 && $diffMonths <= 6) {
-                $statusWaktu = '< 6 Bulan (Mendesak)';
-            } elseif ($diffYears == 0) {
-                $statusWaktu = "{$diffMonths} Bulan Lagi";
-            } else {
-                $statusWaktu = "{$diffYears} Thn {$diffMonths} Bln";
             } elseif ($diffYears == 0 && $diffMonths <= 6) {
                 $statusWaktu = '< 6 Bulan (Mendesak)';
             } elseif ($diffYears == 0) {
@@ -102,20 +98,20 @@ class RiwayatPensiunController extends Controller
                 'tahun' => $tahunPensiun,
                 'sisa_waktu' => $statusWaktu,
                 'keterangan_khusus' => $riwayatResmi?->keterangan ?? 'BUP Reguler',
-                'has_riwayat' => !empty($riwayatResmi),
+                'has_riwayat' => ! empty($riwayatResmi),
                 'riwayat_id' => $riwayatResmi?->id,
             ];
         }
 
         // 3. Urutkan berdasarkan TMT Pensiun terdekat
-        usort($rekapList, fn($a, $b) => $a->tmt_pensiun->timestamp <=> $b->tmt_pensiun->timestamp);
+        usort($rekapList, fn ($a, $b) => $a->tmt_pensiun->timestamp <=> $b->tmt_pensiun->timestamp);
 
         // 4. Hitung Statistik Ringkasan
-        $allProyeksi = Pegawai::all()->map(fn($p) => $p->estimasi_pensiun['tanggal'])->filter();
+        $allProyeksi = Pegawai::all()->map(fn ($p) => $p->estimasi_pensiun['tanggal'])->filter();
         $totalPNS = $allProyeksi->count();
-        $pensiunTahunIni = $allProyeksi->filter(fn($d) => $d->format('Y') == $currentYear)->count();
-        $pensiunTahunDepan = $allProyeksi->filter(fn($d) => $d->format('Y') == ($currentYear + 1))->count();
-        $pensiun5Tahun = $allProyeksi->filter(fn($d) => $d->format('Y') >= $currentYear && $d->format('Y') <= ($currentYear + 5))->count();
+        $pensiunTahunIni = $allProyeksi->filter(fn ($d) => $d->format('Y') == $currentYear)->count();
+        $pensiunTahunDepan = $allProyeksi->filter(fn ($d) => $d->format('Y') == ($currentYear + 1))->count();
+        $pensiun5Tahun = $allProyeksi->filter(fn ($d) => $d->format('Y') >= $currentYear && $d->format('Y') <= ($currentYear + 5))->count();
 
         // 5. Pagination manual untuk collection
         $perPage = 20;
@@ -168,6 +164,7 @@ class RiwayatPensiunController extends Controller
     public function create(): View
     {
         $pegawaiList = Pegawai::with('formasiJabatan')->orderBy('nama', 'asc')->get();
+
         return view('admin.pensiun.create', compact('pegawaiList'));
     }
 
