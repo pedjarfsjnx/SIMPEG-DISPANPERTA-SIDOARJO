@@ -16,7 +16,7 @@ RUN apk add --no-cache \
 
 # Configure and install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo_mysql pdo_sqlite bcmath zip opcache
+    && docker-php-ext-install -j$(nproc) gd pdo_mysql bcmath zip opcache
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -34,4 +34,4 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "touch database/database.sqlite && php artisan migrate --force && php artisan db:seed --force && php artisan config:clear && php artisan route:clear && php artisan view:clear && php -S 0.0.0.0:${PORT:-8080} -t public/"]
+CMD ["sh", "-c", "php artisan config:clear && php artisan route:clear && php artisan view:clear && (php artisan migrate --force || true) && (php artisan db:seed --force || true) && php -S 0.0.0.0:${PORT:-8080} -t public/"]
