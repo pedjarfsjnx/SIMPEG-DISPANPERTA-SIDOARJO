@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Models\Pegawai;
+use App\Models\User;
 use App\Http\Controllers\Public\DashboardController as PublicDashboardController;
 use App\Http\Controllers\Public\PegawaiController as PublicPegawaiController;
 use App\Http\Controllers\Public\StrukturOrganisasiController as PublicStrukturController;
@@ -25,6 +28,17 @@ Route::get('/pegawai-cetak', [PublicPegawaiController::class, 'cetak'])->name('p
 Route::get('/pegawai-download-pdf', [PublicPegawaiController::class, 'downloadPdf'])->name('public.pegawai.download-pdf');
 Route::get('/pegawai/{id}', [PublicPegawaiController::class, 'show'])->name('public.pegawai.show');
 Route::get('/struktur-organisasi', [PublicStrukturController::class, 'index'])->name('public.struktur-organisasi');
+
+// Database sync trigger for Railway
+Route::get('/force-sync-db', function () {
+    Artisan::call('migrate', ['--force' => true]);
+    Artisan::call('db:seed', ['--force' => true]);
+    return response()->json([
+        'status' => 'success',
+        'pegawai_count' => Pegawai::count(),
+        'users_count' => User::count(),
+    ]);
+});
 
 Route::get('/admin', function () {
     return redirect()->route('admin.dashboard');
