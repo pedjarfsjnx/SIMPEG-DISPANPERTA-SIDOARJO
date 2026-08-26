@@ -21,27 +21,27 @@ class StrukturOrganisasiController extends Controller
         // Query breakdown per Eselon / Kelas Jabatan
         $eselon2b = Pegawai::with(['unitKerja', 'bidang', 'kategori', 'formasiJabatan'])
             ->whereHas('formasiJabatan', function($q) {
-                $q->where('kelas_jabatan', '>=', 14);
+                $q->whereIn('kelas_jabatan', ['14', '15', '16', '17', '18']);
             })->get();
 
         $eselon3a = Pegawai::with(['unitKerja', 'bidang', 'kategori', 'formasiJabatan'])
             ->whereHas('formasiJabatan', function($q) {
-                $q->whereBetween('kelas_jabatan', [11, 13]);
+                $q->whereIn('kelas_jabatan', ['11', '12', '13']);
             })->get();
 
         $eselon3b = Pegawai::with(['unitKerja', 'bidang', 'kategori', 'formasiJabatan'])
             ->whereHas('formasiJabatan', function($q) {
-                $q->whereBetween('kelas_jabatan', [9, 10]);
+                $q->whereIn('kelas_jabatan', ['9', '10']);
             })->get();
 
         $fungsionalJft = Pegawai::with(['unitKerja', 'bidang', 'kategori', 'formasiJabatan'])
             ->whereHas('formasiJabatan', function($q) {
-                $q->whereBetween('kelas_jabatan', [7, 8]);
+                $q->whereIn('kelas_jabatan', ['7', '8']);
             })->get();
 
         $pelaksanaJfu = Pegawai::with(['unitKerja', 'bidang', 'kategori', 'formasiJabatan'])
             ->whereHas('formasiJabatan', function($q) {
-                $q->where('kelas_jabatan', '<', 7);
+                $q->whereIn('kelas_jabatan', ['1', '2', '3', '4', '5', '6']);
             })->get();
 
         return view('public.struktur-organisasi', compact(

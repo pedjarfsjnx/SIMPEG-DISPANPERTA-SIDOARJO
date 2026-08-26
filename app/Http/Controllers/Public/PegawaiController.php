@@ -46,15 +46,15 @@ class PegawaiController extends Controller
             $kelasReq = $request->input('kelas_jabatan');
             $query->whereHas('formasiJabatan', function($q) use ($kelasReq) {
                 if ($kelasReq === 'eselon_2') {
-                    $q->where('kelas_jabatan', '>=', 14);
+                    $q->whereIn('kelas_jabatan', ['14', '15', '16', '17', '18']);
                 } elseif ($kelasReq === 'eselon_3a') {
-                    $q->whereBetween('kelas_jabatan', [11, 13]);
+                    $q->whereIn('kelas_jabatan', ['11', '12', '13']);
                 } elseif ($kelasReq === 'eselon_3b') {
-                    $q->whereBetween('kelas_jabatan', [9, 10]);
+                    $q->whereIn('kelas_jabatan', ['9', '10']);
                 } elseif ($kelasReq === 'fungsional') {
-                    $q->whereBetween('kelas_jabatan', [7, 8]);
+                    $q->whereIn('kelas_jabatan', ['7', '8']);
                 } elseif ($kelasReq === 'pelaksana') {
-                    $q->where('kelas_jabatan', '<', 7);
+                    $q->whereIn('kelas_jabatan', ['1', '2', '3', '4', '5', '6']);
                 }
             });
         }
@@ -135,15 +135,15 @@ class PegawaiController extends Controller
             $kelasReq = $request->input('kelas_jabatan');
             $query->whereHas('formasiJabatan', function($q) use ($kelasReq) {
                 if ($kelasReq === 'eselon_2') {
-                    $q->where('kelas_jabatan', '>=', 14);
+                    $q->whereIn('kelas_jabatan', ['14', '15', '16', '17', '18']);
                 } elseif ($kelasReq === 'eselon_3a') {
-                    $q->whereBetween('kelas_jabatan', [11, 13]);
+                    $q->whereIn('kelas_jabatan', ['11', '12', '13']);
                 } elseif ($kelasReq === 'eselon_3b') {
-                    $q->whereBetween('kelas_jabatan', [9, 10]);
+                    $q->whereIn('kelas_jabatan', ['9', '10']);
                 } elseif ($kelasReq === 'fungsional') {
-                    $q->whereBetween('kelas_jabatan', [7, 8]);
+                    $q->whereIn('kelas_jabatan', ['7', '8']);
                 } elseif ($kelasReq === 'pelaksana') {
-                    $q->where('kelas_jabatan', '<', 7);
+                    $q->whereIn('kelas_jabatan', ['1', '2', '3', '4', '5', '6']);
                 }
             });
         }
