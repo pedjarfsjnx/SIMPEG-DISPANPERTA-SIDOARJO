@@ -29,15 +29,23 @@ Route::get('/pegawai-download-pdf', [PublicPegawaiController::class, 'downloadPd
 Route::get('/pegawai/{id}', [PublicPegawaiController::class, 'show'])->name('public.pegawai.show');
 Route::get('/struktur-organisasi', [PublicStrukturController::class, 'index'])->name('public.struktur-organisasi');
 
-// Database sync trigger for Railway
+// Database sync trigger for Railway with detailed error reporting
 Route::get('/force-sync-db', function () {
-    Artisan::call('migrate', ['--force' => true]);
-    Artisan::call('db:seed', ['--force' => true]);
-    return response()->json([
-        'status' => 'success',
-        'pegawai_count' => Pegawai::count(),
-        'users_count' => User::count(),
-    ]);
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('db:seed', ['--force' => true]);
+        return response()->json([
+            'status' => 'success',
+            'pegawai_count' => Pegawai::count(),
+            'users_count' => User::count(),
+        ]);
+    } catch (\Throwable $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ], 500);
+    }
 });
 
 Route::get('/admin', function () {
