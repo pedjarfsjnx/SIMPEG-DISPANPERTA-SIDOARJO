@@ -16,111 +16,94 @@ class PegawaiSeeder extends Seeder
 {
     public function run(): void
     {
-        $pns = KategoriPegawai::where('nama', 'PNS')->first();
-        $pppk = KategoriPegawai::where('nama', 'PPPK')->first();
-        $pppkParuh = KategoriPegawai::where('nama', 'PPPK Paruh Waktu')->first();
-        $swakelola = KategoriPegawai::where('nama', 'Swakelola')->first();
+        $jsonPath = __DIR__ . '/pegawai_data.json';
+        if (!file_exists($jsonPath)) {
+            return;
+        }
 
-        $aktif = StatusKepegawaian::where('nama', 'Aktif')->first();
-        $dinasInduk = UnitKerja::where('tipe', 'Dinas Induk')->first();
-        $uptdRph = UnitKerja::where('nama', 'LIKE', '%RPH%')->first();
+        $pegawaiList = json_decode(file_get_contents($jsonPath), true);
+        if (empty($pegawaiList)) {
+            return;
+        }
 
-        $sekretariat = Bidang::where('nama', 'Sekretariat')->first();
-        $bidangPeternakan = Bidang::where('nama', 'LIKE', '%Peternakan%')->first();
+        // Clean tables to avoid duplicates on re-seed
+        RiwayatPensiun::query()->delete();
+        RiwayatKenaikanPangkat::query()->delete();
+        Pegawai::query()->forceDelete();
 
-        $formasiKadin = FormasiJabatan::where('nama_jabatan', 'KEPALA DINAS PANGAN DAN PERTANIAN')->first();
-        $formasiSekdin = FormasiJabatan::where('nama_jabatan', 'SEKRETARIS DINAS')->first();
-        $formasiKabidPeternakan = FormasiJabatan::where('nama_jabatan', 'KEPALA BIDANG PRODUKSI PETERNAKAN')->first();
+        foreach ($pegawaiList as $item) {
+            $kategori = KategoriPegawai::firstOrCreate(['nama' => $item['kategori_nama'] ?? 'PNS']);
+            $status = StatusKepegawaian::firstOrCreate(['nama' => $item['status_nama'] ?? 'Aktif']);
+            $unitKerja = UnitKerja::firstOrCreate(
+                ['nama' => $item['unit_kerja_nama'] ?? 'Dinas Pangan dan Pertanian (Induk)'],
+                ['tipe' => str_contains($item['unit_kerja_nama'] ?? '', 'UPTD') ? 'UPTD' : 'Dinas Induk']
+            );
 
-        // Sample Pegawai 1 - PNS Kadin (dengan riwayat pensiun mendatang)
-        $peg1 = Pegawai::create([
-            'kategori_pegawai_id' => $pns?->id ?? 1,
-            'status_kepegawaian_id' => $aktif?->id ?? 1,
-            'unit_kerja_id' => $dinasInduk?->id ?? 1,
-            'bidang_id' => null,
-            'formasi_jabatan_id' => $formasiKadin?->id,
-            'nama' => 'Ir. MOKHAMAD RUDY AL AMIN',
-            'nip' => '196712101997032004',
-            'nik' => null,
-            'tempat_lahir' => 'Sidoarjo',
-            'tanggal_lahir' => '1967-12-10',
-            'pendidikan' => 'S2 Magister Pertanian',
-            'golongan' => 'IV/c',
-            'no_hp' => '081234567890',
-            'email' => 'rudy.alamin@sidoarjo.go.id',
-            'tmt_jabatan' => '2021-05-01',
-        ]);
+            $bidangId = null;
+            if (!empty($item['bidang_nama'])) {
+                $bidang = Bidang::firstOrCreate(
+                    ['unit_kerja_id' => $unitKerja->id, 'nama' => $item['bidang_nama']],
+                    ['aktif' => true]
+                );
+                $bidangId = $bidang->id;
+            }
 
-        RiwayatPensiun::create([
-            'pegawai_id' => $peg1->id,
-            'tanggal_pengajuan' => '2026-01-15',
-            'tmt_pensiun' => '2027-01-01',
-            'keterangan' => 'Diusulkan Pensiun BUP 2027',
-        ]);
+            $formasiId = null;
+            if (!empty($item['jabatan_nama'])) {
+                $formasi = FormasiJabatan::firstOrCreate(
+                    ['nama_jabatan' => $item['jabatan_nama']],
+                    [
+                        'unit_kerja_id' => $unitKerja->id,
+                        'bidang_id' => $bidangId,
+                        'kelas_jabatan' => $item['kelas_jabatan'] ?? 7,
+                        'jenis_jabatan' => $item['jenis_jabatan'] ?? 'Pelaksana',
+                        'kuota' => 1,
+                        'status_formasi' => 'terisi'
+                    ]
+                );
+                $formasiId = $formasi->id;
+            }
 
-        // Sample Pegawai 2 - PNS Sekdin (dengan riwayat kenaikan pangkat)
-        $peg2 = Pegawai::create([
-            'kategori_pegawai_id' => $pns?->id ?? 1,
-            'status_kepegawaian_id' => $aktif?->id ?? 1,
-            'unit_kerja_id' => $dinasInduk?->id ?? 1,
-            'bidang_id' => $sekretariat?->id,
-            'formasi_jabatan_id' => $formasiSekdin?->id,
-            'nama' => 'TONY HARTONO, SP, M.Si',
-            'nip' => '197204151998031005',
-            'nik' => null,
-            'tempat_lahir' => 'Surabaya',
-            'tanggal_lahir' => '1972-04-15',
-            'pendidikan' => 'S2 Magister Sains',
-            'golongan' => 'IV/a',
-            'no_hp' => '081398765432',
-            'email' => 'tony.hartono@sidoarjo.go.id',
-            'tmt_jabatan' => '2022-09-10',
-        ]);
+            $pegawai = Pegawai::create([
+                'kategori_pegawai_id' => $kategori->id,
+                'status_kepegawaian_id' => $status->id,
+                'unit_kerja_id' => $unitKerja->id,
+                'bidang_id' => $bidangId,
+                'formasi_jabatan_id' => $formasiId,
+                'nama' => $item['nama'],
+                'nip' => $item['nip'] ?: null,
+                'nik' => $item['nik'] ?: null,
+                'tempat_lahir' => $item['tempat_lahir'] ?: null,
+                'tanggal_lahir' => $item['tanggal_lahir'] ?: null,
+                'pendidikan' => $item['pendidikan'] ?: null,
+                'golongan' => $item['golongan'] ?: null,
+                'no_hp' => $item['no_hp'] ?: null,
+                'email' => $item['email'] ?: null,
+                'tmt_jabatan' => $item['tmt_jabatan'] ?: null,
+            ]);
 
-        RiwayatKenaikanPangkat::create([
-            'pegawai_id' => $peg2->id,
-            'golongan_lama' => 'IV/a',
-            'golongan_baru' => 'IV/b',
-            'tmt_diusulkan' => '2026-10-01',
-            'keterangan' => 'Usulan KP Periode Oktober 2026',
-        ]);
+            if (!empty($item['pensiun'])) {
+                foreach ($item['pensiun'] as $pen) {
+                    RiwayatPensiun::create([
+                        'pegawai_id' => $pegawai->id,
+                        'tanggal_pengajuan' => $pen['tanggal_pengajuan'] ?: null,
+                        'tmt_pensiun' => $pen['tmt_pensiun'] ?: null,
+                        'keterangan' => $pen['keterangan'] ?: null,
+                    ]);
+                }
+            }
 
-        // Sample Pegawai 3 - PPPK
-        Pegawai::create([
-            'kategori_pegawai_id' => $pppk?->id ?? 2,
-            'status_kepegawaian_id' => $aktif?->id ?? 1,
-            'unit_kerja_id' => $dinasInduk?->id ?? 1,
-            'bidang_id' => $bidangPeternakan?->id,
-            'formasi_jabatan_id' => $formasiKabidPeternakan?->id,
-            'nama' => 'SYAFI\'I, SP, M.Agr',
-            'nip' => '198506202022211003',
-            'nik' => null,
-            'tempat_lahir' => 'Sidoarjo',
-            'tanggal_lahir' => '1985-06-20',
-            'pendidikan' => 'S2 Pertanian',
-            'golongan' => 'IX',
-            'no_hp' => '085712345678',
-            'email' => 'syafii@sidoarjo.go.id',
-            'tmt_jabatan' => '2023-01-01',
-        ]);
-
-        // Sample Pegawai 4 - Swakelola (kontrak pakai NIK)
-        Pegawai::create([
-            'kategori_pegawai_id' => $swakelola?->id ?? 4,
-            'status_kepegawaian_id' => $aktif?->id ?? 1,
-            'unit_kerja_id' => $uptdRph?->id ?? 2,
-            'bidang_id' => null,
-            'formasi_jabatan_id' => null,
-            'nama' => 'BAMBANG KUSUMA',
-            'nip' => null,
-            'nik' => '3515081205900001',
-            'tempat_lahir' => 'Sidoarjo',
-            'tanggal_lahir' => '1990-05-12',
-            'pendidikan' => 'SMA Sederajat',
-            'golongan' => null,
-            'no_hp' => '089611223344',
-            'email' => 'bambang@gmail.com',
-            'tmt_jabatan' => '2024-01-15',
-        ]);
+            if (!empty($item['kp'])) {
+                foreach ($item['kp'] as $kpItem) {
+                    RiwayatKenaikanPangkat::create([
+                        'pegawai_id' => $pegawai->id,
+                        'golongan_lama' => $kpItem['golongan_lama'] ?: null,
+                        'golongan_baru' => $kpItem['golongan_baru'] ?: null,
+                        'tmt_diusulkan' => $kpItem['tmt_diusulkan'] ?: null,
+                        'keterangan' => $kpItem['keterangan'] ?: null,
+                    ]);
+                }
+            }
+        }
     }
 }

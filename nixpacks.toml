@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["php82", "php82Extensions.gd", "php82Extensions.pdo_mysql", "php82Extensions.mbstring", "php82Extensions.zip", "php82Packages.composer", "nodejs_20"]
+nixPkgs = ["php82", "php82Extensions.gd", "php82Extensions.pdo_mysql", "php82Extensions.pdo_sqlite", "php82Extensions.mbstring", "php82Extensions.zip", "php82Packages.composer", "nodejs_20"]
 
 [phases.build]
 cmds = [
@@ -9,4 +9,4 @@ cmds = [
 ]
 
 [start]
-cmd = "php artisan config:clear && php artisan route:clear && php artisan view:clear && php -S 0.0.0.0:$PORT -t public/"
+cmd = "touch database/database.sqlite && php artisan migrate --force && php artisan db:seed --force && php artisan config:clear && php artisan route:clear && php artisan view:clear && php -S 0.0.0.0:$PORT -t public/"

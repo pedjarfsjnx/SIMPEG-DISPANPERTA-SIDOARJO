@@ -18,6 +18,11 @@ yarn-error.log
 /.idea
 /.vscode
 
+# Database Files
+database/*.sqlite
+database/*.sqlite-journal
+*.sqlite
+
 # Sensitive Private Agency Data & Brief Docs
 /Brief Project
 /DATA KEPEGAWAIAN DINAS PANGAN & PERTANIAN SIDOARJO
