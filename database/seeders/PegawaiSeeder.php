@@ -56,7 +56,6 @@ class PegawaiSeeder extends Seeder
                         'unit_kerja_id' => $unitKerja->id,
                         'bidang_id' => $bidangId,
                         'kelas_jabatan' => $item['kelas_jabatan'] ?? 7,
-                        'jenis_jabatan' => $item['jenis_jabatan'] ?? 'Pelaksana',
                         'kuota' => 1,
                         'status_formasi' => 'terisi'
                     ]
