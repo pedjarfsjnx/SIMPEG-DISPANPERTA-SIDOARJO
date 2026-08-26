@@ -4,28 +4,26 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        User::firstOrCreate(
+        // Note: User model has 'password' => 'hashed' in casts, so pass plain text password to avoid double-hashing
+        User::updateOrCreate(
             ['email' => 'admin@dispanperta.sidoarjo.go.id'],
             [
                 'name' => 'Admin Kepegawaian',
-                'email' => 'admin@dispanperta.sidoarjo.go.id',
-                'password' => Hash::make('password'),
+                'password' => 'password',
                 'email_verified_at' => now(),
             ]
         );
 
-        User::firstOrCreate(
+        User::updateOrCreate(
             ['email' => 'admin@admin.com'],
             [
                 'name' => 'Administrator',
-                'email' => 'admin@admin.com',
-                'password' => Hash::make('password'),
+                'password' => 'password',
                 'email_verified_at' => now(),
             ]
         );
