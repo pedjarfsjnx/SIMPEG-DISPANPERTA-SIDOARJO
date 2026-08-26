@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
-            if (Schema::hasTable('pegawai') && Pegawai::count() === 0) {
+            if (Schema::hasTable('pegawai') && Pegawai::count() < 149) {
                 Artisan::call('db:seed', ['--force' => true]);
             }
         } catch (\Throwable $e) {
