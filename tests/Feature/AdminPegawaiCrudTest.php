@@ -30,7 +30,7 @@ class AdminPegawaiCrudTest extends TestCase
     {
         $pegawai = Pegawai::factory()->create(['nama' => 'Budi Santoso']);
 
-        $response = $this->actingAs($this->verifiedUser())->get(route('admin.pegawai.index'));
+        $response = $this->actingAs($this->verifiedUser())->get(route('admin.pegawai.index', ['search' => 'Budi']));
 
         $response->assertOk()->assertSee('Budi Santoso');
         $this->assertTrue($response->viewData('pegawaiList')->contains('id', $pegawai->id));

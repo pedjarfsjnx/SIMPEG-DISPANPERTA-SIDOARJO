@@ -12,17 +12,11 @@ class DashboardTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function admin_dashboard_hanya_untuk_user_terverifikasi(): void
+    public function admin_dashboard_bisa_diakses_oleh_user_terautentikasi(): void
     {
-        $belumVerifikasi = User::factory()->create(['email_verified_at' => null]);
+        $user = User::factory()->create();
 
-        $this->actingAs($belumVerifikasi)
-            ->get(route('admin.dashboard'))
-            ->assertRedirect(route('verification.notice'));
-
-        $terverifikasi = User::factory()->create(['email_verified_at' => now()]);
-
-        $this->actingAs($terverifikasi)
+        $this->actingAs($user)
             ->get(route('admin.dashboard'))
             ->assertOk();
     }

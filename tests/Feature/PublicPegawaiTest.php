@@ -30,9 +30,9 @@ class PublicPegawaiTest extends TestCase
     #[Test]
     public function index_publik_menampilkan_pegawai_tanpa_login(): void
     {
-        Pegawai::factory()->create(['nama' => 'Rina Marlina']);
+        $pegawai = Pegawai::factory()->create(['nama' => 'Rina Marlina']);
 
-        $this->get(route('public.pegawai.index'))
+        $this->get(route('public.pegawai.index', ['search' => 'Rina']))
             ->assertOk()
             ->assertSee('Rina Marlina');
     }

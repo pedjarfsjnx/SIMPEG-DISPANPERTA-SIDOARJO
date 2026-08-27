@@ -17,36 +17,49 @@
         </div>
     </div>
 
-    <!-- 3 Stat Highlight Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex items-center space-x-3.5">
-            <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-</div>
-            <div>
-                <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Formasi</div>
-                <div class="text-xl font-extrabold text-slate-900">{{ number_format($totalCount) }} <span class="text-xs font-normal text-slate-500">Posisi</span></div>
+    <!-- 3 Stat Highlight Summary Strip -->
+    <div class="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-sm">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            
+            <!-- 1. Total Formasi -->
+            <div class="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/80 flex items-center justify-between">
+                <div>
+                    <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Formasi</div>
+                    <div class="text-2xl font-bold text-slate-900 mt-0.5">
+                        {{ number_format($totalCount) }} <span class="text-xs font-normal text-slate-500">Posisi</span>
+                    </div>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-slate-200/70 text-slate-600 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                </div>
             </div>
-        </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex items-center space-x-3.5">
-            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M5 13l4 4L19 7"/></svg>
-</div>
-            <div>
-                <div class="text-[11px] font-semibold text-emerald-700 uppercase tracking-wider">Formasi Terisi</div>
-                <div class="text-xl font-extrabold text-emerald-900">{{ number_format($terisiCount) }} <span class="text-xs font-normal text-slate-500">Jabatan</span></div>
+            <!-- 2. Formasi Terisi -->
+            <div class="p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-200/80 flex items-center justify-between">
+                <div>
+                    <div class="text-[11px] font-semibold text-emerald-800 uppercase tracking-wider">Formasi Terisi</div>
+                    <div class="text-2xl font-bold text-emerald-900 mt-0.5">
+                        {{ number_format($terisiCount) }} <span class="text-xs font-normal text-emerald-700">Jabatan</span>
+                    </div>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                </div>
             </div>
-        </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex items-center space-x-3.5">
-            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-</div>
-            <div>
-                <div class="text-[11px] font-semibold text-amber-700 uppercase tracking-wider">Lowong / Kosong</div>
-                <div class="text-xl font-extrabold text-amber-900">{{ number_format($kosongCount) }} <span class="text-xs font-normal text-slate-500">Slot Siap Isi</span></div>
+            <!-- 3. Formasi Kosong / Lowong -->
+            <div class="p-3.5 rounded-xl bg-amber-50/50 border border-amber-200/80 flex items-center justify-between">
+                <div>
+                    <div class="text-[11px] font-semibold text-amber-800 uppercase tracking-wider">Lowong / Kosong</div>
+                    <div class="text-2xl font-bold text-amber-900 mt-0.5">
+                        {{ number_format($kosongCount) }} <span class="text-xs font-normal text-amber-700">Slot Siap Isi</span>
+                    </div>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                </div>
             </div>
+
         </div>
     </div>
 

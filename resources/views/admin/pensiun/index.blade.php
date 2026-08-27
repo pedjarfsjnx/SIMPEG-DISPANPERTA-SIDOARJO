@@ -5,67 +5,87 @@
 @section('content')
 <div class="space-y-6 text-xs">
     <!-- Header & Actions -->
-    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-2">
         <div>
             <div class="flex items-center space-x-2">
-                <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-lg text-[10px] uppercase tracking-wider">Modul Purna Tugas</span>
-                <span class="text-slate-400">&bull;</span>
+                <span class="px-2 py-0.5 bg-emerald-50 text-emerald-800 font-semibold rounded text-[10px] uppercase tracking-wider border border-emerald-200">Modul Purna Tugas</span>
+                <span class="text-slate-300">&bull;</span>
                 <span class="text-xs text-slate-500 font-medium">BUP Otomatis NIP & Rekapitulasi</span>
             </div>
-            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Rekapitulasi Batas Usia Pensiun (BUP) Pegawai</h2>
-            <p class="text-sm text-slate-500">Perhitungan otomatis TMT pensiun berdasarkan tanggal lahir NIP (BUP 60 Thn untuk Kepala & Fungsional, 58 Thn untuk Pelaksana).</p>
+            <h2 class="text-xl font-bold text-slate-900 mt-1">Rekapitulasi Batas Usia Pensiun (BUP) Pegawai</h2>
+            <p class="text-xs text-slate-500">Perhitungan otomatis TMT pensiun berdasarkan tanggal lahir NIP (BUP 60 Thn untuk Kepala & Fungsional, 58 Thn untuk Pelaksana).</p>
         </div>
-        <div class="flex gap-2">
-            <button onclick="window.print()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 shadow-2xs transition flex items-center space-x-2">
-                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                <span>Cetak Rekap Pensiun</span>
+        <div class="flex flex-wrap items-center gap-2">
+            <button onclick="window.print()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 shadow-2xs transition flex items-center space-x-1.5">
+                <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                <span>Cetak Rekap</span>
             </button>
-            <a href="{{ route('admin.pensiun.create') }}" class="px-4 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center space-x-1.5">
+            <a href="{{ route('admin.pensiun.create') }}" class="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs rounded-xl shadow-xs transition flex items-center space-x-1.5">
                 <span>+ Catat Berkas Pensiun</span>
             </a>
         </div>
     </div>
 
-    <!-- 4 Highlight Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs flex items-center space-x-3.5">
-            <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-</div>
-            <div>
-                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Total Pegawai NIP</div>
-                <div class="text-2xl font-extrabold text-slate-900">{{ number_format($totalPNS) }} <span class="text-xs font-normal text-slate-500">Personel</span></div>
+    <!-- Unified 4-Metrics Summary Strip -->
+    <div class="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-sm">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            
+            <!-- 1. Total Pegawai NIP -->
+            <div class="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/80 flex items-center justify-between">
+                <div>
+                    <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Pegawai NIP</div>
+                    <div class="text-2xl font-bold text-slate-900 mt-0.5">
+                        {{ number_format($totalPNS) }} <span class="text-xs font-normal text-slate-500">Personel</span>
+                    </div>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-slate-200/70 text-slate-600 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                </div>
             </div>
-        </div>
 
-        <a href="{{ route('admin.pensiun.index', ['tahun' => date('Y')]) }}" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs border-l-4 border-l-amber-500 flex items-center space-x-3.5 hover:shadow-md transition">
-            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-</div>
-            <div>
-                <div class="text-[10px] font-bold text-amber-700 uppercase tracking-wider">Pensiun Tahun {{ date('Y') }}</div>
-                <div class="text-2xl font-extrabold text-amber-900">{{ number_format($pensiunTahunIni) }} <span class="text-xs font-normal text-slate-500">Pegawai</span></div>
-            </div>
-        </a>
+            <!-- 2. Pensiun Tahun Ini -->
+            <a href="{{ route('admin.pensiun.index', ['tahun' => date('Y')]) }}" 
+               class="group p-3.5 rounded-xl bg-amber-50/50 hover:bg-amber-50/90 border border-amber-200/80 transition flex items-center justify-between">
+                <div>
+                    <div class="text-[11px] font-semibold text-amber-800 uppercase tracking-wider flex items-center gap-1">
+                        <span>Pensiun {{ date('Y') }}</span>
+                        <span class="text-[10px] text-amber-600 font-normal">(Tahun Ini)</span>
+                    </div>
+                    <div class="text-2xl font-bold text-amber-900 mt-0.5">
+                        {{ number_format($pensiunTahunIni) }} <span class="text-xs font-normal text-amber-700">Pegawai</span>
+                    </div>
+                </div>
+                <span class="text-[11px] text-amber-700 group-hover:text-amber-900 font-semibold">Filter &rarr;</span>
+            </a>
 
-        <a href="{{ route('admin.pensiun.index', ['tahun' => date('Y') + 1]) }}" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs border-l-4 border-l-emerald-700 flex items-center space-x-3.5 hover:shadow-md transition">
-            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-</div>
-            <div>
-                <div class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Pensiun Tahun {{ date('Y') + 1 }}</div>
-                <div class="text-2xl font-extrabold text-emerald-900">{{ number_format($pensiunTahunDepan) }} <span class="text-xs font-normal text-slate-500">Pegawai</span></div>
-            </div>
-        </a>
+            <!-- 3. Pensiun Tahun Depan -->
+            <a href="{{ route('admin.pensiun.index', ['tahun' => date('Y') + 1]) }}" 
+               class="group p-3.5 rounded-xl bg-emerald-50/50 hover:bg-emerald-50/90 border border-emerald-200/80 transition flex items-center justify-between">
+                <div>
+                    <div class="text-[11px] font-semibold text-emerald-800 uppercase tracking-wider flex items-center gap-1">
+                        <span>Pensiun {{ date('Y') + 1 }}</span>
+                        <span class="text-[10px] text-emerald-600 font-normal">(Thn Depan)</span>
+                    </div>
+                    <div class="text-2xl font-bold text-emerald-900 mt-0.5">
+                        {{ number_format($pensiunTahunDepan) }} <span class="text-xs font-normal text-emerald-700">Pegawai</span>
+                    </div>
+                </div>
+                <span class="text-[11px] text-emerald-700 group-hover:text-emerald-900 font-semibold">Filter &rarr;</span>
+            </a>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs border-l-4 border-l-sky-600 flex items-center space-x-3.5">
-            <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-</div>
-            <div>
-                <div class="text-[10px] font-bold text-sky-700 uppercase tracking-wider">Pensiun 5 Thn Ke Depan</div>
-                <div class="text-2xl font-extrabold text-sky-900">{{ number_format($pensiun5Tahun) }} <span class="text-xs font-normal text-slate-500">Pegawai</span></div>
+            <!-- 4. Proyeksi 5 Tahun Ke Depan -->
+            <div class="p-3.5 rounded-xl bg-sky-50/50 border border-sky-200/80 flex items-center justify-between">
+                <div>
+                    <div class="text-[11px] font-semibold text-sky-800 uppercase tracking-wider">Proyeksi 5 Thn</div>
+                    <div class="text-2xl font-bold text-sky-900 mt-0.5">
+                        {{ number_format($pensiun5Tahun) }} <span class="text-xs font-normal text-sky-700">Pegawai</span>
+                    </div>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </div>
             </div>
+
         </div>
     </div>
 
