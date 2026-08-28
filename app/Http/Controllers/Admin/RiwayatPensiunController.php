@@ -18,6 +18,77 @@ class RiwayatPensiunController extends Controller
     public function index(Request $request): View
     {
         $currentYear = (int) date('Y');
+        $rekapList = $this->getCalculatedPensiunList($request);
+
+        // Hitung Statistik Ringkasan
+        $allProyeksi = Pegawai::all()->map(fn ($p) => $p->estimasi_pensiun['tanggal'])->filter();
+        $totalPNS = $allProyeksi->count();
+        $pensiunTahunIni = $allProyeksi->filter(fn ($d) => $d->format('Y') == $currentYear)->count();
+        $pensiunTahunDepan = $allProyeksi->filter(fn ($d) => $d->format('Y') == ($currentYear + 1))->count();
+        $pensiun5Tahun = $allProyeksi->filter(fn ($d) => $d->format('Y') >= $currentYear && $d->format('Y') <= ($currentYear + 5))->count();
+
+        // Pagination manual untuk collection
+        $perPage = 20;
+        $page = $request->input('page', 1);
+        $totalItems = count($rekapList);
+        $offset = ($page - 1) * $perPage;
+        $itemsForCurrentPage = array_slice($rekapList, $offset, $perPage);
+        $pensiunList = new LengthAwarePaginator(
+            $itemsForCurrentPage,
+            $totalItems,
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        $unitKerjaList = UnitKerja::orderBy('nama')->get();
+        $kategoriList = KategoriPegawai::orderBy('nama')->get();
+
+        // Opsi Tahun dari 2025 s.d. 2035
+        $tahunOptions = range($currentYear, $currentYear + 10);
+
+        $bulanOptions = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+
+        return view('admin.pensiun.index', compact(
+            'pensiunList',
+            'totalPNS',
+            'pensiunTahunIni',
+            'pensiunTahunDepan',
+            'pensiun5Tahun',
+            'unitKerjaList',
+            'kategoriList',
+            'tahunOptions',
+            'bulanOptions'
+        ));
+    }
+
+    public function cetak(Request $request): View
+    {
+        $rekapList = $this->getCalculatedPensiunList($request);
+        $bulanOptions = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+        ];
+
+        return view('admin.pensiun.cetak', compact('rekapList', 'bulanOptions'));
+    }
+
+    private function getCalculatedPensiunList(Request $request): array
+    {
         $now = Carbon::now();
 
         // 1. Ambil seluruh pegawai aktif
@@ -106,59 +177,7 @@ class RiwayatPensiunController extends Controller
         // 3. Urutkan berdasarkan TMT Pensiun terdekat
         usort($rekapList, fn ($a, $b) => $a->tmt_pensiun->timestamp <=> $b->tmt_pensiun->timestamp);
 
-        // 4. Hitung Statistik Ringkasan
-        $allProyeksi = Pegawai::all()->map(fn ($p) => $p->estimasi_pensiun['tanggal'])->filter();
-        $totalPNS = $allProyeksi->count();
-        $pensiunTahunIni = $allProyeksi->filter(fn ($d) => $d->format('Y') == $currentYear)->count();
-        $pensiunTahunDepan = $allProyeksi->filter(fn ($d) => $d->format('Y') == ($currentYear + 1))->count();
-        $pensiun5Tahun = $allProyeksi->filter(fn ($d) => $d->format('Y') >= $currentYear && $d->format('Y') <= ($currentYear + 5))->count();
-
-        // 5. Pagination manual untuk collection
-        $perPage = 20;
-        $page = $request->input('page', 1);
-        $totalItems = count($rekapList);
-        $offset = ($page - 1) * $perPage;
-        $itemsForCurrentPage = array_slice($rekapList, $offset, $perPage);
-        $pensiunList = new LengthAwarePaginator(
-            $itemsForCurrentPage,
-            $totalItems,
-            $perPage,
-            $page,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
-
-        $unitKerjaList = UnitKerja::orderBy('nama')->get();
-        $kategoriList = KategoriPegawai::orderBy('nama')->get();
-
-        // Opsi Tahun dari 2025 s.d. 2035
-        $tahunOptions = range($currentYear, $currentYear + 10);
-
-        $bulanOptions = [
-            1 => 'Januari',
-            2 => 'Februari',
-            3 => 'Maret',
-            4 => 'April',
-            5 => 'Mei',
-            6 => 'Juni',
-            7 => 'Juli',
-            8 => 'Agustus',
-            9 => 'September',
-            10 => 'Oktober',
-            11 => 'November',
-            12 => 'Desember',
-        ];
-
-        return view('admin.pensiun.index', compact(
-            'pensiunList',
-            'unitKerjaList',
-            'kategoriList',
-            'bulanOptions',
-            'tahunOptions',
-            'totalPNS',
-            'pensiunTahunIni',
-            'pensiunTahunDepan',
-            'pensiun5Tahun'
-        ));
+        return $rekapList;
     }
 
     public function create(): View

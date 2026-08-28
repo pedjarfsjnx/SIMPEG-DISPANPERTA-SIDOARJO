@@ -213,6 +213,23 @@ class AdminKenaikanPangkatTest extends TestCase
     }
 
     #[Test]
+    public function cetak_menampilkan_halaman_cetak_kp(): void
+    {
+        $pegawai = $this->pnsAktif(['nama' => 'Pegawai KP Cetak']);
+        RiwayatKenaikanPangkat::create([
+            'pegawai_id' => $pegawai->id,
+            'golongan_lama' => 'III/a',
+            'golongan_baru' => 'III/b',
+            'tmt_diusulkan' => '2026-10-01',
+        ]);
+
+        $response = $this->actingAs($this->user)->get(route('admin.kenaikan-pangkat.cetak', ['search' => 'Pegawai KP Cetak']));
+        $response->assertOk()
+            ->assertSee('Pegawai KP Cetak')
+            ->assertSee('DAFTAR USULAN KENAIKAN PANGKAT');
+    }
+
+    #[Test]
     public function destroy_menghapus_usulan(): void
     {
         $usulan = RiwayatKenaikanPangkat::create([
@@ -228,3 +245,4 @@ class AdminKenaikanPangkatTest extends TestCase
         $this->assertDatabaseMissing('riwayat_kenaikan_pangkat', ['id' => $usulan->id]);
     }
 }
+

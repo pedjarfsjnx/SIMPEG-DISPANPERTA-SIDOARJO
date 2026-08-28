@@ -157,6 +157,19 @@ class AdminPensiunTest extends TestCase
     }
 
     #[Test]
+    public function cetak_menampilkan_halaman_cetak_dengan_filter(): void
+    {
+        $p1 = $this->pegawaiDenganPensiun('1968-05-20'); // pensiun 2026-05-31
+        $p2 = $this->pegawaiDenganPensiun('1969-06-15'); // pensiun 2027-06-30
+
+        $response = $this->actingAs($this->user)->get(route('admin.pensiun.cetak', ['tahun' => '2026']));
+        $response->assertOk()
+            ->assertSee($p1->nama)
+            ->assertDontSee($p2->nama)
+            ->assertSee('REKAPITULASI PROYEKSI BATAS USIA PENSIUN');
+    }
+
+    #[Test]
     public function destroy_menghapus_riwayat_pensiun(): void
     {
         $riwayat = RiwayatPensiun::create([
@@ -171,3 +184,4 @@ class AdminPensiunTest extends TestCase
         $this->assertDatabaseMissing('riwayat_pensiun', ['id' => $riwayat->id]);
     }
 }
+

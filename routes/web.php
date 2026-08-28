@@ -74,7 +74,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/master-data/status', [AdminMasterDataController::class, 'storeStatus'])->name('master-data.status.store');
 
     // Riwayat Pensiun & KP Management
+    Route::get('/pensiun/cetak', [AdminPensiunController::class, 'cetak'])->name('pensiun.cetak');
     Route::resource('pensiun', AdminPensiunController::class);
+
+    Route::get('/kenaikan-pangkat/cetak', [AdminKPController::class, 'cetak'])->name('kenaikan-pangkat.cetak');
     Route::resource('kenaikan-pangkat', AdminKPController::class);
 
     // Activity Audit Logs

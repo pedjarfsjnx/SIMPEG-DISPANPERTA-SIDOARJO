@@ -30,6 +30,23 @@ class RiwayatKenaikanPangkatController extends Controller
         return view('admin.kenaikan-pangkat.index', compact('kpList', 'totalUsulan'));
     }
 
+    public function cetak(Request $request): View
+    {
+        $query = RiwayatKenaikanPangkat::with(['pegawai.unitKerja', 'pegawai.bidang']);
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->whereHas('pegawai', function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nip', 'like', "%{$search}%");
+            });
+        }
+
+        $kpList = $query->orderBy('tmt_diusulkan', 'asc')->get();
+
+        return view('admin.kenaikan-pangkat.cetak', compact('kpList'));
+    }
+
     public function create(): View
     {
         // Hanya tampilkan pegawai yang belum pensiun
