@@ -83,10 +83,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Activity Audit Logs
     Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
 
-    // Import / Export Excel & PDF
-    Route::get('/import', [ImportExportController::class, 'showImportForm'])->name('import.form');
-    Route::post('/import/preview', [ImportExportController::class, 'previewImport'])->name('import.preview');
-    Route::post('/import/commit', [ImportExportController::class, 'commitImport'])->name('import.commit');
+    // Export Excel
     Route::get('/export', [ImportExportController::class, 'exportExcel'])->name('export.excel');
 });
 

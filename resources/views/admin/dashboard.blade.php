@@ -28,12 +28,13 @@
                     </svg>
                     <span>+ Tambah Pegawai</span>
                 </a>
-                <a href="{{ route('admin.import.form') }}" 
-                   class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs rounded-xl shadow-xs transition whitespace-nowrap">
+                <a href="{{ route('admin.export.excel') }}" 
+                   class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs rounded-xl shadow-xs transition whitespace-nowrap"
+                   title="Export Data Pegawai ke Excel">
                     <svg class="w-3.5 h-3.5 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                    <span>Import Excel</span>
+                    <span>Export Excel</span>
                 </a>
             </div>
         </div>

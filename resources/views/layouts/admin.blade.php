@@ -263,11 +263,6 @@
                Audit Log Aktivitas
             </a>
 
-            <a href="{{ route('admin.import.form') }}" 
-               class="flex items-center px-3 py-2 rounded transition {{ request()->routeIs('admin.import.*') ? 'bg-emerald-800 text-white font-semibold' : 'hover:bg-slate-800 text-slate-400 hover:text-white' }}">
-               Import Excel
-            </a>
-
             <a href="{{ route('admin.export.excel') }}" 
                class="flex items-center px-3 py-2 rounded transition hover:bg-slate-800 text-slate-400 hover:text-white">
                Export Excel
@@ -334,7 +329,6 @@
             <a href="{{ route('admin.pensiun.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.pensiun.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Pengajuan Pensiun</a>
             <a href="{{ route('admin.kenaikan-pangkat.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.kenaikan-pangkat.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Kenaikan Pangkat</a>
             <a href="{{ route('admin.activity-logs.index') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.activity-logs.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Audit Log Aktivitas</a>
-            <a href="{{ route('admin.import.form') }}" class="flex items-center px-3 py-2 rounded text-xs {{ request()->routeIs('admin.import.*') ? 'bg-emerald-800 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800' }}">Import Excel</a>
             <a href="{{ route('admin.export.excel') }}" class="flex items-center px-3 py-2 rounded text-xs text-slate-300 hover:bg-slate-800">Export Excel</a>
         </div>
 
