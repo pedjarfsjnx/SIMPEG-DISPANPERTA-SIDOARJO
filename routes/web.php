@@ -28,6 +28,9 @@ Route::get('/pegawai-cetak', [PublicPegawaiController::class, 'cetak'])->name('p
 Route::get('/pegawai-download-pdf', [PublicPegawaiController::class, 'downloadPdf'])->name('public.pegawai.download-pdf');
 Route::get('/pegawai/{id}', [PublicPegawaiController::class, 'show'])->name('public.pegawai.show');
 Route::get('/struktur-organisasi', [PublicStrukturController::class, 'index'])->name('public.struktur-organisasi');
+Route::get('/panduan', function () {
+    return response()->file(public_path('user-guide.html'));
+})->name('panduan');
 
 // Database sync trigger for Railway with detailed error reporting
 Route::get('/force-sync-db', function () {

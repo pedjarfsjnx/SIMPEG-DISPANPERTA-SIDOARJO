@@ -267,6 +267,13 @@
                class="flex items-center px-3 py-2 rounded transition hover:bg-slate-800 text-slate-400 hover:text-white">
                Export Excel
             </a>
+
+            <div class="pt-4 pb-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3">Bantuan & Dokumen</div>
+
+            <a href="{{ route('panduan') }}" target="_blank"
+               class="flex items-center px-3 py-2 rounded transition hover:bg-slate-800 text-emerald-400 hover:text-white font-medium">
+               Buku Panduan (PDF)
+            </a>
         </nav>
 
         <!-- Public Switch & Footer -->

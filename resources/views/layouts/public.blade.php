@@ -229,7 +229,11 @@
                     </a>
                     <a href="{{ route('public.struktur-organisasi') }}" 
                        class="px-3.5 py-1.5 rounded transition whitespace-nowrap {{ request()->routeIs('public.struktur-organisasi') ? 'bg-emerald-950 text-amber-400 font-bold border border-emerald-700 shadow-sm' : 'text-emerald-100 hover:bg-emerald-800 hover:text-white' }}">
-                       Struktur Organisasi
+                        Struktur Organisasi
+                    </a>
+                    <a href="{{ route('panduan') }}" target="_blank"
+                       class="px-3.5 py-1.5 rounded transition whitespace-nowrap text-emerald-100 hover:bg-emerald-800 hover:text-white">
+                        Buku Panduan
                     </a>
                 </div>
             </div>

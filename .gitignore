@@ -27,4 +27,5 @@ database/*.sqlite-journal
 /Brief Project
 /DATA KEPEGAWAIAN DINAS PANGAN & PERTANIAN SIDOARJO
 /scratch*.php
+/scratch/
 /simpeg_database_dump.sql

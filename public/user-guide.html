@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petunjuk Teknis Operasional - SIMPEG Dispanperta Kabupaten Sidoarjo</title>
+    
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Frame Tangkapan Layar Resmi */
+        .screenshot-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 18px 0 24px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .screenshot-header {
+            background: #0f172a;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1e293b;
+        }
+        .screenshot-title {
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .screenshot-badge {
+            font-size: 10px;
+            font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .screenshot-img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .screenshot-caption {
+            background: #f8fafc;
+            padding: 8px 14px;
+            font-size: 11px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Numbered Step Badge */
+        .step-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background: #166534;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        /* Print Optimization */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: #0f172a !important; font-size: 10pt; }
+            .screenshot-card { box-shadow: none !important; border: 1px solid #94a3b8 !important; break-inside: avoid; margin: 12px 0; }
+            .chapter-page { page-break-before: always; }
+            .page-break { page-break-after: always; }
+            a { text-decoration: none !important; color: inherit !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Top Floating Toolbar (Hidden when printing) -->
+    <header class="no-print sticky top-0 z-50 bg-slate-900 border-b border-slate-800 px-4 py-3 text-white">
+        <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white p-1 rounded">
+                    <img src="logo/logo kabupaten sidoarjo.png" alt="Kabupaten Sidoarjo" class="h-6 w-auto">
+                </div>
+                <div class="bg-white p-1 rounded">
+                    <img src="logo/logo dispanperta sidoarjo.png" alt="Dispanperta Sidoarjo" class="h-6 w-auto">
+                </div>
+                <div>
+                    <span class="text-[10px] font-bold tracking-wider uppercase text-emerald-400 block">Petunjuk Teknis Operasional</span>
+                    <h1 class="text-xs font-semibold text-slate-200">SIMPEG Dinas Pangan dan Pertanian Kabupaten Sidoarjo</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <button onclick="window.print()" class="inline-flex items-center px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-semibold rounded shadow-sm transition">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                    </svg>
+                    Cetak / Simpan PDF (A4)
+                </button>
+                <a href="/" target="_blank" class="inline-flex items-center px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded border border-slate-700 transition">
+                    Buka Aplikasi Web
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+
+        <!-- ============================================================ -->
+        <!-- COVER & DOKUMEN KOP RESMI -->
+        <!-- ============================================================ -->
+        <section class="bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <!-- Kop Resmi Surat Kedinasan -->
+            <div class="flex items-center justify-between border-b-4 border-double border-slate-900 pb-5 mb-8">
+                <div class="w-20 flex-shrink-0 text-center">
+                    <img src="logo/logo kabupaten sidoarjo.png" alt="Logo Pemkab Sidoarjo" class="h-20 w-auto mx-auto object-contain">
+                </div>
+                <div class="flex-grow text-center px-4">
+                    <h2 class="text-base font-bold text-slate-900 uppercase tracking-wide">Pemerintah Kabupaten Sidoarjo</h2>
+                    <h3 class="text-lg font-extrabold text-slate-900 uppercase tracking-tight">Dinas Pangan dan Pertanian</h3>
+                    <p class="text-xs text-slate-700 mt-1">
+                        Jl. Pahlawan No.KM.2, Jetis, Lemahputro, Kec. Sidoarjo, Kabupaten Sidoarjo, Jawa Timur 61213
+                    </p>
+                    <p class="text-[11px] text-slate-600 font-medium">Sub Bagian Umum dan Kepegawaian</p>
+                </div>
+                <div class="w-20 flex-shrink-0 text-center">
+                    <img src="logo/logo dispanperta sidoarjo.png" alt="Logo Dispanperta Sidoarjo" class="h-20 w-auto mx-auto object-contain">
+                </div>
+            </div>
+
+            <!-- Judul Dokumen & Metadata -->
+            <div class="text-center my-6">
+                <span class="inline-block px-3 py-1 bg-slate-100 text-slate-800 text-xs font-bold uppercase tracking-wider rounded mb-3 border border-slate-200">
+                    Petunjuk Teknis Operasional (Manual Book)
+                </span>
+                <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight leading-snug uppercase">
+                    Panduan Penggunaan Sistem Informasi Kepegawaian (SIMPEG)
+                </h1>
+                <p class="text-xs text-slate-600 max-w-2xl mx-auto mt-2.5">
+                    Dokumentasi resmi tata laksana operasional sistem kepegawaian berbasis tangkapan layar langsung dari instansi Dinas Pangan dan Pertanian Kabupaten Sidoarjo.
+                </p>
+            </div>
+
+            <!-- Kartu Metadata Dokumen -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded border border-slate-200 text-xs mt-6">
+                <div>
+                    <span class="text-slate-500 block">Kode Panduan</span>
+                    <strong class="text-slate-800 font-mono font-semibold">JUKNIS-SIMPEG-2026</strong>
+                </div>
+                <div>
+                    <span class="text-slate-500 block">Basis Data Aktif</span>
+                    <strong class="text-slate-800 font-semibold">149 Pegawai (150 Formasi)</strong>
+                </div>
+                <div>
+                    <span class="text-slate-500 block">Unit Pengelola</span>
+                    <strong class="text-slate-800 font-semibold">Subbag Umum & Kepegawaian</strong>
+                </div>
+                <div>
+                    <span class="text-slate-500 block">Status Publikasi</span>
+                    <strong class="text-slate-800 font-semibold">Edisi Resmi Tahun 2026</strong>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================ -->
+        <!-- DAFTAR ISI -->
+        <!-- ============================================================ -->
+        <section class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 sm:p-8 mb-8">
+            <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 pb-2 border-b border-slate-200">
+                Daftar Isi Panduan
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-xs">
+                <a href="#bab1" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 1:</strong> Deskripsi Sistem dan Matriks Hak Akses</span>
+                    <span class="text-slate-400 font-mono">01</span>
+                </a>
+                <a href="#bab2" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 2:</strong> Dashboard Statistik dan Komposisi Aparatur</span>
+                    <span class="text-slate-400 font-mono">02</span>
+                </a>
+                <a href="#bab3" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 3:</strong> Direktori Pegawai dan Pencetakan Laporan</span>
+                    <span class="text-slate-400 font-mono">03</span>
+                </a>
+                <a href="#bab4" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 4:</strong> Struktur Organisasi Dinas</span>
+                    <span class="text-slate-400 font-mono">04</span>
+                </a>
+                <a href="#bab5" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 5:</strong> Akses Masuk Login Administrator</span>
+                    <span class="text-slate-400 font-mono">05</span>
+                </a>
+                <a href="#bab6" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 6:</strong> Panel Dashboard Pengelolaan Admin</span>
+                    <span class="text-slate-400 font-mono">06</span>
+                </a>
+                <a href="#bab7" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 7:</strong> Pengelolaan Data Pegawai dan Perekaman Baru</span>
+                    <span class="text-slate-400 font-mono">07</span>
+                </a>
+                <a href="#bab8" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 8:</strong> Pengelolaan Formasi Jabatan dan Anjab</span>
+                    <span class="text-slate-400 font-mono">08</span>
+                </a>
+                <a href="#bab9" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 9:</strong> Pengaturan Master Data Kedinasan</span>
+                    <span class="text-slate-400 font-mono">09</span>
+                </a>
+                <a href="#bab10" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 10:</strong> Administrasi Batas Usia Pensiun (BUP)</span>
+                    <span class="text-slate-400 font-mono">10</span>
+                </a>
+                <a href="#bab11" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 11:</strong> Usulan Kenaikan Pangkat (KP) dan Validasi</span>
+                    <span class="text-slate-400 font-mono">11</span>
+                </a>
+                <a href="#bab12" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
+                    <span><strong>Bab 12:</strong> Audit Log Aktivitas dan Ekspor Excel</span>
+                    <span class="text-slate-400 font-mono">12</span>
+                </a>
+            </div>
+        </section>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 1 -->
+        <!-- ============================================================ -->
+        <article id="bab1" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 1</span>
+                <h2 class="text-lg font-bold text-slate-900">Deskripsi Sistem dan Matriks Hak Akses</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-4">
+                Sistem Informasi Kepegawaian (SIMPEG) Dinas Pangan dan Pertanian Kabupaten Sidoarjo merupakan aplikasi web terpadu untuk pencatatan, pemantauan status, dan pelaporan aparatur di lingkungan Kantor Induk dan 5 Unit Pelaksana Teknis Daerah (UPTD). Sistem mencakup PNS, PPPK, PPPK Paruh Waktu, Tenaga Swakelola, dan Tenaga Outsourcing.
+            </p>
+
+            <div class="overflow-x-auto border border-slate-200 rounded my-4">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-700 uppercase font-semibold border-b border-slate-200">
+                            <th class="py-2.5 px-3">Modul / Menu Layanan</th>
+                            <th class="py-2.5 px-3 text-center">Pengguna Publik</th>
+                            <th class="py-2.5 px-3 text-center">Administrator Kepegawaian</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 text-slate-700">
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Dashboard Statistik & Komposisi Aparatur</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Tersedia</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Direktori Pegawai & Pencarian NIP</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Tersedia</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Unduh PDF & Cetak Laporan Pegawai</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Tersedia</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Bagan Struktur Organisasi Dinas</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Tersedia</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Kelola Pegawai (Tambah, Edit, Arsip/Soft Delete)</td>
+                            <td class="py-2 px-3 text-center text-slate-400 font-semibold">Tidak Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Hak Akses Penuh</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Kelola Formasi Jabatan (Plotting/Anjab)</td>
+                            <td class="py-2 px-3 text-center text-slate-400 font-semibold">Tidak Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Hak Akses Penuh</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Pengaturan Master Data Kedinasan</td>
+                            <td class="py-2 px-3 text-center text-slate-400 font-semibold">Tidak Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Hak Akses Penuh</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Rekapitulasi Batas Usia Pensiun (BUP)</td>
+                            <td class="py-2 px-3 text-center text-slate-400 font-semibold">Tidak Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Hak Akses Penuh</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Usulan Kenaikan Pangkat (KP)</td>
+                            <td class="py-2 px-3 text-center text-slate-400 font-semibold">Tidak Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Hak Akses Penuh</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-3 font-medium">Audit Log Aktivitas & Ekspor Excel (.xlsx)</td>
+                            <td class="py-2 px-3 text-center text-slate-400 font-semibold">Tidak Tersedia</td>
+                            <td class="py-2 px-3 text-center text-emerald-700 font-semibold">Hak Akses Penuh</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 2 -->
+        <!-- ============================================================ -->
+        <article id="bab2" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 2</span>
+                <h2 class="text-lg font-bold text-slate-900">Dashboard Statistik dan Komposisi Aparatur</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Halaman utama publik menampilkan rangkuman data kepegawaian yang diperbarui secara langsung dari basis data. Rincian kategori aparatur ditampilkan per kelompok persentase dan diagram batang persebaran unit kerja:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Dashboard Publik</span>
+                </div>
+                <img src="images/guide/01_public_dashboard.png" alt="Dashboard Publik SIMPEG Dispanperta" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 2.1: Tampilan Dashboard Publik menampilkan total 149 personel aktif, kartu kategori (PNS 51, PPPK 15, PPPK Paruh Waktu 72, Swakelola 4, Outsourcing 7), diagram komposisi donat, dan diagram batang sebaran unit kerja.
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded border border-slate-200 text-xs space-y-2">
+                <strong>Elemen Antarmuka pada Dashboard Publik:</strong>
+                <ul class="list-disc list-inside space-y-1 text-slate-600">
+                    <li><strong>Total Pegawai Aktif:</strong> Menunjukkan angka agregat pegawai yang tercatat dalam status aktif.</li>
+                    <li><strong>Rincian Kategori:</strong> Kartu persentase per kategori pegawai (klik tautan <em>Lihat &rarr;</em> untuk langsung memfilter ke direktori pegawai).</li>
+                    <li><strong>Grafik Persebaran Unit Kerja & UPTD:</strong> Grafik batang pembagian penempatan pegawai di Kantor Induk dan UPTD wilayah.</li>
+                    <li><strong>Tombol Lihat Direktori Pegawai:</strong> Tautan navigasi cepat menuju tabel data pegawai lengkap.</li>
+                </ul>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 3 -->
+        <!-- ============================================================ -->
+        <article id="bab3" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 3</span>
+                <h2 class="text-lg font-bold text-slate-900">Direktori Pegawai dan Pencetakan Laporan</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Menu Direktori Pegawai menyajikan daftar tabel aparatur lengkap dengan fasilitas penyaringan multifaktor dan ekspor cetak:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/pegawai</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Direktori Pegawai</span>
+                </div>
+                <img src="images/guide/02_public_pegawai.png" alt="Direktori Pegawai Publik" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 3.1: Halaman Direktori Kepegawaian publik dilengkapi filter Kategori, Eselon/Kelas, Unit Kerja, kotak pencarian Nama/NIP, tombol Download PDF, dan Cetak Laporan.
+                </div>
+            </div>
+
+            <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs space-y-2">
+                <strong>Prosedur Penggunaan Direktori:</strong>
+                <div class="flex items-start">
+                    <span class="step-badge">1</span>
+                    <p><strong>Pencarian:</strong> Ketikkan nama pegawai atau 18 digit NIP pada kotak pencarian lalu klik <strong>Cari Pegawai</strong>.</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="step-badge">2</span>
+                    <p><strong>Penyaringan:</strong> Pilih dropdown <em>Kategori</em>, <em>Eselon / Kelas</em>, atau <em>Unit Kerja</em> untuk mempersempit daftar.</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="step-badge">3</span>
+                    <p><strong>Ekspor PDF / Cetak:</strong> Klik <strong>Download PDF</strong> untuk mengunduh dokumen laporan A4 Lanskap resmi, atau <strong>Cetak Laporan</strong> untuk mencetak langsung melalui dialog browser.</p>
+                </div>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 4 -->
+        <!-- ============================================================ -->
+        <article id="bab4" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 4</span>
+                <h2 class="text-lg font-bold text-slate-900">Struktur Organisasi Dinas</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Menyajikan visualisasi hierarki kepemimpinan dinas sesuai Lampiran Peraturan Bupati Sidoarjo Nomor 29 Tahun 2022 tentang Kedudukan, Susunan Organisasi, Tugas dan Fungsi, serta Tata Kerja Dinas Pangan dan Pertanian Kabupaten Sidoarjo:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/struktur-organisasi</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Struktur Organisasi</span>
+                </div>
+                <img src="images/guide/03_public_struktur.png" alt="Struktur Organisasi Dispanperta" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 4.1: Bagan Susunan Organisasi menampilkan alur hierarki dari Kepala Dinas, Sekretaris, Kepala Bidang, hingga UPTD.
+                </div>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 5 -->
+        <!-- ============================================================ -->
+        <article id="bab5" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 5</span>
+                <h2 class="text-lg font-bold text-slate-900">Akses Masuk Login Administrator</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Akses panel administrasi kepegawaian membutuhkan otentikasi akun operator Subbag Umum & Kepegawaian melalui halaman login:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card max-w-2xl mx-auto">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/login</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Form Login</span>
+                </div>
+                <img src="images/guide/04_login_page.png" alt="Form Login Admin" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 5.1: Antarmuka otentikasi akun admin pengelola kepegawaian Dispanperta Sidoarjo.
+                </div>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700 mt-3">
+                <strong>Instruksi Masuk:</strong>
+                <ol class="list-decimal list-inside space-y-1 text-slate-600 mt-1">
+                    <li>Masukkan alamat email kedinasan terdaftar pada kolom <em>Email</em>.</li>
+                    <li>Masukkan kata sandi pengelola pada kolom <em>Password</em>.</li>
+                    <li>Centang opsi <em>Ingat Sesi Login</em> jika menggunakan komputer kerja kantor dinas.</li>
+                    <li>Klik <strong>Masuk ke Panel Admin &rarr;</strong>.</li>
+                </ol>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 6 -->
+        <!-- ============================================================ -->
+        <article id="bab6" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 6</span>
+                <h2 class="text-lg font-bold text-slate-900">Panel Dashboard Pengelolaan Admin</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Setelah berhasil masuk, administrator diarahkan ke panel kendali utama yang dilengkapi sidebar navigasi terpadu:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/dashboard</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Dashboard Admin</span>
+                </div>
+                <img src="images/guide/05_admin_dashboard.png" alt="Dashboard Pengelolaan Admin" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 6.1: Dashboard Pengelolaan Kepegawaian menyajikan tombol tindakan cepat (+ Tambah Pegawai, Export Excel), metrik status formasi jabatan terisi vs kosong, serta pemantauan kategori aktif.
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded border border-slate-200 text-xs space-y-2">
+                <strong>Struktur Navigasi Sidebar Administrator:</strong>
+                <ul class="list-disc list-inside space-y-1 text-slate-600">
+                    <li><strong>Dashboard:</strong> Ringkasan statistik dan grafik kendali utama.</li>
+                    <li><strong>Kelola Pegawai:</strong> Manajemen pendaftaran, edit, arsip/soft delete, dan kontak.</li>
+                    <li><strong>Formasi Jabatan:</strong> Plotting formasi, kelas jabatan, dan kuota kebutuhan.</li>
+                    <li><strong>Master Data:</strong> Pengaturan tabel referensi Unit Kerja, Bidang, Kategori, Status.</li>
+                    <li><strong>Pengajuan Pensiun:</strong> Monitoring Batas Usia Pensiun (BUP) dan proyeksi purna tugas.</li>
+                    <li><strong>Kenaikan Pangkat:</strong> Pengelolaan usulan KP berkala periode April/Oktober.</li>
+                    <li><strong>Audit Log Aktivitas:</strong> Rekaman jejak mutasi data oleh akun admin.</li>
+                    <li><strong>Export Excel:</strong> Pengunduhan basis data ke format spreadsheet (.xlsx).</li>
+                </ul>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 7 -->
+        <!-- ============================================================ -->
+        <article id="bab7" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 7</span>
+                <h2 class="text-lg font-bold text-slate-900">Pengelolaan Data Pegawai dan Perekaman Baru</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Modul Kelola Pegawai menyediakan kendali penuh atas data aparatur, termasuk tautan kontak langsung WhatsApp dan Email:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/pegawai</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Tabel Pegawai Admin</span>
+                </div>
+                <img src="images/guide/06_admin_pegawai.png" alt="Kelola Data Pegawai Admin" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 7.1: Antarmuka tabel kelola data pegawai pada panel admin dilengkapi filter status data, pengurutan, tombol Export Excel, Cetak Rekap, dan aksi (Detail, Edit, Arsip).
+                </div>
+            </div>
+
+            <h3 class="text-sm font-bold text-slate-800 mt-6 mb-2">Formulir Tambah Pegawai Baru</h3>
+            <p class="text-xs text-slate-600 mb-3">
+                Untuk merekam pegawai baru, klik tombol <strong>+ Tambah Pegawai</strong> pada pojok kanan atas tabel:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI FORM CREATE -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/pegawai/create</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Form Tambah Pegawai</span>
+                </div>
+                <img src="images/guide/07_admin_pegawai_create.png" alt="Form Tambah Pegawai Baru" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 7.2: Formulir pendaftaran terstruktur dalam dua tahap: (1) Identitas Utama & Kategori, serta (2) Unit Kerja & Formasi Jabatan.
+                </div>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700">
+                <strong>Kebijakan Pengarsipan Data (Soft Delete & Restore):</strong>
+                <p class="text-slate-600 mt-1">
+                    Tombol <strong>Arsip</strong> akan memindahkan pegawai ke status nonaktif tanpa menghapus data secara permanen. Formasi jabatan yang sebelumnya ditempati akan otomatis kembali berstatus <em>Kosong</em> dan siap diisi pegawai lain. Data arsip dapat dipulihkan kembali sewaktu-waktu.
+                </p>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 8 -->
+        <!-- ============================================================ -->
+        <article id="bab8" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 8</span>
+                <h2 class="text-lg font-bold text-slate-900">Pengelolaan Formasi Jabatan dan Anjab</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Memetakan seluruh formasi jabatan, penanggung jawab definitif, serta kelas jabatan untuk keperluan Analisis Jabatan dan Analisis Beban Kerja (Anjab/ABK):
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/formasi-jabatan</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Formasi Jabatan</span>
+                </div>
+                <img src="images/guide/08_admin_formasi.png" alt="Kelola Formasi Jabatan" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 8.1: Daftar Formasi Jabatan menampilkan kartu status (Total Formasi, Terisi, Lowong/Kosong), filter unit kerja dan status, serta tabel pemetaan pejabat definitif.
+                </div>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700">
+                <strong>Ketentuan Penambahan Formasi:</strong>
+                <p class="text-slate-600 mt-1">
+                    Klik <strong>+ Tambah Formasi</strong> untuk menetapkan formasi baru. Tentukan Nama Jabatan, Unit Kerja, Bidang, dan Kelas Jabatan (Kelas 1 s/d 18). Pegawai baru dapat langsung di-plotting ke formasi bersangkutan.
+                </p>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 9 -->
+        <!-- ============================================================ -->
+        <article id="bab9" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 9</span>
+                <h2 class="text-lg font-bold text-slate-900">Pengaturan Master Data Kedinasan</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Master Data memungkinkan penyesuaian parameter dinas tanpa perlu melakukan perombakan skema database atau source code:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/master-data</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Master Data</span>
+                </div>
+                <img src="images/guide/09_admin_master_data.png" alt="Kelola Master Data" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 9.1: Panel Master Data menampilkan 4 komponen kendali: Master Unit Kerja, Master Bidang, Master Kategori Pegawai, dan Master Status Kepegawaian beserta jumlah pegawai terikat.
+                </div>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 10 -->
+        <!-- ============================================================ -->
+        <article id="bab10" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 10</span>
+                <h2 class="text-lg font-bold text-slate-900">Administrasi Batas Usia Pensiun (BUP)</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Sistem menghitung tanggal pensiun secara otomatis berdasarkan tanggal lahir NIP pegawai (58 tahun untuk Pelaksana/Fungsional Pertama, 60 tahun untuk Pejabat Pimpinan Tinggi dan Fungsional Madya):
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/pensiun</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Rekapitulasi BUP</span>
+                </div>
+                <img src="images/guide/10_admin_pensiun.png" alt="Rekapitulasi Pensiun BUP" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 10.1: Panel Rekapitulasi BUP menyajikan ringkasan proyeksi pensiun tahun berjalan, tahun depan, dan proyeksi 5 tahun, dilengkapi indikator sisa masa kerja serta tombol Cetak Rekap.
+                </div>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700">
+                <strong>Fasilitas Pencetakan Laporan Pensiun:</strong>
+                <p class="text-slate-600 mt-1">
+                    Klik tombol <strong>Cetak Rekap</strong> untuk menghasilkan lembar usulan nominatif BUP bagi Badan Kepegawaian Daerah (BKD), yang telah memuat tanggal lahir resmi, TMT pensiun terhitung, dan kolom tanda tangan pengesahan pimpinan.
+                </p>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 11 -->
+        <!-- ============================================================ -->
+        <article id="bab11" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 11</span>
+                <h2 class="text-lg font-bold text-slate-900">Usulan Kenaikan Pangkat (KP) dan Validasi</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Modul ini mengelola berkas nominatif usulan kenaikan pangkat berkala aparatur, terintegrasi dengan validasi batas masa pensiun:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/kenaikan-pangkat</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Kenaikan Pangkat</span>
+                </div>
+                <img src="images/guide/11_admin_kenaikan_pangkat.png" alt="Kelola Usulan Kenaikan Pangkat" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 11.1: Tabel daftar usulan kenaikan pangkat dengan informasi golongan lama, golongan usulan, TMT diusulkan, batas pensiun, dan tombol Cetak Usulan.
+                </div>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700">
+                <strong>Sistem Validasi Otomatis:</strong>
+                <p class="text-slate-600 mt-1">
+                    Sistem secara otomatis memeriksa kelayakan aparatur yang didaftarkan. Pengajuan usulan kenaikan pangkat akan ditolak secara otomatis apabila tanggal TMT usulan melampaui tanggal Batas Usia Pensiun yang bersangkutan.
+                </p>
+            </div>
+        </article>
+
+
+        <!-- ============================================================ -->
+        <!-- BAB 12 -->
+        <!-- ============================================================ -->
+        <article id="bab12" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 12</span>
+                <h2 class="text-lg font-bold text-slate-900">Audit Log Aktivitas dan Ekspor Excel</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                Seluruh aktivitas perubahan data tercatat dalam audit log untuk memenuhi prinsip akuntabilitas dan tata kelola instansi pemerintah:
+            </p>
+
+            <!-- GAMBAR SCREENSHOT ASLI -->
+            <div class="screenshot-card">
+                <div class="screenshot-header">
+                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/activity-logs</span>
+                    <span class="screenshot-badge">Tangkapan Layar: Audit Log</span>
+                </div>
+                <img src="images/guide/12_admin_activity_logs.png" alt="Audit Log Aktivitas Admin" class="screenshot-img">
+                <div class="screenshot-caption">
+                    Gambar 12.1: Log audit aktivitas mencatat waktu, identitas akun admin pengelola, jenis aksi, deskripsi aktivitas, dan alamat IP Address pengakses.
+                </div>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700">
+                <strong>Ekspor Data ke Microsoft Excel:</strong>
+                <p class="text-slate-600 mt-1">
+                    Pada menu <em>Export Excel</em> di sidebar atau tombol <em>Export Excel</em> di daftar pegawai, sistem akan menghasilkan file berekstensi <code>.xlsx</code> secara langsung melalui pustaka PhpSpreadsheet. File ini memuat data lengkap seluruh kolom aparatur yang siap digunakan untuk sinkronisasi dengan BKD Sidoarjo.
+                </p>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Footer Dokumen -->
+    <footer class="no-print bg-slate-900 text-slate-400 py-5 text-center text-xs border-t border-slate-800">
+        <p>&copy; 2026 Dinas Pangan dan Pertanian Kabupaten Sidoarjo.</p>
+        <p class="text-slate-500 text-[11px] mt-0.5">Sistem Informasi Kepegawaian (SIMPEG) - Dokumen Petunjuk Operasional v1.0</p>
+    </footer>
+
+</body>
+</html>
