@@ -64,11 +64,6 @@
             text-transform: uppercase;
             text-decoration: underline;
         }
-        .report-meta {
-            font-size: 10px;
-            color: #4b5563;
-            margin-top: 4px;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -105,7 +100,7 @@
             page-break-inside: avoid;
         }
         .signature-box {
-            width: 250px;
+            width: 260px;
             text-align: center;
             font-size: 11px;
         }
@@ -214,6 +209,15 @@
 </head>
 <body>
 
+    @php
+        $kadis = \App\Models\Pegawai::whereHas('formasiJabatan', function($q) {
+            $q->where('nama_jabatan', 'like', '%KEPALA DINAS%');
+        })->first();
+
+        $kadisNama = $kadis?->nama ?? 'Dr. ENI RUSTIANINGSIH, ST., MT';
+        $kadisNip = $kadis?->nip ? 'NIP. ' . $kadis->nip : 'NIP. 196712101997032004';
+    @endphp
+
     <!-- Non-printable Top Bar -->
     <div class="no-print-bar">
         <div>
@@ -221,7 +225,7 @@
                 📄 Pratinjau Cetak Daftar Usulan Kenaikan Pangkat (Total: {{ count($kpList) }} Usulan)
             </div>
             <div class="edit-hint">
-                💡 <span><strong>Tips:</strong> Nama penandatangan, jabatan, tanggal, dan NIP pada lembar tanda tangan di bawah dapat Anda klik langsung untuk diedit sebelum dicetak/diunduh.</span>
+                💡 <span><strong>Tips:</strong> Nama penandatangan otomatis diambil dari data Kepala Dinas aktif di database. Anda juga dapat mengklik langsung teksnya jika ingin mengganti pejabat penandatangan sebelum mencetak/mengunduh.</span>
             </div>
         </div>
         <div style="display: flex; gap: 8px; align-items: center;">
@@ -310,9 +314,8 @@
                 <div><span class="editable-field" contenteditable="true">Sidoarjo</span>, <span class="editable-field" contenteditable="true">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</span></div>
                 <div style="font-weight: bold; margin-top: 4px;" class="editable-field" contenteditable="true">Kepala Dinas Pangan dan Pertanian<br>Kabupaten Sidoarjo</div>
                 <div class="signature-space"></div>
-                <div style="font-weight: bold; text-decoration: underline;" class="editable-field" contenteditable="true">Dr. Dra. ENI RUSTIANINGSIH, ST., MT.</div>
-                <div class="editable-field" contenteditable="true">Pembina Utama Muda (IV/c)</div>
-                <div class="font-mono editable-field" contenteditable="true">NIP. 19680529 199403 2 006</div>
+                <div style="font-weight: bold; text-decoration: underline;" class="editable-field" contenteditable="true">{{ $kadisNama }}</div>
+                <div class="font-mono editable-field" contenteditable="true">{{ $kadisNip }}</div>
             </div>
         </div>
     </div>

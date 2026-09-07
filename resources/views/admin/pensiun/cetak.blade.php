@@ -76,7 +76,7 @@
         }
         th, td {
             border: 1px solid #374151;
-            padding: 5px 6px;
+            padding: 6px 8px;
             vertical-align: middle;
         }
         th {
@@ -90,17 +90,6 @@
         .text-right { text-align: right; }
         .font-bold { font-weight: bold; }
         .font-mono { font-family: monospace, Courier, sans-serif; font-size: 10px; }
-        .badge {
-            display: inline-block;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-size: 9px;
-            font-weight: bold;
-        }
-        .badge-danger { background: #fee2e2; color: #991b1b; }
-        .badge-warning { background: #fef3c7; color: #92400e; }
-        .badge-success { background: #dcfce7; color: #166534; }
-        .badge-slate { background: #f1f5f9; color: #475569; }
         
         .signature-container {
             margin-top: 25px;
@@ -109,7 +98,7 @@
             page-break-inside: avoid;
         }
         .signature-box {
-            width: 250px;
+            width: 260px;
             text-align: center;
             font-size: 11px;
         }
@@ -218,6 +207,15 @@
 </head>
 <body>
 
+    @php
+        $kadis = \App\Models\Pegawai::whereHas('formasiJabatan', function($q) {
+            $q->where('nama_jabatan', 'like', '%KEPALA DINAS%');
+        })->first();
+
+        $kadisNama = $kadis?->nama ?? 'Dr. ENI RUSTIANINGSIH, ST., MT';
+        $kadisNip = $kadis?->nip ? 'NIP. ' . $kadis->nip : 'NIP. 196712101997032004';
+    @endphp
+
     <!-- Non-printable Top Bar -->
     <div class="no-print-bar">
         <div>
@@ -225,7 +223,7 @@
                 📄 Pratinjau Cetak Laporan Rekapitulasi Pensiun Pegawai (Total: {{ count($rekapList) }} Personel)
             </div>
             <div class="edit-hint">
-                💡 <span><strong>Tips:</strong> Nama penandatangan, jabatan, tanggal, dan NIP pada lembar tanda tangan di bawah dapat Anda klik langsung untuk diedit sebelum dicetak/diunduh.</span>
+                💡 <span><strong>Tips:</strong> Nama penandatangan otomatis diambil dari data Kepala Dinas aktif di database. Anda juga dapat mengklik langsung teksnya jika ingin mengganti pejabat penandatangan sebelum mencetak/mengunduh.</span>
             </div>
         </div>
         <div style="display: flex; gap: 8px; align-items: center;">
@@ -277,23 +275,14 @@
                     <th width="30">NO</th>
                     <th>NAMA PEGAWAI & NIP</th>
                     <th>JABATAN & PENEMPATAN</th>
-                    <th width="75">TGL LAHIR</th>
-                    <th width="35">BUP</th>
-                    <th width="85">TMT PENSIUN</th>
-                    <th width="110">SISA MASA KERJA</th>
-                    <th width="90">KETERANGAN</th>
+                    <th width="85">TGL LAHIR</th>
+                    <th width="45">BUP</th>
+                    <th width="95">TMT PENSIUN</th>
+                    <th width="120">KETERANGAN</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($rekapList as $index => $item)
-                @php
-                    $badgeClass = match(true) {
-                        str_contains($item->sisa_waktu, 'Mendesak') => 'badge-danger',
-                        str_contains($item->sisa_waktu, 'Bulan') => 'badge-warning',
-                        str_contains($item->sisa_waktu, 'Purna') => 'badge-slate',
-                        default => 'badge-success'
-                    };
-                @endphp
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>
@@ -309,16 +298,13 @@
                     <td class="text-center font-bold">
                         {{ $item->tmt_pensiun ? $item->tmt_pensiun->translatedFormat('d M Y') : '-' }}
                     </td>
-                    <td class="text-center">
-                        <span class="badge {{ $badgeClass }}">{{ $item->sisa_waktu }}</span>
-                    </td>
                     <td class="text-center" style="font-size: 10px;">
                         {{ $item->keterangan_khusus }}
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="text-center" style="padding: 15px; color: #6b7280; font-style: italic;">
+                    <td colspan="7" class="text-center" style="padding: 15px; color: #6b7280; font-style: italic;">
                         Tidak ada data pegawai yang sesuai dengan kriteria filter.
                     </td>
                 </tr>
@@ -332,9 +318,8 @@
                 <div><span class="editable-field" contenteditable="true">Sidoarjo</span>, <span class="editable-field" contenteditable="true">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</span></div>
                 <div style="font-weight: bold; margin-top: 4px;" class="editable-field" contenteditable="true">Kepala Dinas Pangan dan Pertanian<br>Kabupaten Sidoarjo</div>
                 <div class="signature-space"></div>
-                <div style="font-weight: bold; text-decoration: underline;" class="editable-field" contenteditable="true">Dr. Dra. ENI RUSTIANINGSIH, ST., MT.</div>
-                <div class="editable-field" contenteditable="true">Pembina Utama Muda (IV/c)</div>
-                <div class="font-mono editable-field" contenteditable="true">NIP. 19680529 199403 2 006</div>
+                <div style="font-weight: bold; text-decoration: underline;" class="editable-field" contenteditable="true">{{ $kadisNama }}</div>
+                <div class="font-mono editable-field" contenteditable="true">{{ $kadisNip }}</div>
             </div>
         </div>
     </div>
@@ -356,7 +341,7 @@
                 "<style>" +
                 "@page { size: A4 landscape; margin: 1.5cm 1.5cm 1.5cm 1.5cm; } " +
                 "body { font-family: Arial, sans-serif; font-size: 10pt; color: #111827; } " +
-                "table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9pt; } " +
+                "table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9.5pt; } " +
                 "th, td { border: 1px solid #374151; padding: 5px 6px; } " +
                 "th { background-color: #f3f4f6; font-weight: bold; text-align: center; } " +
                 ".text-center { text-align: center; } " +
@@ -372,7 +357,6 @@
                 ".signature-container { margin-top: 30px; } " +
                 ".signature-box { float: right; width: 260px; text-align: center; } " +
                 ".signature-space { height: 55px; } " +
-                ".badge { padding: 2px 4px; font-size: 8pt; border: 1px solid #999; } " +
                 "</style></head><body>";
             var footer = "</body></html>";
             var html = header + printArea.innerHTML + footer;
