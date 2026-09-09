@@ -216,7 +216,7 @@
                     <span class="text-slate-400 font-mono">02</span>
                 </a>
                 <a href="#bab3" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
-                    <span><strong>Bab 3:</strong> Direktori Pegawai dan Pencetakan Laporan</span>
+                    <span><strong>Bab 3:</strong> Direktori Pegawai, Cetak Laporan & Live Edit Word</span>
                     <span class="text-slate-400 font-mono">03</span>
                 </a>
                 <a href="#bab4" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
@@ -232,7 +232,7 @@
                     <span class="text-slate-400 font-mono">06</span>
                 </a>
                 <a href="#bab7" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
-                    <span><strong>Bab 7:</strong> Pengelolaan Data Pegawai dan Perekaman Baru</span>
+                    <span><strong>Bab 7:</strong> Pengelolaan Pegawai, Mutasi, dan Pengarsipan Data</span>
                     <span class="text-slate-400 font-mono">07</span>
                 </a>
                 <a href="#bab8" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
@@ -381,46 +381,156 @@
         <article id="bab3" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
             <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
                 <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 3</span>
-                <h2 class="text-lg font-bold text-slate-900">Direktori Pegawai dan Pencetakan Laporan</h2>
+                <h2 class="text-lg font-bold text-slate-900">Direktori Pegawai, Cetak Laporan, dan Fitur Live Edit Ketikan</h2>
             </div>
 
-            <p class="text-xs text-slate-700 leading-relaxed mb-3">
-                Menu Direktori Pegawai menyajikan daftar tabel aparatur lengkap dengan fasilitas penyaringan multifaktor dan ekspor cetak:
-            </p>
+            <!-- SUB-BAB 3.1 -->
+            <div class="mb-6">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    3.1 Direktori Kepegawaian dan Fasilitas Penyaringan Multi-Faktor
+                </h3>
+                <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                    Menu Direktori Pegawai menyajikan daftar tabel aparatur lengkap dengan fasilitas penyaringan multifaktor dan ekspor cetak:
+                </p>
 
-            <!-- GAMBAR SCREENSHOT ASLI -->
-            <div class="screenshot-card">
-                <div class="screenshot-header">
-                    <span class="screenshot-title">http://localhost/dispanperta/public/pegawai</span>
-                    <span class="screenshot-badge">Tangkapan Layar: Direktori Pegawai</span>
+                <!-- GAMBAR SCREENSHOT ASLI -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">http://localhost/dispanperta/public/pegawai</span>
+                        <span class="screenshot-badge">Tangkapan Layar: Direktori Pegawai</span>
+                    </div>
+                    <img src="images/guide/02_public_pegawai.png" alt="Direktori Pegawai Publik" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        Gambar 3.1: Halaman Direktori Kepegawaian publik dilengkapi filter Kategori, Eselon/Kelas, Unit Kerja, kotak pencarian Nama/NIP, tombol Download PDF, dan Cetak Laporan.
+                    </div>
                 </div>
-                <img src="images/guide/02_public_pegawai.png" alt="Direktori Pegawai Publik" class="screenshot-img">
-                <div class="screenshot-caption">
-                    Gambar 3.1: Halaman Direktori Kepegawaian publik dilengkapi filter Kategori, Eselon/Kelas, Unit Kerja, kotak pencarian Nama/NIP, tombol Download PDF, dan Cetak Laporan.
+
+                <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs space-y-2 mb-4">
+                    <strong>Prosedur Penggunaan Direktori:</strong>
+                    <div class="flex items-start">
+                        <span class="step-badge">1</span>
+                        <p><strong>Pencarian:</strong> Ketikkan nama pegawai atau 18 digit NIP pada kotak pencarian lalu klik <strong>Cari Pegawai</strong>.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">2</span>
+                        <p><strong>Penyaringan:</strong> Pilih dropdown <em>Kategori</em>, <em>Eselon / Kelas</em>, atau <em>Unit Kerja</em> untuk mempersempit daftar.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">3</span>
+                        <p><strong>Ekspor PDF / Cetak:</strong> Klik <strong>Download PDF</strong> untuk mengunduh dokumen laporan A4 Lanskap resmi, atau <strong>Cetak Laporan</strong> untuk membuka pratinjau cetak interaktif.</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs space-y-2">
-                <strong>Prosedur Penggunaan Direktori:</strong>
-                <div class="flex items-start">
-                    <span class="step-badge">1</span>
-                    <p><strong>Pencarian:</strong> Ketikkan nama pegawai atau 18 digit NIP pada kotak pencarian lalu klik <strong>Cari Pegawai</strong>.</p>
+            <!-- SUB-BAB 3.2 -->
+            <div class="border-t border-slate-200 pt-5 mt-5">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    3.2 Fitur Interaktif: Edit Ketikan Langsung Sebelum Cetak / Ekspor Word
+                </h3>
+
+                <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                    Dalam praktik administrasi pemerintahan, staf/operator seringkali perlu menyesuaikan teks judul laporan, mengoreksi ketikan nama atau NIP tertentu, mengubah pejabat penandatangan (misalnya penyesuaian status Pelaksana Tugas / Plt., Plh., atau pendelegasian wewenang Sekretaris Dinas), serta mengubah tanggal penetapan surat tanpa perlu merubah data master di database utama.
+                </p>
+                <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                    Sistem Informasi Kepegawaian Dispanperta dilengkapi fitur <strong>In-Place Live Editing (Edit Ketikan Langsung)</strong> pada seluruh halaman pratinjau cetak laporan, mencakup:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4 text-xs">
+                    <div class="p-2.5 bg-slate-50 border border-slate-200 rounded">
+                        <span class="font-bold text-slate-900 block">1. Laporan Direktori Pegawai</span>
+                        <span class="text-slate-500 text-[11px]">Rute: <code>/pegawai-cetak</code></span>
+                    </div>
+                    <div class="p-2.5 bg-slate-50 border border-slate-200 rounded">
+                        <span class="font-bold text-slate-900 block">2. Usulan Pensiun (BUP)</span>
+                        <span class="text-slate-500 text-[11px]">Rute: <code>/admin/pensiun/cetak</code></span>
+                    </div>
+                    <div class="p-2.5 bg-slate-50 border border-slate-200 rounded">
+                        <span class="font-bold text-slate-900 block">3. Usulan Kenaikan Pangkat</span>
+                        <span class="text-slate-500 text-[11px]">Rute: <code>/admin/kenaikan-pangkat/cetak</code></span>
+                    </div>
                 </div>
-                <div class="flex items-start">
-                    <span class="step-badge">2</span>
-                    <p><strong>Penyaringan:</strong> Pilih dropdown <em>Kategori</em>, <em>Eselon / Kelas</em>, atau <em>Unit Kerja</em> untuk mempersempit daftar.</p>
+
+                <!-- GAMBAR SCREENSHOT ANOTASI CETAK LIVE EDIT -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">http://localhost/dispanperta/public/pegawai-cetak</span>
+                        <span class="screenshot-badge">Panduan Visual: Mode Edit Ketikan Langsung & Ekspor Word</span>
+                    </div>
+                    <img src="images/guide/02b_cetak_live_edit.png" alt="Panduan Visual Mode Edit Ketikan Langsung dan Ekspor Word" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        <strong>Gambar 3.2:</strong> Pratinjau Cetak Interaktif dengan Mode Edit Ketikan Langsung. Sorotan Biru <strong>[1] Toolbar Mode Edit</strong> menyediakan tombol Cetak PDF dan Unduh Word (.doc); Sorotan Oranye <strong>[2] Edit Judul & Sel Tabel</strong> teks dapat diklik dan diketik seketika; Sorotan Hijau <strong>[3] Pejabat Penandatangan & Tanggal</strong> fleksibel diedit untuk nama, NIP, status Plt./Plh., atau tanggal pengesahan surat.
+                    </div>
                 </div>
-                <div class="flex items-start">
-                    <span class="step-badge">3</span>
-                    <p><strong>Ekspor PDF / Cetak:</strong> Klik <strong>Download PDF</strong> untuk mengunduh dokumen laporan A4 Lanskap resmi, atau <strong>Cetak Laporan</strong> untuk mencetak langsung melalui dialog browser.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-blue-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">1</span>
+                            <span>Mode Edit & Ekspor Word / PDF</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Seluruh ketikan yang Anda ubah di layar otomatis tersimpan utuh saat Anda mengklik tombol <strong>Unduh Word (.doc)</strong> atau mencetak ke printer/PDF.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-amber-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px]">2</span>
+                            <span>Edit Judul & Isi Baris Tabel</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Cukup klik teks judul laporan, periode tanggal, maupun sel baris tabel untuk merevisi ketikan nama/gelar, NIP, atau menambahkan catatan khusus kedinasan secara instan.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-emerald-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">3</span>
+                            <span>Ubah Penandatangan & Tanggal</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Fleksibel mengakomodasi mutasi pimpinan atau penugasan Plt./Plh. Kepala Dinas. Operator dapat langsung mengedit jabatan penandatangan, nama pejabat, NIP, dan tanggal surat.
+                        </p>
+                    </div>
                 </div>
+
+                <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs space-y-2 mb-4">
+                    <strong>Panduan Langkah Kerja Mengedit Ketikan Sebelum Cetak:</strong>
+                    <div class="flex items-start">
+                        <span class="step-badge">1</span>
+                        <p><strong>Buka Pratinjau Cetak:</strong> Klik tombol <strong>Cetak Laporan</strong> pada Direktori Pegawai publik, atau tombol <strong>Cetak Rekap / Usulan</strong> pada panel admin Pensiun dan Kenaikan Pangkat.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">2</span>
+                        <p><strong>Perhatikan Penanda Garis Bantu:</strong> Teks yang dapat diedit ditandai dengan garis bawah putus-putus halus (<em>dashed line</em>) pada layar monitor. Banner hijau di atas toolbar menunjukkan <em>"Mode Edit Ketikan Aktif"</em>.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">3</span>
+                        <p><strong>Klik dan Lakukan Pengeditan:</strong> Klik kursor Anda pada kata atau kalimat yang ingin diubah. Ketikkan teks perbaikan sebagaimana mengetik di Microsoft Word. Anda dapat mengedit judul, subjudul, isi sel tabel, kota, tanggal, jabatan, nama penandatangan, hingga NIP.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">4</span>
+                        <p><strong>Pilih Ekspor Word atau Cetak Langsung:</strong>
+                            <br>&bull; <strong>Unduh Word (.doc):</strong> Klik tombol biru <em>Unduh Word (.doc)</em> untuk menghasilkan dokumen Word resmi berformat KOP lengkap dengan seluruh editan ketikan yang telah Anda lakukan.
+                            <br>&bull; <strong>Cetak / Simpan PDF:</strong> Klik tombol hijau <em>Cetak / Simpan PDF</em> untuk mencetak fisik atau menyimpan PDF. Garis bantu putus-putus otomatis hilang saat dicetak sehingga hasil cetakan tetap bersih dan formal.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-3.5 bg-emerald-50 rounded-lg border border-emerald-200 text-xs text-emerald-900 flex items-start space-x-2.5">
+                    <svg class="w-4 h-4 text-emerald-700 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div>
+                        <strong>Catatan Penting Keamanan Data:</strong>
+                        <p class="text-emerald-800 text-[11px] mt-0.5 leading-relaxed">
+                            Pengeditan ketikan pada pratinjau cetak bersifat <em>in-memory / client-side</em> khusus untuk kebutuhan penerbitan dokumen cetak dan ekspor Word. Fitur ini <strong>tidak akan merubah atau merusak basis data master</strong> di server, sehingga integritas data pegawai tetap aman dan terjaga 100%.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </article>
-
-
-        <!-- ============================================================ -->
-        <!-- BAB 4 -->
-        <!-- ============================================================ -->
         <article id="bab4" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
             <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
                 <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 4</span>
@@ -529,11 +639,11 @@
         <article id="bab7" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
             <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
                 <span class="px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded uppercase">Bab 7</span>
-                <h2 class="text-lg font-bold text-slate-900">Pengelolaan Data Pegawai dan Perekaman Baru</h2>
+                <h2 class="text-lg font-bold text-slate-900">Pengelolaan Data Pegawai, Mutasi, dan Pengarsipan (Soft Delete & Restore)</h2>
             </div>
 
             <p class="text-xs text-slate-700 leading-relaxed mb-3">
-                Modul Kelola Pegawai menyediakan kendali penuh atas data aparatur, termasuk tautan kontak langsung WhatsApp dan Email:
+                Modul Kelola Pegawai merupakan pusat administrasi aparatur sipil Dispanperta. Modul ini menangani pendaftaran personel baru, pembaruan biodata, pengelolaan mutasi kerja (internal maupun eksternal), serta pengarsipan data secara aman tanpa kehilangan riwayat jejak rekam kedinasan.
             </p>
 
             <!-- GAMBAR SCREENSHOT ASLI -->
@@ -544,33 +654,404 @@
                 </div>
                 <img src="images/guide/06_admin_pegawai.png" alt="Kelola Data Pegawai Admin" class="screenshot-img">
                 <div class="screenshot-caption">
-                    Gambar 7.1: Antarmuka tabel kelola data pegawai pada panel admin dilengkapi filter status data, pengurutan, tombol Export Excel, Cetak Rekap, dan aksi (Detail, Edit, Arsip).
+                    Gambar 7.1: Antarmuka tabel kelola data pegawai pada panel admin dilengkapi filter status data (Data Aktif vs Hanya Arsip), pengurutan, tombol Export Excel, Cetak Rekap, dan aksi (Detail, Edit, Arsip).
                 </div>
             </div>
 
-            <h3 class="text-sm font-bold text-slate-800 mt-6 mb-2">Formulir Tambah Pegawai Baru</h3>
-            <p class="text-xs text-slate-600 mb-3">
-                Untuk merekam pegawai baru, klik tombol <strong>+ Tambah Pegawai</strong> pada pojok kanan atas tabel:
-            </p>
-
-            <!-- GAMBAR SCREENSHOT ASLI FORM CREATE -->
-            <div class="screenshot-card">
-                <div class="screenshot-header">
-                    <span class="screenshot-title">http://localhost/dispanperta/public/admin/pegawai/create</span>
-                    <span class="screenshot-badge">Tangkapan Layar: Form Tambah Pegawai</span>
-                </div>
-                <img src="images/guide/07_admin_pegawai_create.png" alt="Form Tambah Pegawai Baru" class="screenshot-img">
-                <div class="screenshot-caption">
-                    Gambar 7.2: Formulir pendaftaran terstruktur dalam dua tahap: (1) Identitas Utama & Kategori, serta (2) Unit Kerja & Formasi Jabatan.
-                </div>
-            </div>
-
-            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700">
-                <strong>Kebijakan Pengarsipan Data (Soft Delete & Restore):</strong>
-                <p class="text-slate-600 mt-1">
-                    Tombol <strong>Arsip</strong> akan memindahkan pegawai ke status nonaktif tanpa menghapus data secara permanen. Formasi jabatan yang sebelumnya ditempati akan otomatis kembali berstatus <em>Kosong</em> dan siap diisi pegawai lain. Data arsip dapat dipulihkan kembali sewaktu-waktu.
+            <!-- SUB-BAB 7.1 -->
+            <div class="border-t border-slate-200 pt-5 mt-6">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    7.1 Prosedur Perekaman Pegawai Baru
+                </h3>
+                <p class="text-xs text-slate-600 mb-3">
+                    Untuk merekam data pegawai baru ke dalam sistem, klik tombol <strong>+ Tambah Pegawai</strong> pada pojok kanan atas tabel:
                 </p>
+
+                <!-- GAMBAR SCREENSHOT ASLI FORM CREATE -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">http://localhost/dispanperta/public/admin/pegawai/create</span>
+                        <span class="screenshot-badge">Tangkapan Layar: Form Tambah Pegawai</span>
+                    </div>
+                    <img src="images/guide/07_admin_pegawai_create.png" alt="Form Tambah Pegawai Baru" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        Gambar 7.2: Formulir pendaftaran terstruktur dalam dua tahap: (1) Identitas Utama & Kategori, serta (2) Unit Kerja & Formasi Jabatan.
+                    </div>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs space-y-2">
+                    <strong>Langkah-Langkah Pengisian Form Tambah Pegawai:</strong>
+                    <div class="flex items-start">
+                        <span class="step-badge">1</span>
+                        <p><strong>Identitas Diri:</strong> Masukkan Nama Lengkap (beserta gelar jika ada), 18 digit NIP resmi (khusus PNS/PPPK), dan NIK KTP.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">2</span>
+                        <p><strong>Kategori & Status:</strong> Tentukan Kategori Pegawai (PNS, PPPK, PPPK Paruh Waktu, Swakelola, Outsourcing) dan Status Kepegawaian (default: <em>Aktif</em>).</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">3</span>
+                        <p><strong>Data Kelahiran & Golongan:</strong> Masukkan Tempat Lahir, Tanggal Lahir, Pendidikan Terakhir, dan Golongan/Ruang (contoh: <em>III/a</em>, <em>IV/b</em>).</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">4</span>
+                        <p><strong>Unit Kerja & Formasi Jabatan:</strong> Tentukan penempatan Unit Kerja (Kantor Induk atau salah satu dari 5 UPTD), Bidang, dan Formasi Jabatan definitif yang berstatus lowong.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">5</span>
+                        <p><strong>Kontak & TMT:</strong> Isi Nomor WhatsApp/HP, Email kedinasan, dan TMT Jabatan, kemudian klik <strong>Simpan Pegawai Baru</strong>.</p>
+                    </div>
+                </div>
             </div>
+
+            <!-- SUB-BAB 7.2 -->
+            <div class="border-t border-slate-200 pt-6 mt-6">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    7.2 Standar Operasional Prosedur (SOP) Mutasi Pegawai
+                </h3>
+                <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                    Mutasi adalah perpindahan tugas, jabatan, atau instansi berdasarkan Surat Keputusan (SK) resmi. Dalam operasional SIMPEG Dispanperta, penanganan mutasi dibedakan secara tegas menjadi dua jenis skenario:
+                </p>
+
+                <!-- GAMBAR SCREENSHOT ANOTASI MUTASI -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">http://localhost/dispanperta/public/admin/pegawai/create</span>
+                        <span class="screenshot-badge">Panduan Visual: Form Mutasi & Penempatan</span>
+                    </div>
+                    <img src="images/guide/06b_admin_pegawai_mutasi.png" alt="Panduan Visual Mutasi Pegawai Dispanperta" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        <strong>Gambar 7.3:</strong> Panduan Visual Titik Pengisian Mutasi pada Formulir Pegawai. Kotak <strong>[1]</strong> Status Kepegawaian (ubah ke <em>Mutasi</em> hanya jika pindah keluar Dispanperta); Kotak <strong>[2]</strong> Penempatan Unit Kerja & Bidang (rotasi internal di dinas); Kotak <strong>[3]</strong> Pemilihan Formasi Jabatan baru sesuai SK Alih Tugas.
+                    </div>
+                </div>
+
+                <!-- Callout Legend Mutasi -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-amber-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px]">1</span>
+                            <span>Status Kepegawaian</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Pilih <strong>"Mutasi"</strong> hanya jika pegawai pindah ke instansi lain di luar Dispanperta. Jika mutasi internal di dinas, biarkan tetap <strong>"Aktif"</strong>.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-emerald-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">2</span>
+                            <span>Unit Kerja & Bidang</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Ubah penempatan ke <strong>Unit Kerja / Bidang / UPTD baru</strong> untuk pergeseran tugas internal Dispanperta sesuai SK penempatan.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-blue-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">3</span>
+                            <span>Formasi Jabatan Baru</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Pilih <strong>Formasi Jabatan definitif</strong> baru yang lowong. Status formasi lama akan otomatis dilepas dan formasi baru akan terisi.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Box Mutasi Internal -->
+                <div class="mb-4 p-4 bg-emerald-50/70 border border-emerald-200 rounded-lg text-xs space-y-2">
+                    <div class="flex items-center space-x-2 text-emerald-900 font-bold text-xs uppercase tracking-wide">
+                        <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        <span>Skenario 1: Mutasi Internal (Pindah Bidang / Seksi / UPTD di Lingkungan Dispanperta)</span>
+                    </div>
+                    <p class="text-slate-700">
+                        <strong>Kapan dilakukan:</strong> Ketika pegawai mengalami rotasi penempatan, alih tugas, atau promosi yang lokasinya masih berada di dalam naungan Dinas Pangan dan Pertanian Kabupaten Sidoarjo (contoh: dari <em>Bidang Tanaman Pangan</em> pindah ke <em>Bidang Peternakan</em> atau ke <em>UPTD Puskeswan</em>).
+                    </p>
+                    <div class="bg-white p-3 rounded border border-emerald-200/80 space-y-1.5 text-slate-700">
+                        <strong>Langkah-Langkah Detail Mutasi Internal:</strong>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#047857;">1</span>
+                            <p>Buka menu <strong>Kelola Pegawai</strong>, lalu cari nama pegawai yang bersangkutan.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#047857;">2</span>
+                            <p>Klik tombol <strong>Edit</strong> (ikon pensil kuning) pada baris data pegawai.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#047857;">3</span>
+                            <p>Pada bagian formulir penempatan, ubah dropdown <strong>Unit Kerja</strong> dan/atau <strong>Bidang</strong> ke unit kerja yang baru sesuai SK.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#047857;">4</span>
+                            <p>Pilih <strong>Formasi Jabatan</strong> baru yang dituju, serta perbarui kolom <strong>TMT Jabatan</strong> sesuai tanggal efektif SK penugasan baru.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#047857;">5</span>
+                            <p>Pastikan kolom <strong>Status Kepegawaian</strong> tetap bernilai <strong>"Aktif"</strong>.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#047857;">6</span>
+                            <p>Klik <strong>Simpan Perubahan</strong>.</p>
+                        </div>
+                    </div>
+                    <div class="p-2.5 bg-amber-50 border border-amber-300 rounded text-amber-900 text-[11px] font-medium flex items-center space-x-1.5">
+                        <svg class="w-4 h-4 flex-shrink-0 text-amber-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                        <span><strong>PERHATIAN:</strong> Pada mutasi internal, <u>JANGAN klik tombol "Arsipkan"</u>, karena pegawai bersangkutan masih aktif bekerja di dinas!</span>
+                    </div>
+                </div>
+
+                <!-- Box Mutasi Keluar -->
+                <div class="mb-4 p-4 bg-rose-50/70 border border-rose-200 rounded-lg text-xs space-y-2">
+                    <div class="flex items-center space-x-2 text-rose-900 font-bold text-xs uppercase tracking-wide">
+                        <svg class="w-4 h-4 text-rose-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                        <span>Skenario 2: Mutasi Keluar (Pindah Instansi ke Luar Dispanperta)</span>
+                    </div>
+                    <p class="text-slate-700">
+                        <strong>Kapan dilakukan:</strong> Ketika pegawai resmi pindah tugas keluar dari Dispanperta (misalnya mutasi ke <em>Bappeda, BKPSDM, Sekretariat Daerah, Dinas lain di Pemkab Sidoarjo</em>, atau mutasi antar-daerah ke luar Kabupaten Sidoarjo).
+                    </p>
+                    <div class="bg-white p-3 rounded border border-rose-200/80 space-y-1.5 text-slate-700">
+                        <strong>Langkah-Langkah Detail Mutasi Keluar:</strong>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#be123c;">1</span>
+                            <p>Buka menu <strong>Kelola Pegawai</strong> dan klik tombol <strong>Edit</strong> pada data pegawai yang pindah.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#be123c;">2</span>
+                            <p>Ubah pilihan dropdown <strong>Status Kepegawaian</strong> dari <em>"Aktif"</em> menjadi <strong>"Mutasi"</strong>.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#be123c;">3</span>
+                            <p>Klik tombol <strong>Simpan Perubahan</strong>.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#be123c;">4</span>
+                            <p>Setelah kembali ke tabel utama, cari baris data pegawai tersebut lalu klik tombol merah <strong>"Arsipkan"</strong>.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="step-badge" style="background:#be123c;">5</span>
+                            <p>Pada kotak dialog konfirmasi, klik <strong>OK</strong>. Data pegawai kini berpindah status ke arsip kedinasan.</p>
+                        </div>
+                    </div>
+                    <div class="p-2.5 bg-blue-50 border border-blue-200 rounded text-blue-900 text-[11px] leading-relaxed">
+                        <strong>Dampak Sistematis Melakukan Arsip pada Mutasi Keluar:</strong>
+                        <ul class="list-disc list-inside mt-1 space-y-0.5 text-blue-800">
+                            <li>Formasi jabatan lama yang ditinggalkan di Dispanperta otomatis menjadi <strong>Kosong (Vacant)</strong> sehingga kuotanya dapat segera diisi pegawai pengganti.</li>
+                            <li>Nama pegawai tidak lagi membebani daftar pegawai aktif publik maupun rekap proyeksi pensiun aktif Dispanperta.</li>
+                            <li>Seluruh riwayat SK dan pangkat masa lalu selama berdinas di Dispanperta <strong>tetap tersimpan aman 100%</strong> di basis data untuk kebutuhan audit kepegawaian.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUB-BAB 7.3 -->
+            <div class="border-t border-slate-200 pt-6 mt-6">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    7.3 Tata Cara Pengarsipan Pegawai (Soft Delete) vs Mutasi
+                </h3>
+                <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                    Perbedaan fundamental antara status "Mutasi" dan tindakan "Diarsipkan" dijelaskan secara komprehensif pada tabel berikut:
+                </p>
+
+                <div class="overflow-x-auto border border-slate-200 rounded my-3">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-800 font-semibold border-b border-slate-200">
+                                <th class="py-2.5 px-3 w-1/4">Parameter Perbandingan</th>
+                                <th class="py-2.5 px-3 w-3/8 text-blue-900 bg-blue-50/50">Status Mutasi</th>
+                                <th class="py-2.5 px-3 w-3/8 text-rose-900 bg-rose-50/50">Tindakan Diarsipkan (Soft Delete)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-slate-700">
+                            <tr>
+                                <td class="py-2 px-3 font-semibold bg-slate-50/50">Bentuk di Sistem</td>
+                                <td class="py-2 px-3">Opsi pilihan dropdown pada formulir data (kolom <em>Status Kepegawaian</em>).</td>
+                                <td class="py-2 px-3">Tombol tindakan berwarna merah bertuliskan <strong>"Arsipkan"</strong> di tabel admin.</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold bg-slate-50/50">Kapan Digunakan</td>
+                                <td class="py-2 px-3">Saat pegawai menerima SK Alih Tugas / Mutasi resmi.</td>
+                                <td class="py-2 px-3">Saat pegawai sudah resmi berhenti/tidak lagi berdinas di kantor Dispanperta.</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold bg-slate-50/50">Muncul di Tabel Utama?</td>
+                                <td class="py-2 px-3 text-emerald-700 font-semibold">Ya, masih muncul selama belum diarsipkan.</td>
+                                <td class="py-2 px-3 text-slate-500 font-semibold">Tidak (dipindahkan ke filter <em>Hanya Arsip</em>).</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold bg-slate-50/50">Status Formasi Jabatan</td>
+                                <td class="py-2 px-3">Tetap mengikat formasi jabatan yang diduduki.</td>
+                                <td class="py-2 px-3 text-emerald-700 font-semibold">Otomatis dilepas menjadi Kosong (dapat diisi pegawai baru).</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold bg-slate-50/50">Keberadaan Data Fisik</td>
+                                <td class="py-2 px-3">Tersimpan di tabel operasional aktif.</td>
+                                <td class="py-2 px-3">Tetap tersimpan utuh di database (Soft Delete) & dapat dipulihkan kapan saja.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 5 Kondisi Kapan Pegawai Harus Diarsipkan -->
+                <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs space-y-2 mt-4">
+                    <strong class="text-slate-900 block text-xs">5 Kondisi Resmi Kapan Tombol "Arsipkan" Harus Digunakan:</strong>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-700">
+                        <li><strong>Pegawai Resmi Purna Tugas (Pensiun):</strong> Tanggal TMT SK pensiun telah tiba dan pegawai sudah tidak aktif berdinas.</li>
+                        <li><strong>Pegawai Mutasi Keluar Instansi:</strong> Telah menerima SK mutasi keluar dan telah bertugas di dinas/daerah lain.</li>
+                        <li><strong>Pegawai Wafat:</strong> Meninggal dunia dalam masa dinas aktif.</li>
+                        <li><strong>Pegawai Diberhentikan / Habis Kontrak:</strong> Mengundurkan diri, diberhentikan dengan hormat, atau masa kontrak honorernya usai.</li>
+                        <li><strong>Pembersihan Data Ganda (Duplikat):</strong> Terjadi kekeliruan operator yang menginput nama pegawai sebanyak dua kali.</li>
+                    </ol>
+                </div>
+
+                <!-- GAMBAR SCREENSHOT ANOTASI ARSIP VS MUTASI -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">http://localhost/dispanperta/public/admin/pegawai</span>
+                        <span class="screenshot-badge">Panduan Visual: Tombol Aksi Edit vs Arsipkan</span>
+                    </div>
+                    <img src="images/guide/06c_admin_pegawai_arsip.png" alt="Panduan Visual Tombol Edit vs Arsipkan" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        <strong>Gambar 7.4:</strong> Perbedaan Tombol Aksi pada Tabel Pegawai. Sorotan Hijau <strong>[1] Tombol Edit</strong> untuk mutasi/rotasi internal; Sorotan Merah <strong>[2] Tombol Arsipkan</strong> hanya untuk pegawai purna tugas (pensiun) atau mutasi keluar dinas.
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-xs">
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-emerald-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">1</span>
+                            <span>Tombol Edit (Mutasi Internal)</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Gunakan tombol <strong>Edit</strong> jika pegawai hanya bergeser bidang atau jabatan di lingkungan Dispanperta. Pegawai tetap berstatus aktif dan formasi jabatannya langsung disesuaikan tanpa melepas kepegawaian.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-rose-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center text-[10px]">2</span>
+                            <span>Tombol Arsipkan (Soft Delete)</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Gunakan tombol merah <strong>Arsipkan</strong> jika pegawai sudah resmi <strong>Pensiun</strong> atau <strong>Mutasi Keluar Instansi</strong>. Kursi formasi lama otomatis menjadi kosong (lowong) tanpa menghapus rekam jejak.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SUB-BAB 7.4 -->
+            <div class="border-t border-slate-200 pt-6 mt-6">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    7.4 Tata Cara Memulihkan Data Pegawai yang Diarsipkan (Restore)
+                </h3>
+                <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                    Apabila pengarsipan pegawai dilakukan karena pembatalan mutasi, penundaan pensiun, atau kesalahan klik, data pegawai dapat dipulihkan kembali secara utuh:
+                </p>
+
+                <div class="p-4 bg-emerald-50/50 border border-emerald-200 rounded-lg text-xs space-y-2">
+                    <strong>Langkah-Langkah Pemulihan Data (Restore):</strong>
+                    <div class="flex items-start">
+                        <span class="step-badge">1</span>
+                        <p>Buka menu <strong>Kelola Pegawai</strong> pada panel navigasi admin.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">2</span>
+                        <p>Pada bilah filter di atas tabel, cari dropdown <strong>Status Data</strong> (yang secara default bernilai <em>"Data Aktif"</em>).</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">3</span>
+                        <p>Ubah pilihan filter tersebut menjadi <strong>"Hanya Arsip (Soft Deleted)"</strong>.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">4</span>
+                        <p>Tabel akan menyaring dan menampilkan seluruh berkas pegawai yang berstatus arsip. Cari nama pegawai yang hendak dipulihkan.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">5</span>
+                        <p>Klik tombol hijau <strong>"Pulihkan"</strong> pada kolom Aksi di baris pegawai tersebut.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">6</span>
+                        <p>Konfirmasi dialog pemulihan. Pegawai akan langsung aktif kembali di tabel operasional harian, formasi jabatannya kembali terpasang, dan proyeksi BUP pensiun otomatis aktif kembali.</p>
+                    </div>
+                </div>
+
+                <!-- GAMBAR SCREENSHOT ANOTASI RESTORE -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">http://localhost/dispanperta/public/admin/pegawai?status_data=trashed</span>
+                        <span class="screenshot-badge">Panduan Visual: Filter Status & Pemulihan (Restore)</span>
+                    </div>
+                    <img src="images/guide/06d_admin_pegawai_restore.png" alt="Panduan Visual Pemulihan Pegawai Restore" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        <strong>Gambar 7.5:</strong> Prosedur Pemulihan Berkas Pegawai (Restore). Langkah <strong>[1]</strong> Mengubah filter status data menjadi <em>"Hanya Arsip"</em> lalu klik <em>Terapkan Filter</em>; Langkah <strong>[2]</strong> Mengklik tombol hijau <em>"Pulihkan"</em> untuk mengaktifkan kembali pegawai ke dinas.
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-xs">
+                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-blue-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">1</span>
+                            <span>Filter Status "Hanya Arsip"</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Bilah pencarian tabel dilengkapi filter status data. Pilih <strong>"Hanya Arsip"</strong> lalu klik tombol <em>Terapkan Filter</em> untuk menampilkan seluruh berkas pegawai yang pernah dinonaktifkan / diarsipkan.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-emerald-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">2</span>
+                            <span>Tombol Hijau "Pulihkan"</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Klik tombol <strong>"Pulihkan"</strong> pada baris pegawai. Seluruh biodata, relasi ke formasi, riwayat usulan pangkat, dan kalkulasi BUP pensiun akan otomatis kembali aktif seketika.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SUB-BAB 7.5 -->
+            <div class="border-t border-slate-200 pt-6 mt-6">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    7.5 Pengaruh Status Arsip & Mutasi terhadap Modul Kenaikan Pangkat dan Pensiun
+                </h3>
+                <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                    Sistem SIMPEG Dispanperta mengintegrasikan relasi data yang sinkron agar tindakan mutasi maupun pengarsipan tidak menghilangkan rekam jejak kedinasan masa lalu:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <!-- Kartu Pangkat -->
+                    <div class="p-4 bg-white rounded-lg border border-slate-200 shadow-2xs space-y-2">
+                        <div class="flex items-center space-x-2 text-emerald-800 font-bold border-b border-slate-200 pb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                            <span>Dampaknya pada Modul Kenaikan Pangkat:</span>
+                        </div>
+                        <ul class="list-disc list-inside space-y-1.5 text-slate-600">
+                            <li><strong>Riwayat Pangkat Lama TETAP TAMPIL:</strong> Seluruh riwayat usulan kenaikan pangkat yang pernah diajukan saat pegawai masih aktif tetap tersimpan permanen dan nama pegawai tetap terbaca di tabel arsip kenaikan pangkat.</li>
+                            <li><strong>Usulan Baru Otomatis DIBLOKIR:</strong> Pegawai yang berstatus diarsipkan atau sudah pensiun resmi otomatis dihilangkan dari dropdown formulir usulan pangkat baru guna mencegah kekeliruan administratif.</li>
+                            <li><strong>Pegawai Mutasi Internal:</strong> Tetap berhak dan dapat diajukan usulan kenaikan pangkat secara berkala seperti biasa.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Kartu Pensiun -->
+                    <div class="p-4 bg-white rounded-lg border border-slate-200 shadow-2xs space-y-2">
+                        <div class="flex items-center space-x-2 text-blue-800 font-bold border-b border-slate-200 pb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>Dampaknya pada Modul Rekap Pensiun:</span>
+                        </div>
+                        <ul class="list-disc list-inside space-y-1.5 text-slate-600">
+                            <li><strong>Otomatis Dikeluarkan dari Rekap Aktif:</strong> Pegawai yang diarsipkan tidak lagi muncul dalam daftar proyeksi pensiun aktif tahunan dinas, sehingga angka statistik kebutuhan pegawai tetap presisi.</li>
+                            <li><strong>Data SK Pensiun Resmi Tersimpan Aman:</strong> Apabila pegawai memiliki catatan SK pengajuan pensiun di sistem, data tersebut tetap tersimpan di basis data dan tidak ikut terhapus.</li>
+                            <li><strong>Sinkronisasi Instan saat Restore:</strong> Jika pegawai di-restore/dipulihkan, estimasi BUP otomatis terhitung kembali sesuai 8 digit NIP lahirnya.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </article>
 
 
@@ -660,11 +1141,84 @@
                 </div>
             </div>
 
-            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700">
+            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700 mb-4">
                 <strong>Fasilitas Pencetakan Laporan Pensiun:</strong>
                 <p class="text-slate-600 mt-1">
                     Klik tombol <strong>Cetak Rekap</strong> untuk menghasilkan lembar usulan nominatif BUP bagi Badan Kepegawaian Daerah (BKD), yang telah memuat tanggal lahir resmi, TMT pensiun terhitung, dan kolom tanda tangan pengesahan pimpinan.
+                <div class="mt-2.5 p-2.5 bg-blue-50 border border-blue-200 rounded text-blue-950 text-[11px] leading-relaxed">
+                    <strong>Tips Fitur Edit Ketikan:</strong> Halaman pratinjau cetak pensiun mendukung fitur Live Edit langsung untuk menyesuaikan judul laporan, nama/NIP pegawai di tabel, pejabat penandatangan (Plt. Kepala Dinas), dan tanggal surat sebelum dicetak atau diunduh ke Word (.doc) &mdash; lihat panduan <strong>Bab 3.2</strong>.
+                </div>
                 </p>
+            </div>
+
+            <!-- SUB-BAB 10.2 -->
+            <div class="border-t border-slate-200 pt-5 mt-5">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    10.2 Standar Operasional Penanganan Pegawai Masuk Purna Tugas
+                </h3>
+                <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs space-y-2">
+                    <strong>Langkah-Langkah Detail Administrasi Purna Tugas:</strong>
+                    <div class="flex items-start">
+                        <span class="step-badge">1</span>
+                        <p><strong>Monitoring Berkala:</strong> Periksa kolom <em>Sisa Waktu</em> pada tabel pensiun. Pegawai dengan tanda <code>&lt; 6 Bulan (Mendesak)</code> merupakan prioritas utama pemberkasan ke BKD.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">2</span>
+                        <p><strong>Perekaman Pengajuan Pensiun:</strong> Klik tombol <strong>+ Tambah Pengajuan Pensiun</strong>, pilih nama pegawai PNS bersangkutan, tentukan tanggal pengajuan berkas dan tanggal resmi TMT Pensiun.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">3</span>
+                        <p><strong>Pencetakan Berkas Usulan:</strong> Klik <strong>Cetak Rekap</strong> untuk mencetak daftar nominatif resmi ber-KOP Dispanperta yang dilengkapi kolom tanda tangan Kepala Dinas untuk dikirimkan ke BKD Sidoarjo.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">4</span>
+                        <p><strong>Finalisasi Pengarsipan saat TMT Tiba:</strong> Ketika tanggal TMT Pensiun resmi tiba dan SK Pensiun telah berlaku, buka menu <em>Kelola Pegawai</em>, edit status kepegawaian menjadi <strong>"Pensiun"</strong>, lalu klik tombol <strong>"Arsipkan"</strong>. Dengan langkah ini, kursi formasi jabatan di Dispanperta resmi lowong dan siap diusulkan pengisiannya melalui formasi CPNS/PPPK baru.</p>
+                    </div>
+                </div>
+
+                <!-- GAMBAR SCREENSHOT ANOTASI PENSIUN -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">http://localhost/dispanperta/public/admin/pensiun</span>
+                        <span class="screenshot-badge">Panduan Visual: Administrasi & Peringatan BUP</span>
+                    </div>
+                    <img src="images/guide/10b_admin_pensiun_annotated.png" alt="Panduan Visual Rekapitulasi Pensiun BUP" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        <strong>Gambar 10.2:</strong> Fitur Tindak Lanjut Purna Tugas pada Modul Pensiun. Tombol Biru <strong>[1] Cetak Rekap</strong> untuk mencetak usulan nominatif BUP ke BKD; Tombol Hijau <strong>[2] + Catat Berkas Pensiun</strong> untuk merekam SK pengajuan resmi; Penanda Oranye/Merah <strong>[3] Peringatan Masa Kerja &lt; 6 Bulan</strong> sebagai prioritas pemberkasan.
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-blue-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">1</span>
+                            <span>Cetak Rekap Nominatif BKD</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Menghasilkan dokumen resmi ber-KOP Dispanperta yang memuat proyeksi BUP lengkap dengan kolom tanda tangan pimpinan untuk dikirim ke BKD / BKN.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-emerald-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">2</span>
+                            <span>+ Catat Berkas Pensiun</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Mencatat nomor usulan, tanggal persetujuan BKD, dan pengunggahan berkas digital SK pensiun ke dalam sistem arsip kepegawaian.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-amber-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px]">3</span>
+                            <span>Peringatan &lt; 6 Bulan (Mendesak)</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Sistem secara proaktif mendeteksi pegawai yang memasuki 6 bulan sebelum TMT BUP agar pengelola kepegawaian segera memproses berkas ke BKD.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </article>
 
@@ -694,11 +1248,79 @@
                 </div>
             </div>
 
-            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700">
+            <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700 mb-4">
                 <strong>Sistem Validasi Otomatis:</strong>
                 <p class="text-slate-600 mt-1">
                     Sistem secara otomatis memeriksa kelayakan aparatur yang didaftarkan. Pengajuan usulan kenaikan pangkat akan ditolak secara otomatis apabila tanggal TMT usulan melampaui tanggal Batas Usia Pensiun yang bersangkutan.
+                <div class="mt-2.5 p-2.5 bg-blue-50 border border-blue-200 rounded text-blue-950 text-[11px] leading-relaxed">
+                    <strong>Tips Fitur Edit Ketikan & Ekspor Word:</strong> Halaman cetak berkas usulan kenaikan pangkat juga mendukung Live Edit untuk mengoreksi teks tabel, mengganti nama/NIP penandatangan, serta mengunduh format Microsoft Word (.doc) &mdash; lihat panduan <strong>Bab 3.2</strong>.
+                </div>
                 </p>
+            </div>
+
+            <!-- SUB-BAB 11.2 -->
+            <div class="border-t border-slate-200 pt-5 mt-5">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center mb-2">
+                    <span class="w-2.5 h-2.5 bg-emerald-700 rounded-full mr-2"></span>
+                    11.2 Alur Pemrosesan Usulan dan Kebijakan Pegawai Mutasi / Pensiun
+                </h3>
+                <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs space-y-2">
+                    <strong>Langkah-Langkah Pemrosesan Usulan Kenaikan Pangkat:</strong>
+                    <div class="flex items-start">
+                        <span class="step-badge">1</span>
+                        <p><strong>Buka Formulir Usulan:</strong> Klik tombol <strong>+ Tambah Usulan Pangkat</strong> di pojok kanan atas tabel.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">2</span>
+                        <p><strong>Pemilihan Aparatur:</strong> Dropdown pegawai hanya memuat PNS aktif yang belum pensiun. Pegawai berstatus arsip/mutasi keluar otomatis tidak dimunculkan oleh sistem.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">3</span>
+                        <p><strong>Entri Golongan & TMT:</strong> Masukkan Golongan Lama, Golongan Usulan (contoh: <em>III/b &rarr; III/c</em>), dan TMT Usulan (disesuaikan dengan 6 periode kenaikan pangkat BKN).</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">4</span>
+                        <p><strong>Validasi Otomatis Batas Usia Pensiun:</strong> Sistem otomatis menolak penyimpanan jika TMT Usulan melampaui tanggal pensiun pegawai. Pegawai yang sudah purna tugas tidak dapat diusulkan kenaikan pangkat.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-badge">5</span>
+                        <p><strong>Arsip Historis Abadi:</strong> Seluruh riwayat usulan pangkat yang berhasil disimpan akan tetap tercatat di sistem selamanya. Sekalipun kelak pegawai tersebut pensiun atau mutasi keluar dinas dan diarsipkan, nama dan riwayat pangkat lamanya tetap utuh tersimpan sebagai rekam jejak kedinasan.</p>
+                    </div>
+                </div>
+
+                <!-- GAMBAR SCREENSHOT ANOTASI KENAIKAN PANGKAT -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">http://localhost/dispanperta/public/admin/kenaikan-pangkat</span>
+                        <span class="screenshot-badge">Panduan Visual: Usulan Kenaikan Pangkat & Validasi BUP</span>
+                    </div>
+                    <img src="images/guide/11b_admin_kp_annotated.png" alt="Panduan Visual Usulan Kenaikan Pangkat" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        <strong>Gambar 11.2:</strong> Fitur Usulan Kenaikan Pangkat dan Validasi Cerdas. Tombol Hijau <strong>[1] + Tambah Usulan Pangkat</strong> otomatis menyaring aparatur aktif (pegawai arsip/pensiun terblokir); Sorotan Oranye <strong>[2] Validasi TMT vs Batas Pensiun</strong> memastikan usulan kenaikan pangkat tidak melampaui usia pensiun PNS.
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-xs">
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-emerald-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">1</span>
+                            <span>Tambah Usulan (Penyaringan Aktif)</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Formulir usulan hanya mengizinkan pemilihan PNS aktif. Pegawai yang telah diarsipkan atau pensiun resmi disaring otomatis untuk menjaga integritas data kepegawaian.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                        <div class="flex items-center space-x-2 font-bold text-amber-900 mb-1">
+                            <span class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px]">2</span>
+                            <span>Validasi Cerdas Batas Pensiun</span>
+                        </div>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
+                            Sistem secara otomatis membandingkan TMT Usulan dengan Batas Pensiun. Apabila TMT Usulan &gt; Tanggal Pensiun, pengajuan akan otomatis ditolak dan tidak dapat disimpan.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </article>
 

@@ -162,19 +162,35 @@
         }
         .btn-back:hover { background: #334155; }
 
-        /* Editable in-place signature styling */
+        /* Editable in-place styling */
         .editable-field {
-            border-bottom: 1px dashed #cbd5e1;
-            padding: 1px 3px;
+            border-bottom: 1px dashed #94a3b8;
+            padding: 1px 4px;
             border-radius: 3px;
             display: inline-block;
             transition: all 0.2s;
             cursor: text;
         }
-        .editable-field:hover, .editable-field:focus {
+        .editable-field:hover {
             border-bottom-color: #047857;
             background-color: #f0fdf4;
-            outline: 1px solid #059669;
+        }
+        .editable-field:focus {
+            border-bottom: 1px solid #059669;
+            background-color: #ecfdf5;
+            outline: 2px solid #a7f3d0;
+        }
+        table td[contenteditable="true"] {
+            cursor: text;
+            transition: background-color 0.15s;
+        }
+        table td[contenteditable="true"]:hover {
+            background-color: #f0fdf4;
+            outline: 1px dashed #10b981;
+        }
+        table td[contenteditable="true"]:focus {
+            background-color: #ecfdf5;
+            outline: 2px solid #059669;
         }
 
         .edit-hint {
@@ -194,7 +210,7 @@
             .no-print-bar, .edit-hint {
                 display: none !important;
             }
-            .editable-field {
+            .editable-field, table td[contenteditable="true"] {
                 border-bottom: none !important;
                 background: transparent !important;
                 outline: none !important;
@@ -219,11 +235,12 @@
     <!-- Non-printable Top Bar -->
     <div class="no-print-bar">
         <div>
-            <div style="font-size: 12px; font-weight: 600;">
-                📄 Pratinjau Cetak Laporan Rekapitulasi Pensiun Pegawai (Total: {{ count($rekapList) }} Personel)
+            <div style="font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                <span>📄 Pratinjau Cetak Rekapitulasi Pensiun BUP (Total: {{ count($rekapList) }} Personel)</span>
+                <span style="font-size: 10px; background: #059669; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Mode Edit Ketikan Aktif</span>
             </div>
             <div class="edit-hint">
-                💡 <span><strong>Tips:</strong> Nama penandatangan otomatis diambil dari data Kepala Dinas aktif di database. Anda juga dapat mengklik langsung teksnya jika ingin mengganti pejabat penandatangan sebelum mencetak/mengunduh.</span>
+                ✏️ <span><strong>Fitur Edit Langsung:</strong> Anda dapat mengklik dan merubah teks apapun di halaman ini secara langsung (Judul Laporan, Periode, Isi Tabel, Tanggal, dan Pejabat Penandatangan) sebelum dicetak atau diunduh ke Word. Garis bantu edit tidak akan ikut tercetak.</span>
             </div>
         </div>
         <div style="display: flex; gap: 8px; align-items: center;">
@@ -254,8 +271,8 @@
 
         <!-- Title -->
         <div class="report-title">
-            <h4>REKAPITULASI PROYEKSI BATAS USIA PENSIUN (BUP) PEGAWAI</h4>
-            <div class="report-meta">
+            <h4 class="editable-field" contenteditable="true" title="Klik untuk mengedit judul laporan">REKAPITULASI PROYEKSI BATAS USIA PENSIUN (BUP) PEGAWAI</h4>
+            <div class="report-meta editable-field" contenteditable="true" title="Klik untuk mengedit periode/keterangan laporan">
                 @if(request('tahun'))
                     Tahun Proyeksi: <strong>{{ request('tahun') }}</strong>
                 @else
@@ -315,11 +332,11 @@
         <!-- Signature Section -->
         <div class="signature-container">
             <div class="signature-box">
-                <div><span class="editable-field" contenteditable="true">Sidoarjo</span>, <span class="editable-field" contenteditable="true">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</span></div>
-                <div style="font-weight: bold; margin-top: 4px;" class="editable-field" contenteditable="true">Kepala Dinas Pangan dan Pertanian<br>Kabupaten Sidoarjo</div>
+                <div><span class="editable-field" contenteditable="true" title="Klik untuk edit kota">Sidoarjo</span>, <span class="editable-field" contenteditable="true" title="Klik untuk edit tanggal">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</span></div>
+                <div style="font-weight: bold; margin-top: 4px;" class="editable-field" contenteditable="true" title="Klik untuk edit jabatan penandatangan (contoh: Plt. Kepala Dinas / Sekretaris Dinas)">Kepala Dinas Pangan dan Pertanian<br>Kabupaten Sidoarjo</div>
                 <div class="signature-space"></div>
-                <div style="font-weight: bold; text-decoration: underline;" class="editable-field" contenteditable="true">{{ $kadisNama }}</div>
-                <div class="font-mono editable-field" contenteditable="true">{{ $kadisNip }}</div>
+                <div style="font-weight: bold; text-decoration: underline;" class="editable-field" contenteditable="true" title="Klik untuk edit nama pejabat penandatangan">{{ $kadisNama }}</div>
+                <div class="font-mono editable-field" contenteditable="true" title="Klik untuk edit NIP / Pangkat">{{ $kadisNip }}</div>
             </div>
         </div>
     </div>

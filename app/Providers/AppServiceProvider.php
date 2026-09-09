@@ -18,9 +18,17 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Unconditionally force HTTPS for any remote/cloud deployment
+        // Force HTTPS only for remote cloud deployments (e.g. Railway) or when behind an SSL reverse proxy.
+        // Never force HTTPS for localhost or private local network (LAN / Wi-Fi) IPs.
         $host = request()->getHost();
-        if ($host !== '127.0.0.1' && $host !== 'localhost' && $host !== '::1') {
+        $isLocalHost = in_array($host, ['127.0.0.1', 'localhost', '::1'])
+            || str_ends_with($host, '.test')
+            || str_ends_with($host, '.local');
+        $isPrivateIp = filter_var($host, FILTER_VALIDATE_IP)
+            && !filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+        $isForwardedHttps = request()->header('x-forwarded-proto') === 'https' || request()->isSecure();
+
+        if (env('FORCE_HTTPS', false) || (! $isLocalHost && ! $isPrivateIp && $isForwardedHttps)) {
             URL::forceScheme('https');
             if (isset($_SERVER)) {
                 $_SERVER['HTTPS'] = 'on';

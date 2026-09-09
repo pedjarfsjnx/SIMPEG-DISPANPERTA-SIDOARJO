@@ -29,3 +29,17 @@ database/*.sqlite-journal
 /scratch*.php
 /scratch/
 /simpeg_database_dump.sql
+# Temporary Guide Screenshot Generation Files
+public/images/guide/*base.png
+public/images/guide/raw_*.png
+public/images/guide/check_*.png
+
+# Temporary backups, zip, sql dumps, and local scratch
+*.zip
+*.tar.gz
+*.rar
+*.sql
+*.bak
+*.log
+scratch/
+*.bat
