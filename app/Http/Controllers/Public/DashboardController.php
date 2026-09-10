@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $rekapKategori = KategoriPegawai::withCount('pegawai')->get();
 
         // Rekap per Status
-        $rekapStatus = StatusKepegawaian::withCount('pegawai')->get();
+        $rekapStatus = StatusKepegawaian::withCount(['pegawai' => fn($q) => $q->withTrashed()])->get();
 
         // Rekap per Unit Kerja
         $rekapUnitKerja = UnitKerja::withCount('pegawai')->get();

@@ -230,8 +230,8 @@
             $q->where('nama_jabatan', 'like', '%KEPALA DINAS%');
         })->first();
 
-        $kadisNama = $kadis?->nama ?? 'Dr. ENI RUSTIANINGSIH, ST., MT';
-        $kadisNip = $kadis?->nip ? 'NIP. ' . $kadis->nip : 'NIP. 196712101997032004';
+        $kadisNama = $kadis?->nama ?? 'Mohamad Edi Kurniadi, ST., MM';
+        $kadisNip = $kadis?->nip ? 'NIP. ' . $kadis->nip : 'NIP. 196906051994031006';
     @endphp
 
     <!-- Non-printable Top Bar -->

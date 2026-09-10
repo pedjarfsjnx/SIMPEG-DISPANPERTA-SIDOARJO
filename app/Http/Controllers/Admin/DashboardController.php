@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $formasiKosongCount = FormasiJabatan::where('status_formasi', 'kosong')->orWhereNull('status_formasi')->count();
 
         $rekapKategori = KategoriPegawai::withCount('pegawai')->get();
-        $rekapStatus = StatusKepegawaian::withCount('pegawai')->get();
+        $rekapStatus = StatusKepegawaian::withCount(['pegawai' => fn($q) => $q->withTrashed()])->get();
         $rekapUnitKerja = UnitKerja::withCount('pegawai')->get();
 
         $recentPegawai = Pegawai::with(['kategori', 'unitKerja', 'bidang'])
