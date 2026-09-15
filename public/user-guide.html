@@ -207,6 +207,13 @@
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-xs">
+                <a href="#quickstart" class="col-span-1 md:col-span-2 flex items-center justify-between py-2 px-3 rounded bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 transition font-semibold mb-1">
+                    <span class="flex items-center space-x-2">
+                        <span class="px-1.5 py-0.5 bg-emerald-700 text-white rounded text-[10px] uppercase font-bold">SOP Server</span>
+                        <span><strong>Petunjuk Khusus:</strong> Menjalankan Server & Akses Multi-Device (HP & Wi-Fi Kantor)</span>
+                    </span>
+                    <span class="text-emerald-700 font-mono">00</span>
+                </a>
                 <a href="#bab1" class="flex items-center justify-between py-1.5 px-2 rounded hover:bg-slate-100 text-slate-700 transition">
                     <span><strong>Bab 1:</strong> Deskripsi Sistem dan Matriks Hak Akses</span>
                     <span class="text-slate-400 font-mono">01</span>
@@ -259,7 +266,209 @@
         </section>
 
 
+                <!-- ============================================================ -->
+        <!-- PETUNJUK KHUSUS: MENJALANKAN SERVER & AKSES MULTI-DEVICE -->
         <!-- ============================================================ -->
+        <article id="quickstart" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3 mb-5">
+                <span class="px-2.5 py-1 bg-emerald-800 text-white text-xs font-bold rounded uppercase">SOP Server</span>
+                <h2 class="text-lg font-bold text-slate-900">Petunjuk Menjalankan Server & Prosedur Akses Multi-Perangkat</h2>
+            </div>
+
+            <p class="text-xs text-slate-700 leading-relaxed mb-4">
+                Sistem Informasi Kepegawaian (SIMPEG) dirancang dengan arsitektur basis data terpusat (<em>Centralized Local Server</em>). Sistem dapat dioperasikan secara mandiri dari satu unit komputer/laptop server di kantor dinas dan dapat diakses secara simultan oleh seluruh pegawai dari smartphone (HP Android/iPhone) maupun komputer/laptop kerja lain di lingkungan Dinas Pangan dan Pertanian Kabupaten Sidoarjo.
+            </p>
+
+            <!-- SUB-BAGIAN 1: MENYALAKAN SERVER -->
+            <div class="my-6">
+                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center">
+                    <span class="w-2 h-2 rounded-full bg-emerald-600 mr-2"></span>
+                    1. Prosedur Menyalakan Server (Hanya 1 Klik via JALANKAN_SIMPEG.bat)
+                </h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Pengelola atau petugas Subbag Umum & Kepegawaian tidak perlu membuka terminal atau mengetikkan baris perintah rumit. Cukup lakukan klik ganda (<em>double-click</em>) pada berkas peluncur pintar <strong><code>JALANKAN_SIMPEG.bat</code></strong> (atau shortcut di Desktop):
+                </p>
+
+                <!-- SCREENSHOT 00A: TERMINAL SERVER RUNNER -->
+                <div class="screenshot-card">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">Command Prompt - JALANKAN_SIMPEG.bat (Server Runner)</span>
+                        <span class="screenshot-badge">Tangkapan Layar: Konsol Server Terpadu</span>
+                    </div>
+                    <img src="images/guide/00a_server_terminal_runner.png" alt="Konsol Server SIMPEG Dispanperta" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        <strong>Gambar 0.1:</strong> Tampilan konsol server SIMPEG setelah dijalankan. Script otomatis memastikan Database MySQL aktif, menghubungkan jalur online permanen (Ngrok), mendeteksi alamat IP jaringan kantor, dan menampilkan panduan tautan akses resmi secara real-time.
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-4 rounded border border-slate-200 text-xs">
+                    <div class="space-y-1">
+                        <strong class="text-slate-800 flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
+                            Otomatisasi Sistem:
+                        </strong>
+                        <p class="text-slate-600">
+                            Script secara otomatis menyalakan service MySQL XAMPP (port 3306), menghubungkan tunnel domain online, dan meluncurkan server Laravel pada port 8000 tanpa konfigurasi manual.
+                        </p>
+                    </div>
+                    <div class="space-y-1">
+                        <strong class="text-slate-800 flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>
+                            Ketentuan Jam Kerja:
+                        </strong>
+                        <p class="text-slate-600">
+                            Jendela terminal hitam tersebut <strong>tidak boleh ditutup</strong> selama jam pelayanan kantor berlangsung agar server tetap dapat melayani permintaan data dari HP dan laptop pegawai lain.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUB-BAGIAN 2: MATRIKS AKSES MULTI-DEVICE -->
+            <div class="my-8 pt-4 border-t border-slate-200">
+                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 mr-2"></span>
+                    2. Matriks Jalur Akses bagi Pegawai (Multi-Device)
+                </h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                    Aplikasi menyediakan 2 (dua) opsi jalur konektivitas yang dapat dipilih sesuai dengan kebutuhan perangkat pengguna:
+                </p>
+
+                <div class="overflow-x-auto border border-slate-200 rounded my-3">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 uppercase font-semibold border-b border-slate-200">
+                                <th class="py-2.5 px-3">Metode Jalur</th>
+                                <th class="py-2.5 px-3">Format Alamat Tautan (URL)</th>
+                                <th class="py-2.5 px-3">Perangkat yang Didukung</th>
+                                <th class="py-2.5 px-3">Ketentuan Jaringan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-slate-600">
+                            <tr>
+                                <td class="py-2.5 px-3 font-semibold text-blue-700">
+                                    Jalur 1: Online (Utama)
+                                </td>
+                                <td class="py-2.5 px-3 font-mono font-medium text-slate-900">
+                                    bit.ly/simpeg-dispanperta<br>
+                                    <span class="text-[10px] text-slate-400 font-normal">https://postbox-revolving-exponent.ngrok-free.dev</span>
+                                </td>
+                                <td class="py-2.5 px-3">
+                                    <span class="px-2 py-0.5 bg-blue-50 text-blue-700 font-medium rounded text-[10px]">Smartphone (Android/iPhone)</span>
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-700 font-medium rounded text-[10px] ml-1">Laptop / PC</span>
+                                </td>
+                                <td class="py-2.5 px-3">
+                                    Bebas; dapat menggunakan Wi-Fi kantor maupun paket data seluler pribadi di luar kantor.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-2.5 px-3 font-semibold text-emerald-700">
+                                    Jalur 2: Lokal Wi-Fi
+                                </td>
+                                <td class="py-2.5 px-3 font-mono font-medium text-slate-900">
+                                    http://PEDJARFSJN:8000<br>
+                                    <span class="text-[10px] text-slate-400 font-normal">http://10.44.1.199:8000 (IP Dinamis Router)</span>
+                                </td>
+                                <td class="py-2.5 px-3">
+                                    <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 font-medium rounded text-[10px]">Laptop / PC Rekan Kantor</span>
+                                </td>
+                                <td class="py-2.5 px-3">
+                                    Wajib terhubung pada jaringan Wi-Fi kantor yang sama (<em>sidoarjokab.go.id</em>). Tidak memerlukan kuota internet eksternal.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- SCREENSHOT 00B: MULTI-DEVICE COMPARISON -->
+                <div class="screenshot-card mt-4">
+                    <div class="screenshot-header">
+                        <span class="screenshot-title">Akses Fleksibel Multi-Perangkat: Mobile Responsive & Desktop Browser</span>
+                        <span class="screenshot-badge">Tangkapan Layar: Tampilan HP & Laptop</span>
+                    </div>
+                    <img src="images/guide/00b_akses_multi_device.png?v=20260915_real" alt="Akses Multi Device SIMPEG Dispanperta" class="screenshot-img">
+                    <div class="screenshot-caption">
+                        <strong>Gambar 0.2:</strong> Visualisasi operasional SIMPEG. Sisi kiri menampilkan antarmuka responsif pada smartphone pegawai melalui link Bit.ly, sedangkan sisi kanan menampilkan peramban laptop kerja rekan dinas dengan fitur bookmark bintang (⭐) untuk akses cepat harian.
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUB-BAGIAN 3: PANDUAN PENGGUNAAN PRAKTIS BAGI PEGAWAI -->
+            <div class="my-6 pt-4 border-t border-slate-200">
+                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
+                    <span class="w-2 h-2 rounded-full bg-purple-600 mr-2"></span>
+                    3. Prosedur Akses Cepat Satu Klik bagi Rekan Kerja Dinas
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <!-- Kartu 1: Akses Smartphone -->
+                    <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 text-blue-700 font-bold mb-2">
+                                <span class="step-badge" style="background:#2563eb;">1</span>
+                                <span>Akses Smartphone (HP)</span>
+                            </div>
+                            <p class="text-slate-600 leading-relaxed">
+                                Buka browser HP (Chrome/Safari), ketik <strong><code>bit.ly/simpeg-dispanperta</code></strong>. Klik menu titik tiga (<strong class="font-mono">⋮</strong>) lalu pilih <strong>"Tambahkan ke Layar Utama" (Add to Home screen)</strong> agar ikon SIMPEG tersimpan di menu HP seperti aplikasi mandiri.
+                            </p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-200 text-[11px] text-blue-800 font-medium">
+                            💡 Praktis untuk cek data saat dinas luar / rapat.
+                        </div>
+                    </div>
+
+                    <!-- Kartu 2: Akses Laptop Rekan Kerja -->
+                    <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 text-emerald-700 font-bold mb-2">
+                                <span class="step-badge" style="background:#059669;">2</span>
+                                <span>Bookmark Laptop (PC)</span>
+                            </div>
+                            <p class="text-slate-600 leading-relaxed">
+                                Saat membuka alamat di laptop kerja, tekan pintasan <strong><code>Ctrl + D</code></strong> pada keyboard untuk menyimpan tautan ke Bookmark Bar peramban. Di hari-hari berikutnya, pegawai cukup mengeklik ikon bookmark tersebut tanpa perlu mengetik ulang.
+                            </p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-200 text-[11px] text-emerald-800 font-medium">
+                            💡 Akses instan dalam 1 detik setiap pagi.
+                        </div>
+                    </div>
+
+                    <!-- Kartu 3: Catatan Akses Perdana -->
+                    <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 text-amber-700 font-bold mb-2">
+                                <span class="step-badge" style="background:#d97706;">3</span>
+                                <span>Verifikasi Perdana</span>
+                            </div>
+                            <p class="text-slate-600 leading-relaxed">
+                                Khusus kunjungan pertama kali melalui jalur online (Ngrok), peramban akan menampilkan layar konfirmasi bertuliskan <em>"You are about to visit..."</em>. Pengguna cukup mengeklik tombol biru <strong>"Visit Site"</strong> sekali saja untuk mengonfirmasi akses masuk.
+                            </p>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-200 text-[11px] text-amber-800 font-medium">
+                            💡 Hanya muncul satu kali pada browser baru.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUB-BAGIAN 4: SOP SINKRONISASI BASIS DATA & INTEGRITAS -->
+            <div class="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200 text-xs">
+                <div class="flex items-start space-x-3">
+                    <div class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
+                        ✓
+                    </div>
+                    <div>
+                        <strong class="text-emerald-950 block font-semibold mb-1">
+                            Integritas Basis Data Terpusat Real-Time (Data Sync Guaranteed):
+                        </strong>
+                        <p class="text-emerald-900 leading-relaxed">
+                            Meskipun diakses oleh puluhan perangkat secara bersamaan melalui jalur online maupun jalur Wi-Fi lokal, <strong>seluruh proses pencatatan data (CRUD), pengarsipan mutasi, perhitungan batas usia pensiun, dan usulan kenaikan pangkat secara langsung tersimpan pada basis data MySQL utama di laptop server</strong>. Tidak ada risiko perbedaan data antar perangkat, dan berkas arsip kedinasan tetap terkelola secara utuh di lingkungan dinas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+<!-- ============================================================ -->
         <!-- BAB 1 -->
         <!-- ============================================================ -->
         <article id="bab1" class="chapter-page bg-white rounded-xl shadow-xs border border-slate-200 p-8 sm:p-10 mb-8">
@@ -547,7 +756,7 @@
                     <span class="screenshot-title">http://localhost/dispanperta/public/struktur-organisasi</span>
                     <span class="screenshot-badge">Tangkapan Layar: Struktur Organisasi</span>
                 </div>
-                <img src="images/guide/03_public_struktur.png" alt="Struktur Organisasi Dispanperta" class="screenshot-img">
+                <img src="images/guide/03_public_struktur.png?v=20260915_update" alt="Struktur Organisasi Dispanperta" class="screenshot-img">
                 <div class="screenshot-caption">
                     Gambar 4.1: Bagan Susunan Organisasi menampilkan alur hierarki dari Kepala Dinas, Sekretaris, Kepala Bidang, hingga UPTD.
                 </div>

@@ -23,7 +23,7 @@
                 <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-emerald-800 to-teal-900 text-white flex items-center justify-center font-black text-2xl sm:text-3xl shadow-md border-2 border-emerald-700/20 flex-shrink-0">
                     {{ strtoupper(substr($pegawai->nama, 0, 1)) }}
                 </div>
-
+                
                 <div class="space-y-1.5">
                     <div class="flex flex-wrap items-center gap-2">
                         @if($pegawai->is_pns)

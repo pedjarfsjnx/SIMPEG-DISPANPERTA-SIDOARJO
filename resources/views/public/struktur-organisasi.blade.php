@@ -24,7 +24,7 @@
                 <p class="text-xs text-slate-500">Bagan alur hierarki kepemimpinan Dinas Pangan dan Pertanian Kabupaten Sidoarjo.</p>
             </div>
             @if(file_exists(public_path('images/struktur-organisasi.png')) || file_exists(public_path('images/struktur-organisasi.jpg')))
-            <a href="{{ file_exists(public_path('images/struktur-organisasi.png')) ? asset('images/struktur-organisasi.png') : asset('images/struktur-organisasi.jpg') }}" 
+            <a href="{{ file_exists(public_path('images/struktur-organisasi.png')) ? asset('images/struktur-organisasi.png') . '?v=' . filemtime(public_path('images/struktur-organisasi.png')) : asset('images/struktur-organisasi.jpg') }}" 
                target="_blank" 
                class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-md shadow-xs">
                Buka Foto Penuh &rarr;
@@ -34,7 +34,7 @@
 
         <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-4 flex items-center justify-center min-h-[220px]">
             @if(file_exists(public_path('images/struktur-organisasi.png')))
-                <img src="{{ asset('images/struktur-organisasi.png') }}" alt="Bagan Struktur Organisasi Dispanperta Sidoarjo" class="max-w-full h-auto rounded-lg shadow-md border border-slate-200">
+                <img src="{{ asset('images/struktur-organisasi.png') }}?v={{ file_exists(public_path('images/struktur-organisasi.png')) ? filemtime(public_path('images/struktur-organisasi.png')) : time() }}" alt="Bagan Struktur Organisasi Dispanperta Sidoarjo" class="max-w-full h-auto rounded-lg shadow-md border border-slate-200">
             @elseif(file_exists(public_path('images/struktur-organisasi.jpg')))
                 <img src="{{ asset('images/struktur-organisasi.jpg') }}" alt="Bagan Struktur Organisasi Dispanperta Sidoarjo" class="max-w-full h-auto rounded-lg shadow-md border border-slate-200">
             @else

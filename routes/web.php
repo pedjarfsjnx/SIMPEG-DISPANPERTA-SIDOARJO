@@ -29,7 +29,11 @@ Route::get('/pegawai-download-pdf', [PublicPegawaiController::class, 'downloadPd
 Route::get('/pegawai/{id}', [PublicPegawaiController::class, 'show'])->name('public.pegawai.show');
 Route::get('/struktur-organisasi', [PublicStrukturController::class, 'index'])->name('public.struktur-organisasi');
 Route::get('/panduan', function () {
-    return response()->file(public_path('user-guide.html'));
+    return response()->file(public_path('user-guide.html'), [
+        'Cache-Control' => 'no-cache, no-store, must-revalidate, max-age=0',
+        'Pragma' => 'no-cache',
+        'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
+    ]);
 })->name('panduan');
 
 // Database sync trigger for Railway with detailed error reporting

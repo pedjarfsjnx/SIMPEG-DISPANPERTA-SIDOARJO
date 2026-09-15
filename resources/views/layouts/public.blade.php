@@ -220,7 +220,7 @@
         <!-- Navigation Bar -->
         <nav class="bg-emerald-900 border-t border-emerald-800/80">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center space-x-2 py-2 text-xs font-medium overflow-x-auto">
+                <div class="flex items-center space-x-2 py-2 text-xs font-medium overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                     <a href="{{ route('public.dashboard') }}" 
                        class="px-3.5 py-1.5 rounded transition whitespace-nowrap {{ request()->routeIs('public.dashboard') ? 'bg-emerald-950 text-amber-400 font-bold border border-emerald-700 shadow-sm' : 'text-emerald-100 hover:bg-emerald-800 hover:text-white' }}">
                        Dashboard
