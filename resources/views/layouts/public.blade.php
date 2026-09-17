@@ -205,7 +205,7 @@
                         <span class="text-emerald-200 text-[10px] font-normal normal-case">Jawa Timur</span>
                     </div>
                     <h1 class="text-lg sm:text-xl font-bold tracking-tight uppercase text-white leading-tight">Dinas Pangan dan Pertanian</h1>
-                    <p class="text-[11px] text-emerald-200 mt-0.5">Sistem Informasi Kepegawaian Internal (SIMPEG)</p>
+                    <p class="text-[11px] text-emerald-200 mt-0.5">Sistem Informasi Kepegawaian Internal (SIMPEGG)</p>
                 </div>
             </div>
 

@@ -165,7 +165,7 @@
             <div>
                 <h1 class="text-base font-bold text-white uppercase tracking-wider">Dinas Pangan dan Pertanian</h1>
                 <p class="text-xs text-amber-400 font-medium">Kabupaten Sidoarjo &bull; Jawa Timur</p>
-                <p class="text-[11px] text-slate-400 mt-1">Sistem Informasi Kepegawaian Internal (SIMPEG)</p>
+                <p class="text-[11px] text-slate-400 mt-1">Sistem Informasi Kepegawaian Internal (SIMPEGG)</p>
             </div>
         </div>
 
