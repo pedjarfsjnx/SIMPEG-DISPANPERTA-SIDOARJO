@@ -44,11 +44,12 @@
             </div>
 
             <!-- 2. Pensiun Tahun Ini -->
-            <a href="{{ route('admin.pensiun.index', ['tahun' => date('Y')]) }}" 
+            @php $thIni = (int)date('Y'); @endphp
+            <a href="{{ route('admin.pensiun.index', ['tahun_mulai' => $thIni, 'tahun_selesai' => $thIni]) }}" 
                class="group p-3.5 rounded-xl bg-amber-50/50 hover:bg-amber-50/90 border border-amber-200/80 transition flex items-center justify-between">
                 <div>
                     <div class="text-[11px] font-semibold text-amber-800 uppercase tracking-wider flex items-center gap-1">
-                        <span>Pensiun {{ date('Y') }}</span>
+                        <span>Pensiun {{ $thIni }}</span>
                         <span class="text-[10px] text-amber-600 font-normal">(Tahun Ini)</span>
                     </div>
                     <div class="text-2xl font-bold text-amber-900 mt-0.5">
@@ -59,11 +60,11 @@
             </a>
 
             <!-- 3. Pensiun Tahun Depan -->
-            <a href="{{ route('admin.pensiun.index', ['tahun' => date('Y') + 1]) }}" 
+            <a href="{{ route('admin.pensiun.index', ['tahun_mulai' => $thIni + 1, 'tahun_selesai' => $thIni + 1]) }}" 
                class="group p-3.5 rounded-xl bg-emerald-50/50 hover:bg-emerald-50/90 border border-emerald-200/80 transition flex items-center justify-between">
                 <div>
                     <div class="text-[11px] font-semibold text-emerald-800 uppercase tracking-wider flex items-center gap-1">
-                        <span>Pensiun {{ date('Y') + 1 }}</span>
+                        <span>Pensiun {{ $thIni + 1 }}</span>
                         <span class="text-[10px] text-emerald-600 font-normal">(Thn Depan)</span>
                     </div>
                     <div class="text-2xl font-bold text-emerald-900 mt-0.5">
@@ -74,27 +75,30 @@
             </a>
 
             <!-- 4. Proyeksi 5 Tahun Ke Depan -->
-            <div class="p-3.5 rounded-xl bg-sky-50/50 border border-sky-200/80 flex items-center justify-between">
+            <a href="{{ route('admin.pensiun.index', ['tahun_mulai' => $thIni, 'tahun_selesai' => $thIni + 4]) }}" 
+               class="group p-3.5 rounded-xl bg-sky-50/50 hover:bg-sky-50/90 border border-sky-200/80 transition flex items-center justify-between">
                 <div>
-                    <div class="text-[11px] font-semibold text-sky-800 uppercase tracking-wider">Proyeksi 5 Thn</div>
+                    <div class="text-[11px] font-semibold text-sky-800 uppercase tracking-wider flex items-center gap-1">
+                        <span>Proyeksi 5 Thn</span>
+                        <span class="text-[10px] text-sky-600 font-normal">({{ $thIni }}-{{ $thIni + 4 }})</span>
+                    </div>
                     <div class="text-2xl font-bold text-sky-900 mt-0.5">
                         {{ number_format($pensiun5Tahun) }} <span class="text-xs font-normal text-sky-700">Pegawai</span>
                     </div>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                </div>
-            </div>
+                <span class="text-[11px] text-sky-700 group-hover:text-sky-900 font-semibold">Filter &rarr;</span>
+            </a>
 
         </div>
     </div>
 
-    <!-- Filter Card: Bulan, Tahun, Unit Kerja, & Search -->
-    <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
-        <form method="GET" action="{{ route('admin.pensiun.index') }}" class="space-y-3">
+    <!-- Filter Card: Pencarian, Unit Kerja, Bulan, & Rentang Tahun -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-3.5">
+        <form method="GET" action="{{ route('admin.pensiun.index') }}" class="space-y-3.5">
+            <!-- Baris 1: Search, Unit Kerja, Bulan -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
                 <!-- Search -->
-                <div class="md:col-span-4 relative">
+                <div class="md:col-span-5 relative">
                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </div>
@@ -105,32 +109,8 @@
                            class="w-full text-xs pl-10 pr-3.5 py-2.5 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-slate-50/50 shadow-2xs transition">
                 </div>
 
-                <!-- Filter Bulan -->
-                <div class="md:col-span-3">
-                    <select name="bulan" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
-                        <option value="">-- Semua Bulan Pensiun --</option>
-                        @foreach($bulanOptions as $num => $namaBulan)
-                            <option value="{{ $num }}" {{ request('bulan') == $num ? 'selected' : '' }}>
-                                Bulan {{ $namaBulan }} (Bulan {{ str_pad($num, 2, '0', STR_PAD_LEFT) }})
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Filter Tahun -->
-                <div class="md:col-span-2">
-                    <select name="tahun" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
-                        <option value="">-- Semua Tahun --</option>
-                        @foreach($tahunOptions as $th)
-                            <option value="{{ $th }}" {{ request('tahun') == $th ? 'selected' : '' }}>
-                                Tahun {{ $th }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <!-- Filter Unit Kerja -->
-                <div class="md:col-span-3">
+                <div class="md:col-span-4">
                     <select name="unit_kerja_id" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
                         <option value="">-- Semua Unit Kerja --</option>
                         @foreach($unitKerjaList as $unit)
@@ -140,32 +120,106 @@
                         @endforeach
                     </select>
                 </div>
+
+                <!-- Filter Bulan -->
+                <div class="md:col-span-3">
+                    <select name="bulan" class="w-full text-xs py-2.5 px-3 rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 bg-white shadow-2xs transition">
+                        <option value="">-- Semua Bulan Pensiun --</option>
+                        @foreach($bulanOptions as $num => $namaBulan)
+                            <option value="{{ $num }}" {{ request('bulan') == $num ? 'selected' : '' }}>
+                                Bulan {{ $namaBulan }} ({{ str_pad($num, 2, '0', STR_PAD_LEFT) }})
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-100">
-                <div class="text-[11px] text-slate-600">
-                    @if(request()->filled('bulan') || request()->filled('tahun') || request()->filled('search') || request()->filled('unit_kerja_id'))
+            <!-- Baris 2: Filter Rentang Tahun & Preset Cepat -->
+            <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/80 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2 text-xs">
+                    <span class="font-bold text-slate-700 flex items-center gap-1.5 mr-1">
+                        <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        Rentang Tahun:
+                    </span>
+                    <div class="flex items-center gap-1.5">
+                        <select name="tahun_mulai" id="tahun_mulai" class="text-xs py-1.5 px-2.5 rounded-lg border-slate-300 bg-white focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 shadow-2xs font-semibold text-slate-800">
+                            <option value="">Dari Tahun...</option>
+                            @foreach($tahunOptions as $th)
+                                <option value="{{ $th }}" {{ ($tahunMulai == $th) ? 'selected' : '' }}>
+                                    Tahun {{ $th }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <span class="text-slate-400 font-bold text-xs">s.d.</span>
+                        <select name="tahun_selesai" id="tahun_selesai" class="text-xs py-1.5 px-2.5 rounded-lg border-slate-300 bg-white focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 shadow-2xs font-semibold text-slate-800">
+                            <option value="">Sampai Tahun...</option>
+                            @foreach($tahunOptions as $th)
+                                <option value="{{ $th }}" {{ ($tahunSelesai == $th) ? 'selected' : '' }}>
+                                    Tahun {{ $th }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Preset Badges -->
+                    <div class="flex flex-wrap items-center gap-1.5 md:ml-2 md:pl-2 md:border-l border-slate-200">
+                        <span class="text-[11px] text-slate-400">Pilihan Cepat:</span>
+                        <button type="button" onclick="setRentang({{ $thIni }}, {{ $thIni }})" 
+                                class="px-2 py-0.5 rounded text-[11px] font-medium bg-white hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 border border-slate-200 hover:border-emerald-300 transition cursor-pointer">
+                            Tahun Ini ({{ $thIni }})
+                        </button>
+                        <button type="button" onclick="setRentang({{ $thIni }}, {{ $thIni + 1 }})" 
+                                class="px-2 py-0.5 rounded text-[11px] font-medium bg-white hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 border border-slate-200 hover:border-emerald-300 transition cursor-pointer">
+                            2 Tahun ({{ $thIni }} - {{ $thIni + 1 }})
+                        </button>
+                        <button type="button" onclick="setRentang({{ $thIni }}, {{ $thIni + 2 }})" 
+                                class="px-2 py-0.5 rounded text-[11px] font-medium bg-white hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 border border-slate-200 hover:border-emerald-300 transition cursor-pointer">
+                            3 Tahun ({{ $thIni }} - {{ $thIni + 2 }})
+                        </button>
+                        <button type="button" onclick="setRentang({{ $thIni }}, {{ $thIni + 4 }})" 
+                                class="px-2 py-0.5 rounded text-[11px] font-medium bg-white hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 border border-slate-200 hover:border-emerald-300 transition cursor-pointer">
+                            5 Tahun ({{ $thIni }} - {{ $thIni + 4 }})
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 self-end md:self-auto">
+                    <button type="submit" class="py-1.5 px-4 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center space-x-1.5 cursor-pointer">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                        <span>Terapkan Rekap</span>
+                    </button>
+                    @if(request()->hasAny(['search', 'bulan', 'tahun', 'tahun_mulai', 'tahun_selesai', 'unit_kerja_id', 'kategori_id']))
+                        <a href="{{ route('admin.pensiun.index') }}" title="Reset Filter" class="py-1.5 px-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold text-xs rounded-xl transition">
+                            Reset
+                        </a>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Status Filter Aktif -->
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-600">
+                <div>
+                    @if(request()->filled('bulan') || $tahunMulai || $tahunSelesai || request()->filled('search') || request()->filled('unit_kerja_id'))
                         <span class="font-bold text-emerald-800">
                             Filter Aktif: 
-                            {{ request('bulan') ? 'Bulan '.$bulanOptions[(int)request('bulan')] : '' }} 
-                            {{ request('tahun') ? 'Tahun '.request('tahun') : '' }}
-                            {{ request('search') ? 'Kata Kunci: "'.request('search').'"' : '' }}
+                            @if($tahunMulai && $tahunSelesai && $tahunMulai == $tahunSelesai)
+                                Tahun {{ $tahunMulai }}
+                            @elseif($tahunMulai && $tahunSelesai)
+                                Rentang Tahun {{ min($tahunMulai, $tahunSelesai) }} s.d. {{ max($tahunMulai, $tahunSelesai) }}
+                            @elseif($tahunMulai)
+                                Mulai Tahun {{ $tahunMulai }}
+                            @elseif($tahunSelesai)
+                                Sampai Tahun {{ $tahunSelesai }}
+                            @endif
+                            {{ request('bulan') ? ' • Bulan '.$bulanOptions[(int)request('bulan')] : '' }} 
+                            {{ request('search') ? ' • Kata Kunci: "'.request('search').'"' : '' }}
+                            @if(request('unit_kerja_id'))
+                                • Unit: {{ $unitKerjaList->firstWhere('id', request('unit_kerja_id'))?->nama }}
+                            @endif
                         </span>
                         <span class="text-slate-400">({{ $pensiunList->total() }} pegawai ditemukan)</span>
                     @else
                         <span>Menampilkan seluruh daftar rekapitulasi proyeksi pensiun pegawai instansi.</span>
-                    @endif
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <button type="submit" class="py-2.5 px-5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center space-x-1.5">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
-                        <span>Terapkan Rekap</span>
-                    </button>
-                    @if(request()->hasAny(['search', 'bulan', 'tahun', 'unit_kerja_id', 'kategori_id']))
-                        <a href="{{ route('admin.pensiun.index') }}" title="Reset Filter" class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition">
-                            Reset
-                        </a>
                     @endif
                 </div>
             </div>
@@ -239,10 +293,10 @@
                         <td colspan="8" class="py-12 text-center text-slate-500">
                             <div class="flex flex-col items-center justify-center space-y-2">
                                 <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-</div>
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                </div>
                                 <div class="font-semibold text-slate-700 text-sm">Tidak Ada Pegawai Yang Pensiun Pada Periode Terpilih</div>
-                                <div class="text-xs text-slate-400">Coba ubah filter bulan atau tahun untuk melihat rekapitulasi periode lain.</div>
+                                <div class="text-xs text-slate-400">Coba ubah filter bulan atau rentang tahun untuk melihat rekapitulasi periode lain.</div>
                             </div>
                         </td>
                     </tr>
@@ -258,4 +312,12 @@
         @endif
     </div>
 </div>
+
+<script>
+    function setRentang(mulai, selesai) {
+        document.getElementById('tahun_mulai').value = mulai;
+        document.getElementById('tahun_selesai').value = selesai;
+        document.getElementById('tahun_mulai').closest('form').submit();
+    }
+</script>
 @endsection

@@ -44,8 +44,8 @@ class RiwayatPensiunController extends Controller
         $unitKerjaList = UnitKerja::orderBy('nama')->get();
         $kategoriList = KategoriPegawai::orderBy('nama')->get();
 
-        // Opsi Tahun dari 2025 s.d. 2035
-        $tahunOptions = range($currentYear, $currentYear + 10);
+        // Opsi Tahun dari (currentYear - 1) s.d. (currentYear + 10)
+        $tahunOptions = range($currentYear - 1, $currentYear + 10);
 
         $bulanOptions = [
             1 => 'Januari',
@@ -62,6 +62,9 @@ class RiwayatPensiunController extends Controller
             12 => 'Desember',
         ];
 
+        $tahunMulai = $request->filled('tahun_mulai') ? (int) $request->input('tahun_mulai') : ($request->filled('tahun') ? (int) $request->input('tahun') : null);
+        $tahunSelesai = $request->filled('tahun_selesai') ? (int) $request->input('tahun_selesai') : ($request->filled('tahun') ? (int) $request->input('tahun') : null);
+
         return view('admin.pensiun.index', compact(
             'pensiunList',
             'totalPNS',
@@ -71,7 +74,9 @@ class RiwayatPensiunController extends Controller
             'unitKerjaList',
             'kategoriList',
             'tahunOptions',
-            'bulanOptions'
+            'bulanOptions',
+            'tahunMulai',
+            'tahunSelesai'
         ));
     }
 
@@ -84,7 +89,10 @@ class RiwayatPensiunController extends Controller
             9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
         ];
 
-        return view('admin.pensiun.cetak', compact('rekapList', 'bulanOptions'));
+        $tahunMulai = $request->filled('tahun_mulai') ? (int) $request->input('tahun_mulai') : ($request->filled('tahun') ? (int) $request->input('tahun') : null);
+        $tahunSelesai = $request->filled('tahun_selesai') ? (int) $request->input('tahun_selesai') : ($request->filled('tahun') ? (int) $request->input('tahun') : null);
+
+        return view('admin.pensiun.cetak', compact('rekapList', 'bulanOptions', 'tahunMulai', 'tahunSelesai'));
     }
 
     private function getCalculatedPensiunList(Request $request): array
@@ -112,6 +120,10 @@ class RiwayatPensiunController extends Controller
 
         $allPegawai = $pegawaiQuery->get();
 
+        // Filter Rentang Tahun / Tahun Tertentu
+        $tahunMulai = $request->filled('tahun_mulai') ? (int) $request->input('tahun_mulai') : ($request->filled('tahun') ? (int) $request->input('tahun') : null);
+        $tahunSelesai = $request->filled('tahun_selesai') ? (int) $request->input('tahun_selesai') : ($request->filled('tahun') ? (int) $request->input('tahun') : null);
+
         // 2. Hitung proyeksi pensiun otomatis dari NIP + BUP
         $rekapList = [];
         foreach ($allPegawai as $p) {
@@ -132,9 +144,21 @@ class RiwayatPensiunController extends Controller
                 continue;
             }
 
-            // Filter Tahun jika ada
-            if ($request->filled('tahun') && (int) $request->input('tahun') !== $tahunPensiun) {
-                continue;
+            // Filter Rentang Tahun
+            if ($tahunMulai && $tahunSelesai) {
+                $minTh = min($tahunMulai, $tahunSelesai);
+                $maxTh = max($tahunMulai, $tahunSelesai);
+                if ($tahunPensiun < $minTh || $tahunPensiun > $maxTh) {
+                    continue;
+                }
+            } elseif ($tahunMulai) {
+                if ($tahunPensiun < $tahunMulai) {
+                    continue;
+                }
+            } elseif ($tahunSelesai) {
+                if ($tahunPensiun > $tahunSelesai) {
+                    continue;
+                }
             }
 
             // Hitung sisa masa kerja dengan integer DateInterval
