@@ -39,7 +39,10 @@ public/images/guide/check_*.png
 *.tar.gz
 *.rar
 *.sql
+!dispanperta.sql
 *.bak
 *.log
 scratch/
 *.bat
+!UPDATE_SIMPEG.bat
+!JALANKAN_SIMPEG.bat
