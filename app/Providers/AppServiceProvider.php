@@ -18,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        \Carbon\Carbon::setLocale('id');
+
         // Force HTTPS only for remote cloud deployments (e.g. Railway) or when behind an SSL reverse proxy.
         // Never force HTTPS for localhost or private local network (LAN / Wi-Fi) IPs.
         $host = request()->getHost();

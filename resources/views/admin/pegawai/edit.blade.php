@@ -130,11 +130,32 @@
 
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                        Golongan / Ruang
+                        Golongan / Ruang / Golongan Gaji
                     </label>
                     <input type="text" 
                            name="golongan" 
                            value="{{ old('golongan', $pegawai->golongan) }}" 
+                           placeholder="Contoh: IV/a, III/d, atau X" 
+                           class="w-full text-sm rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 py-2.5 px-3.5 shadow-2xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        TMT Jabatan
+                    </label>
+                    <input type="date" 
+                           name="tmt_jabatan" 
+                           value="{{ old('tmt_jabatan', $pegawai->tmt_jabatan?->format('Y-m-d')) }}" 
+                           class="w-full text-sm rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 py-2.5 px-3.5 shadow-2xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        TMT Pangkat (PNS)
+                    </label>
+                    <input type="date" 
+                           name="tmt_pangkat" 
+                           value="{{ old('tmt_pangkat', $pegawai->tmt_pangkat?->format('Y-m-d')) }}" 
                            class="w-full text-sm rounded-xl border-slate-300 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 py-2.5 px-3.5 shadow-2xs">
                 </div>
             </div>

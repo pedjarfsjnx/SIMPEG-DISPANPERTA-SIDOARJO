@@ -31,11 +31,13 @@ class Pegawai extends Model
         'no_hp',
         'email',
         'tmt_jabatan',
+        'tmt_pangkat',
     ];
 
     protected $casts = [
         'tanggal_lahir' => 'date',
         'tmt_jabatan' => 'date',
+        'tmt_pangkat' => 'date',
     ];
 
     public function kategori(): BelongsTo
@@ -78,19 +80,56 @@ class Pegawai extends Model
     {
         $kategoriNama = strtoupper($this->kategori?->nama ?? '');
 
-        return ($this->kategori_pegawai_id === 1 || str_contains($kategoriNama, 'PNS'))
+        return str_contains($kategoriNama, 'PNS')
             && ! str_contains($kategoriNama, 'PPPK')
             && ! str_contains($kategoriNama, 'NON-PNS')
             && ! empty($this->golongan)
             && $this->golongan !== '-';
     }
 
-    // Helper: Apakah Pegawai adalah PPPK
+    // Helper: Apakah Pegawai adalah PPPK Penuh (Bukan Paruh Waktu)
     public function getIsPppkAttribute(): bool
     {
         $kategoriNama = strtoupper($this->kategori?->nama ?? '');
 
-        return str_contains($kategoriNama, 'PPPK');
+        return str_contains($kategoriNama, 'PPPK')
+            && ! str_contains($kategoriNama, 'PARUH WAKTU');
+    }
+
+    // Helper: Apakah Pegawai adalah PPPK Paruh Waktu
+    public function getIsPppkParuhWaktuAttribute(): bool
+    {
+        $kategoriNama = strtoupper($this->kategori?->nama ?? '');
+
+        return str_contains($kategoriNama, 'PARUH WAKTU');
+    }
+
+    // Helper: Apakah Pegawai adalah Swakelola
+    public function getIsSwakelolaAttribute(): bool
+    {
+        $kategoriNama = strtoupper($this->kategori?->nama ?? '');
+
+        return str_contains($kategoriNama, 'SWAKELOLA');
+    }
+
+    // Helper: Apakah Pegawai adalah Outsourcing
+    public function getIsOutsourcingAttribute(): bool
+    {
+        $kategoriNama = strtoupper($this->kategori?->nama ?? '');
+
+        return str_contains($kategoriNama, 'OUTSOURCING');
+    }
+
+    // Helper: Mengambil Usulan Kenaikan Pangkat Resmi dari Database (Bukan Estimasi Otomatis)
+    public function getUsulanKpResmiAttribute(): ?RiwayatKenaikanPangkat
+    {
+        return $this->riwayatKenaikanPangkat->sortByDesc('tmt_diusulkan')->first();
+    }
+
+    // Helper: Mengambil Riwayat Pensiun Resmi dari Database (Bukan Estimasi Otomatis)
+    public function getRiwayatPensiunResmiAttribute(): ?RiwayatPensiun
+    {
+        return $this->riwayatPensiun->sortByDesc('tmt_pensiun')->first();
     }
 
     // Accessor: Usia Pegawai Saat Ini

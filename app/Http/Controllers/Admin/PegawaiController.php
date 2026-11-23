@@ -123,6 +123,7 @@ class PegawaiController extends Controller
             'no_hp' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:100',
             'tmt_jabatan' => 'nullable|date',
+            'tmt_pangkat' => 'nullable|date',
         ]);
 
         $pegawai = Pegawai::create($validated);
@@ -194,6 +195,7 @@ class PegawaiController extends Controller
             'no_hp' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:100',
             'tmt_jabatan' => 'nullable|date',
+            'tmt_pangkat' => 'nullable|date',
         ]);
 
         $pegawai->update($validated);
